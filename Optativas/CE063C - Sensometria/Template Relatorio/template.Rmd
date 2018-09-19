@@ -1,0 +1,33 @@
+---
+title: "Nome do experimento"
+author: "Nome do aluno ( ou dupla)"
+date: "25 de setembro de 2018"
+output: pdf_document
+---
+
+## Objetivo do experimento
+
+- Descrever o objetivo do experimento.
+
+## Material
+
+- Citar os materiais utilizados no experimento
+
+## Metodologia
+
+- Descrever a execução do experimento: aleatorização, amostras, ...
+
+- Análise estatística: descrever a metodologia estatística.
+
+## Resultados e interpretações
+
+- Principais resultados; análises específicas para cada experimento, por exemplo: tamanho de amostra, poder do teste, ... .
+
+- Conclusão do experimento.
+
+## Referências: 
+
+- Incluir entre uma e três referências bibliográficas: artigo ou livro.
+  
+- Citar as referências no texto do relatório.  
+
