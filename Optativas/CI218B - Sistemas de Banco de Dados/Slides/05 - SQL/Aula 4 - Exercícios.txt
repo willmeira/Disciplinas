@@ -1,0 +1,14 @@
+>> Exercício 1
+SELECT p.p_name, p.p_retailprice, ps.ps_supplycost
+FROM part p, partsupp ps
+WHERE p.p_partkey = ps.ps_partkey and p.p_retailprice>2097.1
+
+>> Exercício 2
+SELECT o.o_orderstatus, l.l_discount
+FROM orders o, lineitem l
+WHERE o.o_orderkey=l.l_orderkey and l.l_shipdate between '1998-11-11' and '1998-12-31';
+
+>> Exercício 3
+SELECT o.o_orderpriority, c.c_name, c.c_address
+FROM orders o, customer c, nation n
+WHERE o.o_custkey=c.c_custkey AND n.n_nationkey=c.c_nationkey AND n.n_name='UNITED STATES' AND  c.c_acctbal > 9990
