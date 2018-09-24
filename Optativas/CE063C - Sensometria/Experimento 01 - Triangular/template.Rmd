@@ -2,7 +2,7 @@
 title: "Nome do experimento"
 author: "Nome do aluno ( ou dupla)"
 date: "25 de setembro de 2018"
-output: pdf_document
+output: html_document
 ---
 
 ## Objetivo do experimento
