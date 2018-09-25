@@ -1,8 +1,9 @@
 ---
 title: "TESTE TRIANGULAR"
-author: "Kritiany J. Martini GRR20149099, Simone Matsubara GRR20124663"
+author: "Willian Meira Schlichta GRR20159077"
 date: "23 de setembro de 2018"
 output: html_document
+bibliography: referencias.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -14,9 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Teste Triangular**
 
-É um dos teste mais utilizados, devido a sua simplicidade de interpretação e de delineamento. Neste teste cada provador recebe simultaneamente três amostras, previamente codificadas e balanceadas, sendo duas iguais e uma diferente, cabendo ao provador apontar apenas a amostra diferente. A escolha é forçada, ou seja, o avaliador deve apresentar uma resposta. As amostras devem ser casualizadas. 
+É um dos teste mais utilizados, devido a sua simplicidade de interpretação e de delineamento. Neste teste cada provador recebe simultaneamente três amostras previamente codificadas, casualizadas e balanceadas, sendo duas iguais e uma diferente. Cabe ao avaliador identificar a amostra diferente. Nesse teste a escolha é forçada, ou seja, o avaliador deve apresentar uma resposta, mesmo que ele não tenha percebido a diferença. 
 
-Os testes triangulares apresentam como vantagem, a menor probabilidade de acertar ao acaso (1/3) e diferenciar as amostras de maneira global e como desvantagens, serem pouco práticos para um número elevado de amostras (tratamentos) e serem potencialmente afetados pela fadiga sensorial dos provadores (MEILGAARD; CIVILLE; CARR, 2006).
+Os testes triangulares apresentam como vantagem, a menor probabilidade de acertar ao acaso ($1/3$) e diferenciar as amostras de maneira global e como desvantagens, serem pouco práticos para um número elevado de amostras (tratamentos) e serem potencialmente afetados pela fadiga sensorial dos provadores (@meilgaard3sensory). 
 
 O Teste Triagular pode ser realizado para medir Diferença ou Similaridade de um produto. Para testar a diferença buscamos minimizar $\alpha$ diminuindo o Erro Tipo I, já no teste de similaridade queremos maximizar $1 - \beta$ diminuindo a chance de decidirmos incorretamente que as amostras são similares, quando na realidade elas são diferentes (Erro Tipo II). Em nosso caso realizamos o Teste de Diferença.
 
@@ -76,7 +77,3 @@ Com 93% de certeza, concluímos que os refrigerantes de limão - Sprite e Soda, te
 
 
 ## Referências: 
-
-- Incluir entre uma e três referências bibliográficas: artigo ou livro.
-  
-- Citar as referências no texto do relatório.       
