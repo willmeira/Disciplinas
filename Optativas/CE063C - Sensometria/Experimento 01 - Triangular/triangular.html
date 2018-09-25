@@ -131,23 +131,31 @@ $(document).ready(function () {
 <p><strong>Teste Triangular</strong></p>
 <p>É um dos teste mais utilizados, devido a sua simplicidade de interpretação e de delineamento. Neste teste cada provador recebe simultaneamente três amostras previamente codificadas, casualizadas e balanceadas, sendo duas iguais e uma diferente. Cabe ao avaliador identificar a amostra diferente. Nesse teste a escolha é forçada, ou seja, o avaliador deve apresentar uma resposta, mesmo que ele não tenha percebido a diferença.</p>
 <p>Os testes triangulares apresentam como vantagem, a menor probabilidade de acertar ao acaso (<span class="math inline">\(1/3\)</span>) e diferenciar as amostras de maneira global e como desvantagens, serem pouco práticos para um número elevado de amostras (tratamentos) e serem potencialmente afetados pela fadiga sensorial dos provadores (<span class="citation">Meilgaard, Carr, and Civille (2006)</span>).</p>
-<p>O Teste Triagular pode ser realizado para medir Diferença ou Similaridade de um produto. Para testar a diferença buscamos minimizar <span class="math inline">\(\alpha\)</span> diminuindo o Erro Tipo I, já no teste de similaridade queremos maximizar <span class="math inline">\(1 - \beta\)</span> diminuindo a chance de decidirmos incorretamente que as amostras são similares, quando na realidade elas são diferentes (Erro Tipo II). Em nosso caso realizamos o Teste de Diferença.</p>
+<p>O Teste Triagular pode ser realizado para medir <em>diferença</em> ou <em>similaridade</em> de um produto. Para testar a diferença buscamos minimizar <span class="math inline">\(\alpha\)</span>, e consequentemente diminuindo o Erro Tipo I. Já no teste de similaridade queremos maximizar <span class="math inline">\(1 - \beta\)</span> diminuindo a chance de decidirmos incorretamente que as amostras são similares, quando na realidade elas são diferentes (Erro Tipo II).</p>
+<p>Em nosso caso realizamos o Teste de Diferença.</p>
 <p><strong>Objetivo e estatísticas do teste</strong></p>
-<p>O objetivo do teste é que a diferença entre as duas marcas de refrigerante não seja perceptível, ou seja, queremos minimizar o erro <span class="math inline">\(\beta\)</span> (probabilidade de não rejeitar a hipótese nula quando ela é falsa). Este erro é o de decidirmos incorretamente que as amostras são similares, quando na realidade elas são diferentes.</p>
-<p>Os intervalos são baseados no teste binomial. <span class="math inline">\(h_0\)</span>: Não há diferenças sensoriais entre os produtos; <span class="math inline">\(h_1\)</span>: Há diferenças sensoriais entre os produtos.</p>
+<p>O objetivo do nosso teste foi avaliar se existe diferença significativa de sabor entre duas marcas de refrigerantes de limão, ou seja, queremos minimizar o erro <span class="math inline">\(\beta\)</span> (probabilidade de não rejeitar a hipótese nula quando ela é falsa).</p>
+<p>A estatística do teste é baseada no teste binomial onde foi formulado as seguintes hipóstes:</p>
+<p><span class="math inline">\(H_0\)</span>: Não há diferenças sensoriais entre os produtos</p>
+<p><span class="math inline">\(H_1\)</span>: Há diferenças sensoriais entre os produtos.</p>
 <p><strong>Descrição do experimento realizado</strong></p>
-<p>Cada avaliador recebeu 3 copos com refrigerantes, codificadas com três digitos, onde provou um de cada vez intercalando com copo de aguá, da esquerda para a direita. Ao identificar o diferentte, anotou-se na ficha específica do teste. As amostras foram casualizadas e aleatorizadas pela seguinte função “triangle.design” As combinações das amostras foram as seguintes: AAB/ ABA/ BAA/ BBA/ BAB/ ABB.</p>
-<pre class="r"><code>#triangle.design(2,25,labprod = c(&quot;A&quot;,&quot;B&quot;))
-#sample(100:999,3)</code></pre>
+<p>O teste foi aplicado para 24 avaliadores não treinados, onde cada um recebeu 3 amostras de refrigerante, sendo que sempre haviam 2 produtos iguais e 1 diferente. Foram orientados a provar um de cada vez, intercalando com copo de aguá, no sentido da esquerda para a direita, obrigatoriamente, afim de indetificar o produto diferente. Caso permanecesse com dúvida após a primeira prova, poderiam então provar em qualquer ordem. Após a identificação registrava-se o resultado na ficha específica do teste Triangular.</p>
+<p>As amostras foram codificadas com o auxílio da função <em>“sample”</em> do Software <em>R</em>, para que fossem gerados números aleatórios de 3 algarismos, e foram casualizadas e balanceadas pela função <em>“triangle.design”</em> gerando as seguintes combinações: AAB / ABA / BAA / BBA / BAB / ABB.</p>
+<pre class="r"><code>sample(100:999,3)</code></pre>
+<pre class="r"><code>head(triangle.design(2,25,labprod = c(&quot;A&quot;,&quot;B&quot;)))</code></pre>
+<pre><code>##                 Product X Product Y Product Z
+## Panelist1.Test1         A         B         A
+## Panelist2.Test1         B         A         B
+## Panelist3.Test1         A         B         A
+## Panelist4.Test1         A         A         B
+## Panelist5.Test1         A         B         B
+## Panelist6.Test1         B         B         A</code></pre>
 <p><strong>Resultados Obtidos</strong></p>
-<p>Dos 24 avaliadores presentes no experimento, 16 acertaram e 8 erraram a amostra diferente. Vale ressaltar que desses 16 acertos 2 pessoas declararam ter “chutado” o resultado.</p>
+<p>Dos 24 avaliadores, foram obtidos 16 acertos e 8 erros a amostra diferente, sendo que para mostrar um grau de diferença significativa, 13 acertos já seriam suficiente. Lembrando que ao informar os resultados do experimento aos avaliadores, 2 deles que acertaram, informaram terem <em>“chutado”</em>&quot; a resposta.</p>
 <p><strong>Analisando os resultados obtidos</strong></p>
+<p>Iniciamos a análise dos teste com a função <em>“triangle.pair.test”</em>, obtendo os resultados a sequir:</p>
+<p>para analisar os resultados do teste triangular, nos mostrou que <span class="math inline">\(13\)</span> respostas corretas são suficientes para detectar uma diferença.</p>
 <pre class="r"><code>triangle.pair.test(16,24)</code></pre>
-<pre><code>## [1] &quot;P-value of the Triangle test: 0.00086&quot;
-## [1] &quot;At the 95% level, one can say that the panelists make the difference between the two products&quot;
-## [1] &quot;The estimation (by  Maximum Likelihood) of panelist which really perceived the difference between the two products is: 13&quot;
-## [1] &quot;The  Maximum Likelihood is:  0.23845&quot;
-## [1] &quot;The minimum of panelists who should detect the odd product to can say that panelists perceive the difference between the products is: 13&quot;</code></pre>
 <pre><code>## $p.value
 ## [1] 0.0008594835
 ## 
@@ -159,7 +167,6 @@ $(document).ready(function () {
 ## 
 ## $minimum
 ## [1] 13</code></pre>
-<pre class="r"><code>discrim(correct = 16,total = 24,method = 'triangle',test = 'difference')</code></pre>
 <pre><code>## 
 ## Estimates for the triangle discrimination protocol with 16 correct
 ## answers in 24 trials. One-sided p-value and 95 % two-sided confidence
@@ -173,7 +180,7 @@ $(document).ready(function () {
 ## Result of difference test:
 ## 'exact' binomial test:  p-value = 0.0008595 
 ## Alternative hypothesis: d-prime is greater than 0</code></pre>
-<p>A função “triangle.pair.test”, utilizada para analisar os resultados do teste triangular, nos mostrou que <span class="math inline">\(13\)</span> respostas corretas são suficientes para detectar uma diferença. Mostrou também um <span class="math inline">\(d-prime = 2,3214\)</span>, que quando maior que 1, visto que não temos um valor histórico para comparar, significa um estímulo forte, ou seja, os alunos/provadores conseguem preceber diferenças entres as amostras. Para finalizar, o <span class="math inline">\(p-valor = 0.00086\)</span>, ao nível significativa de <span class="math inline">\(0.05\)</span>,mostra que <span class="math inline">\(h_0\)</span>, a hipótese de que não há diferença sensoriais entre os produtos, foi rejeitada.</p>
+<p>Mostrou também um <span class="math inline">\(d-prime = 2,3214\)</span>, que quando maior que 1, visto que não temos um valor histórico para comparar, significa um estímulo forte, ou seja, os alunos/provadores conseguem preceber diferenças entres as amostras. Para finalizar, o <span class="math inline">\(p-valor = 0.00086\)</span>, ao nível significativa de <span class="math inline">\(0.05\)</span>,mostra que <span class="math inline">\(h_0\)</span>, a hipótese de que não há diferença sensoriais entre os produtos, foi rejeitada.</p>
 <p><strong>Definindo tamanho da amostra</strong></p>
 <pre class="r"><code>discrimSS(pdA = 0.50,target.power = 0.80,alpha = 0.05,pGuess = 1/3)</code></pre>
 <pre><code>## [1] 16</code></pre>

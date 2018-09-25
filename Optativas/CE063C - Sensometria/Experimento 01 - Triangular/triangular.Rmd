@@ -19,42 +19,61 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Os testes triangulares apresentam como vantagem, a menor probabilidade de acertar ao acaso ($1/3$) e diferenciar as amostras de maneira global e como desvantagens, serem pouco práticos para um número elevado de amostras (tratamentos) e serem potencialmente afetados pela fadiga sensorial dos provadores (@meilgaard3sensory). 
 
-O Teste Triagular pode ser realizado para medir Diferença ou Similaridade de um produto. Para testar a diferença buscamos minimizar $\alpha$ diminuindo o Erro Tipo I, já no teste de similaridade queremos maximizar $1 - \beta$ diminuindo a chance de decidirmos incorretamente que as amostras são similares, quando na realidade elas são diferentes (Erro Tipo II). Em nosso caso realizamos o Teste de Diferença.
+O Teste Triagular pode ser realizado para medir *diferença* ou *similaridade* de um produto. Para testar a diferença buscamos minimizar $\alpha$, e consequentemente diminuindo o Erro Tipo I. Já no teste de similaridade queremos maximizar $1 - \beta$ diminuindo a chance de decidirmos incorretamente que as amostras são similares, quando na realidade elas são diferentes (Erro Tipo II). 
+
+
+Em nosso caso realizamos o Teste de Diferença.
 
 **Objetivo e estatísticas do teste**
 
-O objetivo do teste é que a diferença entre as duas marcas de refrigerante não seja perceptível, ou seja, queremos minimizar o erro $\beta$ (probabilidade de não rejeitar a hipótese nula quando
-ela é falsa). Este erro é o de decidirmos incorretamente que as amostras são similares, quando na realidade elas são diferentes.
+O objetivo do nosso teste foi avaliar se existe diferença significativa de sabor entre duas marcas de refrigerantes de limão, ou seja, queremos minimizar o erro $\beta$ (probabilidade de não rejeitar a hipótese nula quando ela é falsa).
 
-Os intervalos são baseados no teste binomial.
-$h_0$: Não há diferenças sensoriais entre os produtos;
-$h_1$: Há diferenças sensoriais entre os produtos.
+A estatística do teste é baseada no teste binomial onde foi formulado as seguintes hipóstes:
+
+  $H_0$: Não há diferenças sensoriais entre os produtos
+
+  $H_1$: Há diferenças sensoriais entre os produtos.
 
 
 **Descrição do experimento realizado**
 
-Cada avaliador recebeu 3 copos com refrigerantes, codificadas com três digitos, onde provou um de cada vez intercalando com copo de aguá, da esquerda para a direita. Ao identificar o diferentte, anotou-se na ficha específica do teste.
-As amostras foram casualizadas e aleatorizadas pela seguinte função "triangle.design"
-As combinações das amostras foram as seguintes: AAB/ ABA/ BAA/ BBA/ BAB/ ABB.
+O teste foi aplicado para 24 avaliadores não treinados, onde cada um recebeu 3 amostras de refrigerante, sendo que sempre haviam 2 produtos iguais e 1 diferente. Foram orientados a provar um de cada vez, intercalando com copo de aguá, no sentido da esquerda para a direita, obrigatoriamente, afim de indetificar o produto diferente. Caso permanecesse com dúvida após a primeira prova, poderiam então provar em qualquer ordem. Após a identificação registrava-se o resultado na ficha específica do teste Triangular. 
 
-```{r}
-#triangle.design(2,25,labprod = c("A","B"))
-#sample(100:999,3)
+As amostras foram codificadas com o auxílio da função *"sample"* do Software *R*, para que fossem gerados números aleatórios de 3 algarismos, e foram casualizadas e balanceadas pela função *"triangle.design"* gerando as seguintes combinações: AAB / ABA / BAA / BBA / BAB / ABB.
+
+```{r eval = FALSE, echo = TRUE, results = "markup"}
+sample(100:999,3)
+```
+```{r eval = TRUE, echo = TRUE, results = "markup"}
+head(triangle.design(2,25,labprod = c("A","B")))
 ```
 
 **Resultados Obtidos**
 
-Dos 24 avaliadores presentes no experimento, 16 acertaram e 8 erraram a amostra diferente. Vale ressaltar que desses 16 acertos 2 pessoas declararam ter "chutado" o resultado.
+Dos 24 avaliadores, foram obtidos 16 acertos e 8 erros a amostra diferente, sendo que para mostrar um grau de diferença significativa, 13 acertos já seriam suficiente. Lembrando que ao informar os resultados do experimento aos avaliadores, 2 deles que acertaram, informaram terem *"chutado"*" a resposta.
 
 **Analisando os resultados obtidos**
 
-```{r}
+Iniciamos a análise dos teste com a função *"triangle.pair.test"*, obtendo os resultados a sequir:
+
+para analisar os resultados do teste triangular, nos mostrou que $13$ respostas corretas são suficientes para detectar uma diferença.
+```{r eval = FALSE, echo = TRUE, results = "hide"}
 triangle.pair.test(16,24)
+```
+```{r eval = TRUE, echo = FALSE, results = "hide"}
+teste01 <-triangle.pair.test(16,24)
+```
+```{r eval = TRUE, echo = FALSE, results = "markup"}
+teste01
+```
+
+```{r eval = TRUE, echo = FALSE, results = "markup"}
 discrim(correct = 16,total = 24,method = 'triangle',test = 'difference')
 
 ```
-
-A função "triangle.pair.test", utilizada para analisar os resultados do teste triangular, nos mostrou que $13$ respostas corretas são suficientes para detectar uma diferença. Mostrou também um $d-prime = 2,3214$, que quando maior que 1, visto que não temos um valor histórico para comparar, significa um estímulo forte, ou seja, os alunos/provadores conseguem preceber diferenças entres as amostras. Para finalizar, o $p-valor = 0.00086$, ao nível significativa de $0.05$,mostra que $h_0$, a hipótese de que não há diferença sensoriais entre os produtos, foi rejeitada.
+  
+  
+ Mostrou também um $d-prime = 2,3214$, que quando maior que 1, visto que não temos um valor histórico para comparar, significa um estímulo forte, ou seja, os alunos/provadores conseguem preceber diferenças entres as amostras. Para finalizar, o $p-valor = 0.00086$, ao nível significativa de $0.05$,mostra que $h_0$, a hipótese de que não há diferença sensoriais entre os produtos, foi rejeitada.
 
 **Definindo tamanho da amostra**
 ```{r}
