@@ -1,0 +1,60 @@
+---
+title: "TESTE DE ORDENAÇÃO"
+author: "Kritiany J. Martini GRR20149099, Simone Matsubara GRR20124663"
+date: "23 de setembro de 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(sensR)
+library(FactoMineR)
+library(SensoMineR)
+library(agricolae) # Teste de Friedman
+library(crank) # Teste de Page
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+**Teste de Ordenação**
+
+Consiste em comparar diferentes amostras com relação a intensidade de um atributo específico. O avaliador recebe 3 amostras de forma balanceadas e aleatórias ou mais e deve ordená-las em ordem crescente ou descrente.
+
+**Objetivo e estatística do teste**
+
+Este experimento teve como objetivo ordenar as 4 marcas de wafers do mais doce para o menos doce.
+
+Foi utilizado o teste de friedman para realização do experimento.  
+Seguem uma distribuição $\chi^2_{\alpha}$
+
+$h_0$: Não há diferenças sensoriais entre os produtos;
+$h_1$: Há diferenças sensoriais entre os produtos.
+
+**Descrição do experimento realizado**
+
+Cada avaliador 4 amostras de wafers de diferentes marcas. em seguida fez uma análise inicial e ordenou do mais doce pro menos doce. Foi fornecido um copo d'agua para intercalar com as amostras. Em seguida, reavaliou para confirmar a ordem. 
+
+
+**Resultados Obtidos**
+
+Dos 15 avaliadores, 10 informaram que o wafer Bauducco Maxi era o mais doce. 
+
+**Analisando os resultados obtidos**
+
+```{r}
+avaliador<- gl(15,4)
+produto<-gl(4,1,60)
+pos<- c(2,4,3,1, 1,3,4,2, 1,4,3,2, 2,4,3,1, 2,3,4,1, 2,4,3,1,
+        2,4,3,1, 1,3,4,2, 1,4,3,2, 1,4,3,2, 1,3,4,2, 1,4,3,2,
+        1,4,2,3, 2,4,1,3, 1,3,4,2)
+ord<-friedman(avaliador,produto,pos,alpha=0.05,group=TRUE, console = TRUE)
+
+```
+
+Temos que as amostras 1 e 4 são as mais doces. Fazendo a diferença entre seus ranks, obtivemos o valor de 6, menor que o LSD. Portanto, essas amostras não pertencem ao mesmo grupo.
+
+
+**Conclusão**
+
+Com $p-valor= 7.865965e-07$ rejeitamos a hipótese nula de que não há diferenças significativas entre as amostras.
+
+

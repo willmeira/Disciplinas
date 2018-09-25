@@ -50,9 +50,5 @@ str(epx01)
 
 - Conclusão do experimento.
 
-## Referências: 
 
-- Incluir entre uma e três referências bibliográficas: artigo ou livro.
-  
-- Citar as referências no texto do relatório.  
 

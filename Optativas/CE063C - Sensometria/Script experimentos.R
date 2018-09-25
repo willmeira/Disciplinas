@@ -22,6 +22,7 @@ library("FactoMineR")
 triangle.design(2,24)
 triangle.pair.test(16,24)
 
+install.packages("sesnR")
 
 
 delineamento <- triangle.design(2,24)

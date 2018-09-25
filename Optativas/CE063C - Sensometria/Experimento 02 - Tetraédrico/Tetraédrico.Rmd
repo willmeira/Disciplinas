@@ -1,0 +1,76 @@
+---
+title: "TESTE TETRAÉDRICO"
+author: "Kritiany J. Martini GRR20149099 e Simone Matsubara GRR20124663"
+date: "23 de setembro de 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(sensR)
+library(FactoMineR)
+library(SensoMineR)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Teste Tetraédrico**
+
+Quatro amostras codificadas são apresentadas ao avaliador, duas de um tratamento A e duas de um tratamento B. o avaliador receberá a instrução de agrupar as amostras duas a duas, em dois conjuntos similares. Essa metodologia é própria para aplicação em casos de diferença sensorial geral, ou seja, para detectar qualquer diferença como objetivo da análise ou para casos em que não seja conhecido o atributo específico de controle. É importante observar que o avaliador é instruído a separar dois grupos de duas amostras, o que é diferente da tarefa de apenas agrupar duas amostras similares. Isso porque, se for instruído a formar apenas o primeiro grupo de amostras similares, ele pode ser conduzido a selecionar as amostras intermediárias como um par, deixando para trás as duas amostras que apresentam maior diferença como o segundo par (DUTCOSKY, 2013).
+
+**Objetivo e estatístcas do Teste**
+
+O objetivo do teste é identificar se há diferença entre as duas marcas de refrigerante.
+
+Os intervalos são baseados no teste binomial.
+
+$h_0$: Não há diferenças sensoriais entre os produtos;
+$h_1$: Há diferenças sensoriais entre os produtos.
+
+Ainda, foi utilizado $\alpha = 0,05$, $\beta = 0,20$ e $pd = 0,50$.
+
+**Descrição do experimento realizado**
+
+Cada avaliador recebeu 4 copos com refrigerantes, codificadas com três digitos, onde provou um de cada vez intercalando com copo de aguá, da esquerda para a direita. Ao identificar os pares, anotou-se na ficha específica do teste.
+As amostras foram casualizadas e aleatorizadas pela seguinte função "triangle.design" e acrescidas da letra faltante referente a quarta amostra, por ser uma função para aleatorizar amostras triangulares.
+E ainda utilizaram a função "sample", que gerou 4 números aleatórios de 3 dígitos para identificarmos as amostras, impedindo possíveis vícios.
+
+```{r}
+#triangle.design(2,20,labprod = c("A","B"))
+#sample(100:999,4)
+```
+
+**Resultados Obtidos**
+
+Dos 20 alunos/provadores presentes no experimento, 15 acertaram e 5 erraram os pares de amostras iguais. 
+
+**Analisando os resultados obtidos**
+
+```{r}
+triangle.pair.test(15,20)
+discrim(correct = 15,total = 20,method = 'tetrad',test = 'difference')
+
+```
+A função "discrim", utilizada para analisar os resultados do teste triangular, nos mostrou que $11$ respostas corretas são suficientes para detectar uma diferença, anda com um $d-prime = 1,890$, que quando maior que $1$,  visto que não temos um valor histórico para comparar, significa um estímulo forte, ou seja, os avaliadores conseguem preceber diferenças entres as amostras. E o $p-valor = 0.00017$, ao nível significativa de $0.05$,mostra que $h_0$, a hipótese de que não há diferença sensoriais entre os produtos, foi rejeitada.
+
+
+**Definindo o tamanho da amostra**
+```{r}
+discrimSS(pdA = 0.50,target.power = 0.80,alpha = 0.05,pGuess = 1/3)
+```
+
+Embora não tenhamos feito está etapa neste experimento, já que utilizamos os alunos disponíveis em sala de aula, através da função "discrimSS" é possível definir o tamanho da amostra necessária. Por exemplo: para um poder do teste de $0.80$ $(1-\beta)$, a amostra seria de $16$ avaliadores.
+
+**Avaliando o poder do teste**
+```{r}
+discrimPwr(pdA = 0.50,sample.size = 20,alpha = 0.05,pGuess = 1/3,test = "difference")
+```
+
+Utilizando a função "discrimPwr" temos que as 20 amostras utilizadas nos trouxeram um poder do teste de 0.9081.
+
+
+**Conclusão**
+
+Com 90% de certeza, concluímos que os refrigerantes de limão - Sprite e Soda, tem diferenças sensoriais significativas.
+
+
+
+

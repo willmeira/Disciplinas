@@ -1,0 +1,73 @@
+---
+title: "TESTE PAREADO - 2AFC: 2 alternative forced choice"
+author: "Kritiany J. Martini GRR20149099, Simone Matsubara GRR20124663"
+date: "23 de setembro de 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(sensR)
+library(FactoMineR)
+library(SensoMineR)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Teste Pareado**
+
+O teste pareado, tenta identificar se uma amostra apresenta uma intensidade maior do que a outra para um determinado atributo, sendo um teste direcional, ou seja, o pesquisador direciona o provador a dizer qual dos produtos testados apresenta maior atributo que o outro. 
+
+
+**Objetivo e estatística do teste**
+
+Tentar identificar qual amostra apresenta uma intensidade maior de doçura.
+
+Os dados seguem uma distribuição binomial.
+$h_0$:$p_c$=1/2
+$h_0$:$p_c$>1/2
+
+**Descrição do experimento realizado**
+
+Cada avaliador recebeu 2 copos com sucos de maracujá concetrados na cor amarela, onde provou um de cada vez intercalando com copo de aguá, da esquerda para a direita.Ao identificar a amostra mais doce, anotou-se na ficha específica do teste.
+
+
+**Resultados Obtidos**
+
+Dos 20 avaliadores presentes no experimento, onde 19 acertaram e 1 errou a amostra mais doce.
+
+**Analisando os resultados obtidos**
+```{r}
+discrim(correct = 19,total = 20,method = 'twoAFC',test = 'difference')
+```
+
+Considerando que existam 19 respostas corretas de 20, sabe-se a proporçãao de respostas corretas estimadas é de $p_c=0.95$.
+Para obter o $p-valor$ utilizaremos a distribuição Binomial.
+
+```{r}
+1-pbinom(18,20,1/2)
+```
+
+
+**Definindo tamanho da amostra**
+```{r}
+#discrimSS(pdA = 0.50,target.power = 0.80,alpha = 0.05,pGuess = 1/3)
+```
+Embora não tenhamos feito está etapa neste experimento, pois utilizamos os alunos disponíveis em sala de aula, através da função "discrimSS" é possível definir o tamanho da amostra necessária. Por exemplo: para um poder do teste de 0.80 (1-beta), a amostra seria de 16 alunos/provadores.
+
+**Quantidade de respostas para apresentar diferenças**
+```{r}
+findcr(sample.size=20,alpha=0.05, p0=1/3, test='difference')
+```
+De acordo com a função "findcr", o número necessário de respostas corretas para detectar diferenças é de $11$.
+
+**Avaliando o poder do teste**
+```{r}
+discrimPwr(pdA = 0.50,sample.size = 20,alpha = 0.05,pGuess = 1/3,test = "difference")
+```
+Utilizando a função "discrimPwr" descobrimos que as $20$ amostras utilizadas nos trouxeram um poder do teste de $0.9081$.
+
+**Conclusão**
+
+Com 90% de certeza e um $p-valor=2.002716e-05$ concluímos que os sucos tem diferenças sensoriais significativas.
+
+
+
