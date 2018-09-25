@@ -1,6 +1,6 @@
 ---
-title: "Nome do experimento"
-author: "Nome do aluno ( ou dupla)"
+title: "Experimento 01 - Teste Triangular "
+author: "Willian Meira Schlichta"
 date: "25 de setembro de 2018"
 output: html_document
 ---
@@ -12,6 +12,31 @@ output: html_document
 ## Material
 
 - Citar os materiais utilizados no experimento
+
+*******************
+## Experimento 01 - Teste Triangular 
+
+```{r eval = TRUE, echo = TRUE, results = "markup"}
+library("FactoMineR")
+require("FactoMineR")
+library("SensoMineR")
+require("SensoMineR")
+```
+
+```{r eval = TRUE, echo = TRUE, results = "hide"}
+delineamento  <- triangle.design(2,24)
+epx01 <- triangle.pair.test(16,24)
+```
+
+```{r eval=TRUE, echo=TRUE, results="markup"}
+epx01 
+str(epx01)
+
+```
+
+
+
+
 
 ## Metodologia
 
