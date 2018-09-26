@@ -134,7 +134,7 @@ $(document).ready(function () {
 <p>O Teste Triagular pode ser realizado para medir <em>diferença</em> ou <em>similaridade</em> de um produto. Para testar a diferença buscamos minimizar <span class="math inline">\(\alpha\)</span>, e consequentemente diminuindo o Erro Tipo I. Já no teste de similaridade queremos maximizar <span class="math inline">\(1 - \beta\)</span> diminuindo a chance de decidirmos incorretamente que as amostras são similares, quando na realidade elas são diferentes (Erro Tipo II).</p>
 <p>Em nosso caso realizamos o Teste de Diferença.</p>
 <p><strong>Objetivo e estatísticas do teste</strong></p>
-<p>O objetivo do nosso teste foi avaliar se existe diferença significativa de sabor entre duas marcas de refrigerantes de limão, ou seja, queremos minimizar o erro <span class="math inline">\(\beta\)</span> (probabilidade de não rejeitar a hipótese nula quando ela é falsa).</p>
+<p>O objetivo do nosso teste foi avaliar se existe diferença sensorial significativa entre dois refrigerantes de mesmo sabor, mas de marcas diferentes (Sprite e Soda Limonada).</p>
 <p>A estatística do teste é baseada no teste binomial onde foi formulado as seguintes hipóstes:</p>
 <p><span class="math inline">\(H_0\)</span>: Não há diferenças sensoriais entre os produtos</p>
 <p><span class="math inline">\(H_1\)</span>: Há diferenças sensoriais entre os produtos.</p>
@@ -144,53 +144,36 @@ $(document).ready(function () {
 <pre class="r"><code>sample(100:999,3)</code></pre>
 <pre class="r"><code>head(triangle.design(2,25,labprod = c(&quot;A&quot;,&quot;B&quot;)))</code></pre>
 <pre><code>##                 Product X Product Y Product Z
-## Panelist1.Test1         A         B         A
-## Panelist2.Test1         B         A         B
-## Panelist3.Test1         A         B         A
-## Panelist4.Test1         A         A         B
-## Panelist5.Test1         A         B         B
+## Panelist1.Test1         B         A         B
+## Panelist2.Test1         A         B         B
+## Panelist3.Test1         B         B         A
+## Panelist4.Test1         B         A         A
+## Panelist5.Test1         B         A         B
 ## Panelist6.Test1         B         B         A</code></pre>
 <p><strong>Resultados Obtidos</strong></p>
-<p>Dos 24 avaliadores, foram obtidos 16 acertos e 8 erros a amostra diferente, sendo que para mostrar um grau de diferença significativa, 13 acertos já seriam suficiente. Lembrando que ao informar os resultados do experimento aos avaliadores, 2 deles que acertaram, informaram terem <em>“chutado”</em>&quot; a resposta.</p>
+<p>Dos 24 avaliadores, foram obtidos 16 acertos e 8 erros, ficando uma proporção de acertos de <em>2/3</em>. Vale ressaltar que ao informar os resultados do experimento aos avaliadores, 2 deles que acertaram, informaram terem <em>“chutado”</em>&quot; a resposta.</p>
 <p><strong>Analisando os resultados obtidos</strong></p>
 <p>Iniciamos a análise dos teste com a função <em>“triangle.pair.test”</em>, obtendo os resultados a sequir:</p>
-<p>para analisar os resultados do teste triangular, nos mostrou que <span class="math inline">\(13\)</span> respostas corretas são suficientes para detectar uma diferença.</p>
 <pre class="r"><code>triangle.pair.test(16,24)</code></pre>
-<pre><code>## $p.value
-## [1] 0.0008594835
-## 
-## $Estimation
-## [1] 12
-## 
-## $ML
-## [1] 0.23845
-## 
-## $minimum
-## [1] 13</code></pre>
-<pre><code>## 
-## Estimates for the triangle discrimination protocol with 16 correct
-## answers in 24 trials. One-sided p-value and 95 % two-sided confidence
-## intervals are based on the 'exact' binomial test. 
-## 
-##         Estimate Std. Error  Lower  Upper
-## pc        0.6667    0.09623 0.4468 0.8437
-## pd        0.5000    0.14434 0.1702 0.7655
-## d-prime   2.3214    0.51469 1.1746 3.4673
-## 
-## Result of difference test:
-## 'exact' binomial test:  p-value = 0.0008595 
-## Alternative hypothesis: d-prime is greater than 0</code></pre>
-<p>Mostrou também um <span class="math inline">\(d-prime = 2,3214\)</span>, que quando maior que 1, visto que não temos um valor histórico para comparar, significa um estímulo forte, ou seja, os alunos/provadores conseguem preceber diferenças entres as amostras. Para finalizar, o <span class="math inline">\(p-valor = 0.00086\)</span>, ao nível significativa de <span class="math inline">\(0.05\)</span>,mostra que <span class="math inline">\(h_0\)</span>, a hipótese de que não há diferença sensoriais entre os produtos, foi rejeitada.</p>
-<p><strong>Definindo tamanho da amostra</strong></p>
-<pre class="r"><code>discrimSS(pdA = 0.50,target.power = 0.80,alpha = 0.05,pGuess = 1/3)</code></pre>
-<pre><code>## [1] 16</code></pre>
-<p>Embora não tenhamos feito está etapa neste experimento, pois utilizamos os alunos disponíveis em sala de aula, através da função “discrimSS” é possível definir o tamanho da amostra necessária. Por exemplo: para um poder do teste de <span class="math inline">\((1-\beta)\)</span> <span class="math inline">\(0.80\)</span>, a amostra seria de <span class="math inline">\(16\)</span> avaliadores.</p>
-<p><strong>Avaliando o poder do teste</strong></p>
+<p>Número mínimo de acertos</p>
+<pre><code>## [1] 13</code></pre>
+<p>P-valor do teste</p>
+<pre><code>## [1] 0.00086</code></pre>
+<p>Tal análise nos mostrou que 13 respostas corretas já seriam suficientes para detectarmos uma diferença siginificativa, o que fica ainda mais evidente ao olharmos para o P-valor obtido no teste (0.00086), que ao nível de significância <span class="math inline">\(\alpha = 0,05\)</span>, nos da fortes envidências para rejeitarmos a hipótese nula (<span class="math inline">\(H_0\)</span>).</p>
+<p>Em seguida rodamos a função <em>“discrim”</em> para avaliarmos a <em>“discriminação”</em> do teste.</p>
+<pre><code>##          Estimate Std. Error     Lower     Upper
+## pc      0.6666667 0.09622504 0.4467804 0.8436977
+## pd      0.5000000 0.14433757 0.1701706 0.7655466
+## d-prime 2.3213620 0.51468948 1.1746050 3.4672723</code></pre>
+<p>Pelo quadro acima, podemos verificar um <em>“D-prime”</em> bem acima de 1, e visto que não temos histórico para comparação, isso significa um forte estímulo causado pelos produtos nos avaliadores, e assim estes conseguirem idetificar as diferenças.</p>
+<p>P-valor do teste</p>
+<pre><code>## [1] 0.00086</code></pre>
+<p>Este segundo teste confirma o resultado do teste anterior, nos apresentando o mesmo P-valor, confirmando a evidência para rejeitarmos a hipótese nula (<span class="math inline">\(H_0\)</span>).</p>
+<p><strong>Conclusão</strong></p>
+<p>Utilizando a função <em>“discrimPwr”</em> descobrimos que as <span class="math inline">\(24\)</span> amostras utilizadas nos trouxeram um poder do teste de <span class="math inline">\(0.9323\)</span>.</p>
 <pre class="r"><code>discrimPwr(pdA = 0.50,sample.size = 24,alpha = 0.05,pGuess = 1/3,test = &quot;difference&quot;)</code></pre>
 <pre><code>## [1] 0.9323412</code></pre>
-<p>Utilizando a função “discrimPwr” descobrimos que as <span class="math inline">\(24\)</span> amostras utilizadas nos trouxeram um poder do teste de <span class="math inline">\(0.9323\)</span>.</p>
-<p><strong>Conclusão</strong></p>
-<p>Com 93% de certeza, concluímos que os refrigerantes de limão - Sprite e Soda, tem diferenças sensoriais significativas.</p>
+<p>Concluindo com este último teste, ele nos da um índice de 93% de certeza que há diferenças sensoriais significativas entre as marcas duas marcas de refrigerantes testadas.</p>
 <div id="referencias" class="section level2 unnumbered">
 <h2>Referências:</h2>
 <div id="refs" class="references">

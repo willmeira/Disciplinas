@@ -2,7 +2,7 @@
 title: "TESTE TRIANGULAR"
 author: "Willian Meira Schlichta GRR20159077"
 date: "23 de setembro de 2018"
-output: html_document
+output: pdf_document
 bibliography: referencias.bib
 ---
 
@@ -26,7 +26,7 @@ Em nosso caso realizamos o Teste de Diferença.
 
 **Objetivo e estatísticas do teste**
 
-O objetivo do nosso teste foi avaliar se existe diferença significativa de sabor entre duas marcas de refrigerantes de limão, ou seja, queremos minimizar o erro $\beta$ (probabilidade de não rejeitar a hipótese nula quando ela é falsa).
+O objetivo do nosso teste foi avaliar se existe diferença sensorial significativa entre dois refrigerantes de mesmo sabor, mas de marcas diferentes (Sprite e Soda Limonada). 
 
 A estatística do teste é baseada no teste binomial onde foi formulado as seguintes hipóstes:
 
@@ -50,49 +50,52 @@ head(triangle.design(2,25,labprod = c("A","B")))
 
 **Resultados Obtidos**
 
-Dos 24 avaliadores, foram obtidos 16 acertos e 8 erros a amostra diferente, sendo que para mostrar um grau de diferença significativa, 13 acertos já seriam suficiente. Lembrando que ao informar os resultados do experimento aos avaliadores, 2 deles que acertaram, informaram terem *"chutado"*" a resposta.
+Dos 24 avaliadores, foram obtidos 16 acertos e 8 erros, ficando uma proporção de acertos de *2/3*. Vale ressaltar que ao informar os resultados do experimento aos avaliadores, 2 deles que acertaram, informaram terem *"chutado"*" a resposta.
 
 **Analisando os resultados obtidos**
 
 Iniciamos a análise dos teste com a função *"triangle.pair.test"*, obtendo os resultados a sequir:
 
-para analisar os resultados do teste triangular, nos mostrou que $13$ respostas corretas são suficientes para detectar uma diferença.
+
 ```{r eval = FALSE, echo = TRUE, results = "hide"}
 triangle.pair.test(16,24)
 ```
 ```{r eval = TRUE, echo = FALSE, results = "hide"}
 teste01 <-triangle.pair.test(16,24)
 ```
+Número mínimo de acertos
 ```{r eval = TRUE, echo = FALSE, results = "markup"}
-teste01
+teste01$minimum
 ```
-
+P-valor do teste
 ```{r eval = TRUE, echo = FALSE, results = "markup"}
-discrim(correct = 16,total = 24,method = 'triangle',test = 'difference')
-
+AUX<-round(teste01$p.value,5)
+AUX
 ```
-  
-  
- Mostrou também um $d-prime = 2,3214$, que quando maior que 1, visto que não temos um valor histórico para comparar, significa um estímulo forte, ou seja, os alunos/provadores conseguem preceber diferenças entres as amostras. Para finalizar, o $p-valor = 0.00086$, ao nível significativa de $0.05$,mostra que $h_0$, a hipótese de que não há diferença sensoriais entre os produtos, foi rejeitada.
+Tal análise nos mostrou que `r teste01$minimum` respostas corretas já seriam suficientes para detectarmos uma diferença siginificativa, o que fica ainda mais evidente ao olharmos para o P-valor obtido no teste (`r toString(AUX)`), que ao nível de significância $\alpha = 0,05$, nos da fortes envidências para rejeitarmos a hipótese nula ($H_0$).
 
-**Definindo tamanho da amostra**
-```{r}
-discrimSS(pdA = 0.50,target.power = 0.80,alpha = 0.05,pGuess = 1/3)
+Em seguida rodamos a função *"discrim"* para avaliarmos a *"discriminação"* do teste. 
+```{r eval = TRUE, echo = FALSE, results = "markup"}
+teste02 <- discrim(correct = 16,total = 24,method = 'triangle',test = 'difference')
+teste02$coefficients
 ```
+Pelo quadro acima, podemos verificar um *"D-prime"* bem acima de 1, e visto que não temos histórico para comparação, isso significa um forte estímulo causado pelos produtos nos avaliadores, e assim estes conseguirem idetificar as diferenças.
 
-Embora não tenhamos feito está etapa neste experimento, pois utilizamos os alunos disponíveis em sala de aula, através da função "discrimSS" é possível definir o tamanho da amostra necessária. Por exemplo: para um poder do teste de $(1-\beta)$ $0.80$, a amostra seria de $16$ avaliadores.
-
-**Avaliando o poder do teste**
-```{r}
-discrimPwr(pdA = 0.50,sample.size = 24,alpha = 0.05,pGuess = 1/3,test = "difference")
+P-valor do teste
+```{r eval = TRUE, echo = FALSE, results = "markup"}
+round(teste02$p.value,5)
 ```
-
-Utilizando a função "discrimPwr" descobrimos que as $24$ amostras utilizadas nos trouxeram um poder do teste de $0.9323$.
-
+Este segundo teste confirma o resultado do teste anterior, nos apresentando o mesmo P-valor, confirmando a evidência para rejeitarmos a hipótese nula ($H_0$).
 
 **Conclusão**
 
-Com 93% de certeza, concluímos que os refrigerantes de limão - Sprite e Soda, tem diferenças sensoriais significativas.
+
+Utilizando a função *"discrimPwr"* descobrimos que as $24$ amostras utilizadas nos trouxeram um poder do teste de $0.9323$.
+```{r eval = TRUE, echo = TRUE, results = "markup"}
+discrimPwr(pdA = 0.50,sample.size = 24,alpha = 0.05,pGuess = 1/3,test = "difference")
+```
+
+Concluindo com este último teste, ele nos da um índice de 93% de certeza que há diferenças sensoriais significativas entre as marcas duas marcas de refrigerantes testadas.
 
 
 ## Referências: 
