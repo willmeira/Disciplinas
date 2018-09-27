@@ -2,7 +2,7 @@
 title: "TESTE TRIANGULAR"
 author: "Willian Meira Schlichta GRR20159077"
 date: "23 de setembro de 2018"
-output: pdf_document
+output: html_document
 bibliography: referencias.bib
 ---
 
