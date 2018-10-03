@@ -8,6 +8,10 @@ output: html_document
 ```{r setup, include=FALSE}
 require(effects)
 require(car)
+library(ggplot2)
+library(xtable)
+library(knitr)
+library(spm)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -37,18 +41,54 @@ Uma vez selecionado o modelo faça uma análise de diagnóstico e apresente as i
 Carregando os dados, nomeando as varíaveis e adicionando a variável *dens* na base:
 ```{r eval=TRUE, echo=TRUE, results='markup'}
 base_Ex19 <- read.table('https://www.ime.usp.br/~giapaula/reg3.dat',header=F)
-names(base_Ex19)<-c('estado','pop','percap','analf','expvida','crime','estud','ndias','area')
-base_Ex19$dens <- base_Ex19$pop/base_Ex19$area
+names(base_Ex19)<-c('estad','popul','renda','analf','expvi','crime','estud','ndias','area')
+base_Ex19$densi <- base_Ex19$pop/base_Ex19$area
+dim(base_Ex19)
+str(base_Ex19)
+summary(base_Ex19)
+
+vars <- c("expvi","renda", "analf", "crime", "estud", "ndias", "densi")
+m1 <- base_Ex19[, vars]
+m1
+dim(m1)
+str(m1)
+summary(m1)
+
 ```
+```{r eval=TRUE, echo=TRUE, results='markup'}
+m2 <- apply(base_Ex19[, vars], 2, summary)
+kable(m2)
+kable(head(m1),digits = 4,caption = "tittab1")
+
+pairs(m1)
+
+
+
+scatterplotMatrix(m1, 
+                  diagonal=list(method="boxplot"),
+                  regLine = list(method=lm, lty=1, lwd=2, col="green"),
+                  col=c("darkblue", "blue", "green"))
+
+``` 
 
 
 ```{r eval=TRUE, echo=TRUE, results='markup'}
 
+ggplot(base_Ex19, aes(x=estad, y=expvi)) +
+  geom_boxplot() +
+  stat_summary(fun.y=median, geom="line", lwd=1, aes(group=1))
+
+
+
 ```
 
 
+de acordo com @tittab1 asdad asd asdas
+
 ```{r eval=TRUE, echo=TRUE, results='markup'}
-boxplot(base_Ex19)
+
+
+
 ```
 
 ## **************************************************
