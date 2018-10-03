@@ -1,20 +1,67 @@
-dados <- read.table('https://www.ime.usp.br/~giapaula/reg3.dat',header=F)
-names(dados)<-c('estado','pop','percap','analf','expvida','crime','estud','ndias','area')
-head(dados)
+---
+title: "Lista 01 - Exercício 19"
+author: "Willian Meira Schlichta"
+date: "2 de outubro de 2018"
+output: html_document
+---
 
-dados$dens <- dados$pop/dados$area
+```{r setup, include=FALSE}
+require(effects)
+require(car)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Exercício 19** - No arquivo *reg3.dat* são descritas as seguintes variáveis referentes a 50 estados norte-americanos: 
+
+1. Estado (nome do estado);
+2. Pop (população estimada em julho de 1975);
+3. Percap (renda percapita em 1974 em USD); 
+4. Analf (proporção de analfabetos em 1970);
+5. Expvida (expectativa de vida em anos 1969-70)
+6. Crime (taxa de criminalidade por 100000 habitantes 1976);
+7. Estud (porcentagem de estudantes que concluem o segundo grau 1970);
+8. Nndias (número de dias do ano com temperatura abaixo de zero grau Celsus no estado);
+9. Area (área do estado em milhas quadradas).
+
+O objetivo do estudo é tentar explicar e variável **expvida** usando um modelo de regressão normal linear dadas as variáveis explicativas *percap*, *analf*, *crime*, *estud*, *ndias* e *dens*, em que *dens = pop / area*. 
+
+Inicialmente faça uma análise descritiva dos dados, por exemplo com boxplots de cada uma das variáveis que serão consideradas no estudo e com diagramas de dispersão com as respectivas tendências entre as variáveis explicativas e a variável resposta. Comente essa parte descritiva.
+
+Posteriormente, ajuste o modelo de regressão normal linear com todas as variáveis explicativas e através do método AIC faça uma seleção de variáveis. 
+
+Uma vez selecionado o modelo faça uma análise de diagnóstico e apresente as interpretações dos coeficientes estimados do modelo final.
+
+
+**Resolução**
+
+Carregando os dados, nomeando as varíaveis e adicionando a variável *dens* na base:
+```{r eval=TRUE, echo=TRUE, results='markup'}
+base_Ex19 <- read.table('https://www.ime.usp.br/~giapaula/reg3.dat',header=F)
+names(base_Ex19)<-c('estado','pop','percap','analf','expvida','crime','estud','ndias','area')
+base_Ex19$dens <- base_Ex19$pop/base_Ex19$area
+```
+
+
+```{r eval=TRUE, echo=TRUE, results='markup'}
+
+```
+
+
+```{r eval=TRUE, echo=TRUE, results='markup'}
+boxplot(base_Ex19)
+```
+
+## **************************************************
+
 
 
 # códigos de exemplo do professor
 
-
-require(effects)
-require(car)
-
 ### Exemplo - Análise de reação química (Modelo com erros normais)
 ### Leitura e descritiva dos dados
-summary(dados)
-plot(dados, pch=20, cex=1.5)
+
+summary(base_Ex19)
+plot(base_Ex19, pch=20, cex=1.5)
 ### Observando os gráficos, notamos indícios de existência de uma tendência 
 ### crescente da viscosidade com relação às outras duas variáveis 
 ### (sobretudo quanto à temperatura).
@@ -22,7 +69,7 @@ plot(dados, pch=20, cex=1.5)
 
 ### Ajuste do modelo de regressão linear com as duas variáveis explicativas 
 
-ajuste1 <- lm(expvida~percap+analf+crime+estud+ndias+dens,data=dados) 
+ajuste1 <- lm(expvida~percap+analf+crime+estud+ndias+dens,data=base_Ex19) 
 ### A função lm ajusta modelos lineares (neste caso, um modelo de regressão 
 ### linear com duas variáveis explicativas).
 summary(ajuste1) 
@@ -42,7 +89,7 @@ model.matrix(ajuste1) ### Matriz do modelo.
 names(ajuste1) ### Retorna a relação dos resultados produzidos pela função lm. 
 ### Para mais informações, consultar a documentação - help('lm')
 
-ajuste2 <- lm(Viscosidade ~ scale(Temperatura,scale=F) + scale(Alimentação,scale=F), data=dados) 
+ajuste2 <- lm(Viscosidade ~ scale(Temperatura,scale=F) + scale(Alimentação,scale=F), data=Ex19) 
 ### Ajuste alternativo, 'centrando' as variáveis explicativas,
 ### ou seja, diminuindo de cada observação das variáveis explicativas a respectiva média.
 
@@ -192,18 +239,4 @@ linearHypothesis(modelo2, "1*EmbalagemE4 - 1*EmbalagemE3 = 0")
 linearHypothesis(modelo2, "1*EmbalagemE3 - 0.5*EmbalagemE4 - 0.5*EmbalagemE2 = 0")
 ### Testando a igualdade da embalagem 3 e da média das embalagens 4 e 2.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## **************************************************

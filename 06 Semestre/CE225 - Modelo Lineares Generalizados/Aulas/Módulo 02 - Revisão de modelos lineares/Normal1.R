@@ -31,6 +31,9 @@ model.matrix(ajuste1) ### Matriz do modelo.
 ### são aqui confirmadas com base nas significâncias
 ### dos coeficientes do modelo (p<0,001, para a temperatura, e p=0,003, 
 ### para a taxa de alimentação).
+
+pf(82.5,2,13)
+
  
 names(ajuste1) ### Retorna a relação dos resultados produzidos pela função lm. 
 ### Para mais informações, consultar a documentação - help('lm')
