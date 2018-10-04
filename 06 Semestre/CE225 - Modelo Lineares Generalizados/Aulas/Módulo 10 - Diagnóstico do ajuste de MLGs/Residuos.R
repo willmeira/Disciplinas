@@ -36,6 +36,7 @@ hnp(ajuste1, pch = 20, cex = 1.2)
 residuos <- qresid(ajuste1)
 ajustados <- predict(ajuste1)
 
+
 par(mfrow = c(1,2))
 plot(residuos ~ ajustados, pch = 20, cex = 1.4, col = 'blue')
 ### Gráfico de resíduos versus valores ajustados.
