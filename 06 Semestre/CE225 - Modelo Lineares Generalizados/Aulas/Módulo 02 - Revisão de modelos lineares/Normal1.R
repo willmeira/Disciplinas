@@ -1,5 +1,8 @@
 require(effects)
 require(car)
+require(ggplot2)
+
+
 
 ### Exemplo - Análise de reação química (Modelo com erros normais)
 
@@ -11,7 +14,6 @@ plot(dados, pch=20, cex=1.5)
 ### Observando os gráficos, notamos indícios de existência de uma tendência 
 ### crescente da viscosidade com relação às outras duas variáveis 
 ### (sobretudo quanto à temperatura).
-
 
 ### Ajuste do modelo de regressão linear com as duas variáveis explicativas 
 
@@ -156,13 +158,14 @@ model.matrix(modelo1) # Matriz do modelo (X).
 modelo2 <- lm(Vendas ~ Embalagem-1)
 summary(modelo2) 
 ### Agora, os quatro parâmetros correspondem às vendas médias das quatro embalagens. 
+model.matrix(modelo2)
 
 ### Diagnóstico do modelo
 
 residuos <- rstandard(modelo1) # Vetor de resíduos
 preditos <- modelo1$fitted.values # Vetor de valores ajustados
 
-plot(preditos,residuos,pch=20,xlab='Valores ajustados',ylab='Resíduos',cex=1.5)
+plot(preditos,residuos,pch=20,xlab='Valores ajustados',ylab='Resíduos',cex=1.2)
 ### Investigar heterocedasticidade, observações mal-ajustadas (outliers, pontos influentes). 
 ### Não há qualquer indício de problemas no ajuste.
 

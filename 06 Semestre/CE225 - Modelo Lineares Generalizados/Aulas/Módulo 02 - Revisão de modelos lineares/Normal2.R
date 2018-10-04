@@ -1,6 +1,6 @@
 require(effects)
-require(car)
 require(leaps) 
+require(car)
 
 ### Exemplo - Regressão Linear Múltipla para os dados de vendas de cosméticos.
 ### O objetivo é propor e ajustar um modelo de regressão para explicar o 
