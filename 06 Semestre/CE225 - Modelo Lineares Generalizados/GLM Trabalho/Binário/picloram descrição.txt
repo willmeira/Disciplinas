@@ -1,0 +1,13 @@
+Dataset: picloram.dat
+
+Source: D.L. Turner, M.H. Ralphs, J.O. Evans (1992). "Logistic Analysis
+for Monitoring and Assessing Herbicide Efficacy," Weed Technology,
+Vol 6, #2, pp424-430
+
+Description: Results of a herbicide study for Picloram at 4 doses
+(0, 1.1, 2.2, 4.5) in 3 replicates and death of larkspur plants
+
+Variables/Columns
+Repicate   8
+Dose     13-16
+Death Indicator   24   /* 1=Plant Died, 0=Lived  */
