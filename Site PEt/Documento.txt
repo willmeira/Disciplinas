@@ -1,0 +1,29 @@
+Informações do curso
+Fundado em 1974, o curso de Bacharelado em  Estatística da Universidade Federal do Paraná, oferta anualmente 66 vagas, com aulas no período noturno e com duração média de nove semestres.
+A maioria das atividades do curso é desenvolvida no Laboratório de Estatística, onde o aluno tem à sua disposição salas de aulas com microcomputadores que são utilizados para o aprendizado de técnicas estatísticas. 
+Devido à diversidade da área de atuação do profissional de Estatística, o curso tem  como objetivo formar profissionais capacitados para atender às necessidades da sociedade, tendo em vista as exigências e a crescente demanda do mercado.
+Vivemos na era do big data. Temos muitos dados, mas ainda não sabemos maneiras eficientes de processá-los. Um dos maiores problemas atualmente é encontrar informações úteis neste universo de informações presentes no mundo. E ninguém melhor do que um estatístico para fazer isto.
+
+Estrutura curricular foi dividida em 5 módulos que totalizam 3.000 horas:
+1 - Formação básica (1.590 horas): Disciplinas obrigatórias que fornecem base de matemática, computação, probabilidade, estatística e estatística computacional.
+2 - Formação específica (540 horas): Disciplinas obrigatórias que aplicam os conhecimentos de base, principalmente nas áreas de bioestatística, controle de processos industriais e ciências atuariais. 
+3 - Formação complementar obrigatória (270 horas): Composta pelo Trabalho de Conclusão de Curso (TCC).
+4 - Formação complementar optativa (300 horas): Disciplinas optativas que permitem ao aluno aprofundar-se em subáreas de acordo com seus interesses e aptidões.
+5 - Atividades formativas (300 horas):  Disciplinas eletivas, estágio não-obrigatório, monitoria, iniciação científica, extensão, educação à distância (EAD), representação acadêmica, Programa Especial de Treinamento (PET), Empresa Júnior, entre outros.
+
+Mercado de trabalho
+O estatístico pode trabalhar em agências governamentais, institutos de pesquisa, empresas do setor financeiro e de tecnologia, grandes corporações e escritórios de consultoria, na indústria, criação de banco de dados, bioestatística, análise de perfil de consumidor, até mesmo na área jurídica e qualquer outro setor que envolva a coleta e análise de dados.
+Atualmente, há uma grande demanda por estatísticos no mercado de trabalho. Portanto, é uma profissão bem remunerada. A expansão desta área se deve principalmente às grandes bases de dados, conhecidas como big data.
+
+Áreas de atuação do estatístico
+De maneira geral, o estatístico formado na UFPR é um profissional que possui sólidos conhecimentos em estatística, matemática e computação. Será capaz de utilizar as ferramentas necessárias para coletar, organizar, analisar e interpretar diversos tipos de dados. 
+Sendo  capaz de resolver problemas usuais de diversas áreas de atuação (??atuações??), como saúde, agronegócio, ciências sociais, linguística, telecomunicações, informática, setor industrial, setor financeiro e inteligência de mercado, marketing, entre tantas outras áreas onde for necessário realizar análise de informações.
+Mais informações
+Site coordenação http://www.coordest.ufpr.br/
+Site departamento http://www.est.ufpr.br/
+
+
+Avaliação do Ministério da Educação (MEC): 
+- Conceito 2 no Exame Nacional de Desempenho de Estudantes (Enade/2009)
+- Conceito 4 no Conceito Preliminar de Curso (CPC/2009)
+
