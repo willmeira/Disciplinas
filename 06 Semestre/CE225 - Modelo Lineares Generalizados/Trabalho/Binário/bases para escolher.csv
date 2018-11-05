@@ -1,0 +1,286 @@
+Package ,Item ,Title ,Rows ,Cols ,has_logical ,has_binary ,has_numeric ,has_character ,CSV ,Doc
+pscl ,iraqVote ,"U.S. Senate vote on the use of force against Iraq, 2002. ",100,6,TRUE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+Stat2Data ,CAFE ,CAFE ,100,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+HSAUR ,BtheB ,Beat the Blues Data ,100,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Backpack ,Backpack ,100,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Film ,Film ,100,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Pollster08 ,Pollster08 ,102,11,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+DAAG ,rockArt ,Pacific Rock Art features ,103,641,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+DAAG ,possum ,Possum Measurements ,104,14,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+pscl ,admit ,Applications to a Political Science PhD Program ,106,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Stat2Data ,CloudSeeding2 ,Cloud Seeding 2 ,108,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+geepack ,respdis ,Clustered Ordinal Respiratory Disorder ,111,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+robustbase ,CrohnD ,Crohn's Disease Adverse Events Data ,117,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+psych ,Tal_Or ,Data set testing causal direction in presumed media influence ,123,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,BlueJays ,Blue Jays ,123,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Bids ,Bids Received By U.S. Firms ,126,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,fa ,Friedreich Ataxia data ,127,13,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+DAAG ,psid3 ,Labour Training Evaluation Data ,128,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+cluster ,plantTraits ,Plant Species Traits Data ,136,31,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,VA ,Veteran's Administration Lung Cancer Trial ,137,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,veteran ,Veterans' Administration Lung Cancer study ,137,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+KMsurv ,bmt ,data from Section 1.3 ,137,22,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Stat2Data ,LostLetter ,LostLetter ,140,8,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+MASS ,quine ,Absenteeism from School in Rural New South Wales ,146,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+rpart ,stagec ,Stage C Prostate Cancer ,146,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+COUNT ,fishing ,fishing ,147,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Hoops ,Hoops ,147,22,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+psych ,blot ,Bond's Logical Operations Test - BLOT ,150,35,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+robustbase ,possumDiv ,Possum Diversity Data ,151,9,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+HSAUR ,schooldays ,Days not Spent at School ,154,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+KMsurv ,burn ,data from Section 1.6 ,154,18,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+MASS ,minn38 ,Minnesota High School Graduates of 1938 ,168,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+survival ,heart ,Stanford Heart Transplant data ,172,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Journals ,Economic Journals Dat Set ,180,10,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+DAAG ,tinting ,Car Window Tinting Experiment Data ,182,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,stanford2 ,More Stanford Heart Transplant data ,184,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,cf ,Cystic fibrosis data ,186,24,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+COUNT ,lbw ,lbw ,189,10,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+MASS ,birthwt ,Risk Factors Associated with Low Infant Birth Weight ,189,10,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+datasets ,Seatbelts ,Road Casualties in Great Britain 1969-84 ,192,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Kids198 ,Kids198 ,198,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,Davis ,Self-Reports of Height and Weight ,200,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+MASS ,crabs ,Morphological Measurements on Leptograpsus Crabs ,200,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,Pima.tr ,Diabetes in Pima Indian Women ,200,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,ICU ,ICU ,200,9,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+DAAG ,ais ,Australian athletes data set ,202,13,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,cgd ,Chronic Granulotomous Disease data ,203,16,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+boot ,melanoma ,Survival from Malignant Melanoma ,205,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,Melanoma ,Survival from Malignant Melanoma ,205,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,TipJoke ,Tip Joke ,211,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,bankingCrises ,Countries in Banking Crises ,211,71,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,frogs ,Frogs Data ,212,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,FirstYearGPA ,FirstYearGPA ,219,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,bacteria ,Presence of Bacteria after Drug Treatments ,220,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,FriendFoe ,Data from the Television Game Show Friend Or Foe ? ,227,13,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,cancer ,NCCTG Lung Cancer Data ,228,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,lung ,NCCTG Lung Cancer Data ,228,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Pulse ,Pulse ,232,7,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+ggplot2 ,mpg ,Fuel economy data from 1999 and 2008 for 38 popular models of car ,234,11,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+HSAUR ,epilepsy ,Epilepsy Data ,236,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+MASS ,epil ,Seizure Counts for Epileptics ,236,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,survey ,Student Survey Data ,237,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,mgus ,Monoclonal gammapothy data ,241,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+reshape2 ,tips ,Tipping data ,244,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+datasets ,infert ,Infertility after Spontaneous and Induced Abortion ,248,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,nsw74psidA ,A Subset of the nsw74psid1 Data Set ,252,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,psid2 ,Labour Training Evaluation Data ,253,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,shuttle ,Space Shuttle Autolander Problem ,256,7,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+vcd ,Rochdale ,Rochdale Data ,256,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,USGDPpresidents ,US GDP per capita with presidents and wars ,259,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,aldh2 ,ALDH2 markers and Alcoholism ,263,18,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mediation ,framing ,"Brader, Valentino and Suhay (2008) Framing Experiment Data ",265,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Caterpillars ,Caterpillars ,267,18,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,hla ,The HLA data ,271,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,leafshape ,Full Leaf Shape Data Set ,286,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,rats ,Rat treatment data from Mantel et al ,300,5,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+MASS ,Pima.tr2 ,Diabetes in Pima Indian Women ,300,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,meyer ,A pedigree data on 282 animals deriving from two generations ,306,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+vcd ,Suicide ,Suicide Rates in Germany ,306,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,NaturalPark ,Willingness to Pay for the Preservation of the Alentejo Natural Park ,312,7,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+DAAG ,nsw74psid3 ,Labour Training Evaluation Data ,313,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,homerun ,Sample Data on Home Runs Hit By Mark McGwire and Sammy Sosa in 1998. ,314,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Zelig ,coalition ,Coalition Dissolution in Parliamentary Democracies ,314,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,coalition2 ,"Coalition Dissolution in Parliamentary Democracies, Modified Version ",314,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+ISLR ,Hitters ,Baseball Data ,322,20,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+vcd ,Baseball ,Baseball Data ,322,25,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+psych ,affect ,Two data sets of affect and arousal scores as a function of personality and movie conditions ,330,20,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,Wong ,Post-Coma Recovery of IQ ,331,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,Pima.te ,Diabetes in Pima Indian Women ,332,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Fatality ,Drunk Driving Laws and Traffic Deaths ,336,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,bladder ,Bladder Cancer Recurrences ,340,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,mao ,A study of Parkinson's disease and MAO gene ,340,19,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+DAAG ,vlt ,Video Lottery Terminal Data ,345,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+gap ,apoeapoc ,APOE/APOC1 markers and Alzheimer's ,353,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,Greene ,Refugee Appeals ,384,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,crohn ,Crohn's disease data ,387,212,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+survival ,retinopathy ,Diabetic Retinopathy ,394,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,Salaries ,Salaries for Professors ,397,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+lattice ,USRegionalMortality ,Mortality Rates in US by Cause and Gender ,400,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mi ,nlsyV ,National Longitudinal Survey of Youth Extract ,400,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+ISLR ,Carseats ,Sales of Child Car Seats ,400,11,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+ISLR ,Credit ,Credit Card Balance Data ,400,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+COUNT ,loomis ,loomis ,410,11,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+survival ,pbc ,Mayo Clinic Primary Biliary Cirrhosis Data ,418,20,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Caschool ,The California Test Score Data Set ,420,17,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,cps3 ,Labour Training Evaluation Data ,429,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,InsuranceVote ,InsuranceVote ,435,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+ggplot2 ,midwest ,Midwest demographics ,437,28,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+geepack ,respiratory ,Data from a clinical trial comparing two treatments for a respiratory illness ,444,8,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+DAAG ,nsw74demo ,Labour Training Evaluation Data ,445,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,free1 ,Freedom of Speech Data ,450,11,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Zelig ,free2 ,Freedom of Speech Data ,450,11,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,Unemployment ,Unemployment Duration ,452,12,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+mosaicData ,HELPrct ,Health Evaluation and Linkage to Primary Care ,453,29,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+boot ,channing ,Channing House Data ,462,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+KMsurv ,channing ,data from Section 1.16 ,462,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Stat2Data ,FlightResponse ,FlightResponse ,464,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mosaicData ,HELPmiss ,Health Evaluation and Linkage to Primary Care ,470,27,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,nep499 ,A study of Alzheimer's disease with eight SNPs and APOE ,499,23,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Stat2Data ,YouthRisk2009 ,YouthRisk2009 ,500,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+MASS ,Boston ,Housing Values in Suburbs of Boston ,506,14,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Hedonic ,Hedonic Prices of Census Tracts in Boston ,506,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+plm ,Hedonic ,Hedonic Prices of Census Tracts in the Boston Area ,506,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+pscl ,UKHouseOfCommons ,1992 United Kingdom electoral returns ,521,12,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+mi ,CHAIN ,Subset of variables from the CHAIN project ,532,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mosaicData ,CPS85 ,Data from the 1985 Current Population Survey (CPS85) ,534,11,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Housing ,Sales Prices of Houses in the City of Windsor ,546,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+HSAUR ,respiratory ,Respiratory Illness Data ,555,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mediation ,school ,School-level data ,568,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+boot ,aids ,Delay in AIDS Reporting in England and Wales ,570,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+quantreg ,uis ,UIS Drug Treatment study data ,575,18,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Fair ,Extramarital Affairs Data ,601,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+COUNT ,affairs ,affairs ,601,18,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,Mathlevel ,Level of Calculus Attained for Students Taking Advanced Micro-economics ,609,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+lme4 ,Arabidopsis ,Arabidopsis clipping/fertilization data ,625,8,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,Crime ,Crime in North Carolina ,630,24,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+plm ,Crime ,Crime in North Carolina ,630,24,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,myeloid ,Acute myeloid leukemia ,646,7,FALSE ,TRUE ,FALSE ,TRUE ,CSV  ,DOC  
+Ecdat ,Somerville ,Visits to Lake Somerville ,659,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+reshape2 ,french_fries ,Sensory data from a french fries experiment. ,696,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,biopsy ,Biopsy Data on Breast Cancer Patients ,699,11,FALSE ,TRUE ,FALSE ,TRUE ,CSV  ,DOC  
+psych ,sat.act ,"3 Measures of ability: SATV, SATQ, ACT ",700,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+rpart ,solder ,Soldering of Components on Printed-Circuit Boards ,720,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+DAAG ,nswdemo ,Labour Training Evaluation Data ,722,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+HistData ,PearsonLee ,Pearson and Lee's data on the heights of parents and children classified by gender ,746,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,Mroz ,U.S. Women's Labor-Force Participation ,753,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Mroz ,Labor Supply Data ,753,18,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Griliches ,Wage Datas ,758,20,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,rhDNase ,rhDNASE data set ,767,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+ISLR ,College ,U.S. News and World Report's College Data ,777,18,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+HistData ,Quarrels ,Statistics of Deadly Quarrels ,779,84,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,transplant ,Liver transplant waiting list ,815,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gap ,PD ,"A study of Parkinson's disease and APOE, LRRK2, SNCA makers ",825,22,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+Ecdat ,ModeChoice ,Data to Study Travel Mode Choice ,840,7,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+KMsurv ,kidtran ,data from Section 1.7 ,863,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,Participation ,Labor Force Participation ,872,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+KMsurv ,std ,data from Section 1.12 ,877,24,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+mosaicData ,Galton ,Galton's dataset of parent and child heights ,898,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mediation ,jobs ,JOBS II data ,899,17,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,solder ,Data from a soldering experiment ,900,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+multgee ,arthritis ,Rheumatoid Arthritis Clinical Trial ,906,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Hawks ,Hawks ,908,19,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+pscl ,vote92 ,Reports of voting in the 1992 U.S. Presidential election. ,909,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+pscl ,bioChemists ,article production by graduate students in biochemistry Ph.D. programs ,915,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+KMsurv ,bfeed ,data from Section 1.14 ,927,10,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+HistData ,GaltonFamilies ,"Galton's data on the heights of parents and their children, by child ",934,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+psych ,epiR ,Eysenck Personality Inventory (EPI) data for 3570 participants ,948,60,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+mediation ,boundsdata ,Example Data for the Design Functions ,1000,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Pines ,Pines ,1000,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gamclass ,german ,German credit scoring data ,1000,21,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+geepack ,spruce ,Log-size of 79 Sitka spruce trees ,1027,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Goldenrod ,Goldenrod Galls ,1055,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+ISLR ,OJ ,Orange Juice Data ,1070,18,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+ISLR ,Weekly ,Weekly S&P Stock Market Data ,1089,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,OME ,Tests of Auditory Perception in Children with OME ,1097,7,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Marathon ,Marathon ,1127,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,HHSCyberSecurityBreaches ,Cybersecurity breaches reported to the US Department of Health and Human Services ,1151,9,TRUE ,TRUE ,FALSE ,TRUE ,CSV  ,DOC  
+ISLR ,Smarket ,S&P Stock Market Data ,1250,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,mifem ,Mortality Outcomes for Females Suffering Myocardial Infarction ,1295,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Titanic ,Titanic ,1313,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,mexico ,Voting Data from the 1988 Mexican Presidental Election ,1359,33,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+survival ,mgus2 ,Monoclonal gammapothy data ,1384,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,science ,School Science Survey Data ,1385,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,NCbirths ,NCbirths ,1450,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mosaicData ,HELPfull ,Health Evaluation and Linkage to Primary Care ,1472,788,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+COUNT ,medpar ,medpar ,1495,10,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Zelig ,voteincome ,Sample Turnout and Demographic Data from the 2000 Current Population Survey ,1500,7,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,BudgetUK ,Budget Shares of British Households ,1519,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,BEPS ,British Election Panel Study ,1525,10,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+psych ,ability ,16 ability items scored as correct or incorrect. ,1525,16,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+fpp2 ,prisonLF ,prison ,1536,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,Gunnels ,Gunnels ,1592,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mosaicData ,SaratogaHouses ,Houses in Saratoga County (2006) ,1728,16,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,PatentsHGH ,Dynamic Relation Between Patents and R&D ,1730,18,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+pscl ,politicalInformation ,Interviewer ratings of respondent levels of political information ,1807,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Kakadu ,Willingness to Pay for the Preservation of the Kakadu National Park ,1827,22,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,colon ,Chemotherapy for Stage B/C colon cancer ,1858,16,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+COUNT ,azcabgptca ,azcabgptca ,1959,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Zelig ,turnout ,Turnout Data Set from the National Election Survey ,2000,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mediation ,CEDdata ,Example Data for the Crossover Encouragement Design ,2000,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,dengue ,"Dengue prevalence, by administrative region ",2000,13,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+COUNT ,mdvis ,mdvis ,2227,13,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+MASS ,nlschools ,Eighth-Grade Pupils in the Netherlands ,2287,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,cps2 ,Labour Training Evaluation Data ,2369,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Hdma ,The Boston HMDA Data Set ,2381,13,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Hmda ,The Boston HMDA Data Set ,2381,13,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Yogurt ,Choice of Brand for Yogurts ,2412,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,immi1 ,Individual Preferences Over Immigration Policy ,2485,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,immi2 ,Individual Preferences Over Immigration Policy ,2485,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,immi3 ,Individual Preferences Over Immigration Policy ,2485,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,immi4 ,Individual Preferences Over Immigration Policy ,2485,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,immi5 ,Individual Preferences Over Immigration Policy ,2485,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,immigration ,Individual Preferences Over Immigration Policy ,2485,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,psid1 ,Labour Training Evaluation Data ,2490,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,nsw74psid1 ,Labour Training Evaluation Data ,2675,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Treatment ,Evaluating Treatment Effect of Training on Earnings ,2675,10,TRUE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Stat2Data ,MathPlacement ,Math Placement ,2696,16,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+carData ,Chile ,Voting Intentions in the 1988 Chilean Plebiscite ,2700,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,nswpsid1 ,Labour Training Evaluation Data ,2787,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Catsup ,Choice of Brand for Catsup ,2798,14,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+psych ,bfi ,25 Personality items representing 5 factors ,2800,28,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+MASS ,Aids2 ,Australian AIDS Survival Data ,2843,7,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,Train ,Stated Preferences for Train Traveling ,2929,11,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+gap ,mfblong ,Example data for ACEnucfam ,3000,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+ISLR ,Wage ,Mid-Atlantic Wage Data ,3000,11,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Schooling ,Wages and Schooling ,3010,28,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,Wells ,Well Switching in Bangladesh ,3020,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,head.injury ,Minor Head Injury (Simulated) Data ,3121,11,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,headInjury ,Minor Head Injury (Simulated) Data ,3121,11,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Zelig ,mid ,Militarized Interstate Disputes ,3126,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,SumHes ,The Penn Table ,3250,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+plm ,SumHes ,"The Penn World Table, v. 5 ",3250,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Cracker ,Choice of Brand for Crakers ,3292,14,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,UnempDur ,Unemployment Duration ,3343,11,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Workinghours ,Wife Working Hours ,3382,12,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+KMsurv ,pneumon ,data from Section 1.13 ,3470,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+psych ,epi ,Eysenck Personality Inventory (EPI) data for 3570 participants ,3570,57,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+COUNT ,azpro ,azpro ,3589,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+COUNT ,azprocedure ,azprocedure ,3589,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mosaicData ,Weather ,Weather ,3655,25,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+COUNT ,rwm1984 ,rwm1984 ,3874,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+psych ,msq ,75 mood items from the Motivational State Questionnaire for 3896 participants ,3896,92,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+psych ,spi ,A sample from the SAPA Personality Inventory including an item dictionary and scoring keys. ,4000,145,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+survival ,nwtco ,Data from the National Wilm's Tumor Study ,4028,9,TRUE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+carData ,KosteckiDillon ,Treatment of Migraine Headaches ,4152,9,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Wages ,Panel Datas of Individual Wages ,4165,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+plm ,Wages ,Panel Data of Individual Wages ,4165,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Males ,Wages and Education of Young Males ,4360,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+plm ,Males ,Wages and Education of Young Males ,4360,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,OFP ,Visits to Physician Office ,4406,19,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,spam7 ,Spam E-mail Data ,4601,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Car ,Stated Preferences for Car Choice ,4654,70,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Benefits ,Unemployment of Blue Collar Workers ,4877,18,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,DoctorAUS ,Doctor Visits in Australia ,5190,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,RetSchool ,Return to Schooling ,5225,17,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,Arrests ,Arrests for Marijuana Possession ,5226,8,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,LaborSupply ,Wages and Hours Worked ,5320,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+plm ,LaborSupply ,Wages and Hours Worked ,5320,7,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,WVS ,World Values Surveys ,5381,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,MedExp ,Structure of Demand for Medical Care ,5574,15,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Star ,Effects on Learning of Small Class Sizes ,5748,8,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+ISLR ,Caravan ,The Insurance Company (TIC) Benchmark ,5822,86,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,cricketer ,Lifespans of UK 1st class cricketers born 1840-1960 ,5960,8,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Ecdat ,VietNamH ,Medical Expenses in Viet-nam (household Level) ,5999,11,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+sandwich ,InstInnovation ,Innovation and Institutional Ownership ,6208,25,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,Computers ,Prices of Personal Computers ,6259,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,monica ,WHO Monica Data ,6367,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+psych ,msqR ,75 mood items from the Motivational State Questionnaire for 3032 unique participants ,6411,79,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+carData ,SLID ,Survey of Labour and Income Dynamics ,7425,5,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+lme4 ,VerbAgg ,Verbal Aggression item responses ,7584,9,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+survival ,flchain ,Assay of serum free light chain for 7874 subjects. ,7874,11,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+mosaicData ,TenMileRace ,Cherry Blossom Race ,8636,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+mediation ,student ,Hypothetical student-level data ,9679,13,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+Stat2Data ,YouthRisk2007 ,YouthRisk2007 ,13387,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+DAAG ,cps1 ,Labour Training Evaluation Data ,15992,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+COUNT ,rwm5yr ,rwm5yr ,19609,17,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,DoctorContacts ,Contacts With Medical Doctor ,20186,15,TRUE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,HI ,Health Insurance and Hours Worked By Wives ,22272,13,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+Ecdat ,BudgetFood ,Budget Share of Food for Spanish Households ,23972,6,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+DAAG ,nassCDS ,Airbag and other influences on accident fatalities ,26217,15,FALSE ,TRUE ,TRUE ,TRUE ,CSV  ,DOC  
+Ecdat ,VietNamI ,Medical Expenses in Viet-nam (individual Level) ,27765,12,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,GSSvocab ,Data from the General Social Survey (GSS) from the National Opinion Research Center of the University of Chicago. ,28867,8,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+carData ,MplsStops ,Minneapolis Police Department 2017 Stop Data ,51920,14,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
+gamclass ,fars2008 ,"US fatal road accident data, 2007 and 2008 ",64881,24,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+gamclass ,fars2007 ,"US fatal road accident data, 2007 and 2008 ",72548,24,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
+lme4 ,InstEval ,University Lecture/Instructor Evaluations by Students at ETH ,73421,7,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
