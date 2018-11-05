@@ -1,0 +1,7 @@
+IDH 
+    Países com índice superior à 0,800, possuem um IDH alto.
+    Entre 0,500 e 0,799 são considerados com IDH mediano.
+    De 0 até 0,499, o IDH é classificado abaixo da média.
+    
+   
+    

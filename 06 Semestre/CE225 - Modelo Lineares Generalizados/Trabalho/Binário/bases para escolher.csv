@@ -51,7 +51,6 @@ Stat2Data ,TipJoke ,Tip Joke ,211,5,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC
 Ecdat ,bankingCrises ,Countries in Banking Crises ,211,71,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
 DAAG ,frogs ,Frogs Data ,212,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
 Stat2Data ,FirstYearGPA ,FirstYearGPA ,219,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
-MASS ,bacteria ,Presence of Bacteria after Drug Treatments ,220,6,FALSE ,TRUE ,FALSE ,FALSE ,CSV  ,DOC  
 Ecdat ,FriendFoe ,Data from the Television Game Show Friend Or Foe ? ,227,13,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
 survival ,cancer ,NCCTG Lung Cancer Data ,228,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
 survival ,lung ,NCCTG Lung Cancer Data ,228,10,FALSE ,TRUE ,TRUE ,FALSE ,CSV  ,DOC  
