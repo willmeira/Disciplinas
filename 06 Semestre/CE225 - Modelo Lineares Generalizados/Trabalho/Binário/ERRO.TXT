@@ -1,0 +1,5 @@
+> ajuste1<-glm(dead~.,family = binomial(link = 'logit'), data=base3 )
+Warning messages:
+1: glm.fit: algoritmo não convergiu 
+2: glm.fit: probabilidades ajustadas numericamente 0 ou 1 ocorreu 
+> summary(base3)
