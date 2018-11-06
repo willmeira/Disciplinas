@@ -1,8 +1,22 @@
 ---
-title: "Dados_Binarios"
-author: "Willian Meira Schlichta"
-date: "6 de novembro de 2018"
-output: html_document
+title: "Untitled"
+output: html_document:                    # Classe de documento.
+   toc: true                       # Exibir sum?rio.
+   toc_depth: 2                    # Profundidade do sum?rio.
+   toc_float:                      # Sum?rio flutuante na borda.
+     collapsed: true
+     smooth_scroll: true
+   number_sections: true           # Se??es numeradas.
+   theme: flatly
+   #default, cerulean, journal, flatly, readable, spacelab,united, cosmo, lumen, paper, sandstone, simplex, yeti    highlight: tango
+   #default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, and textmate
+   #css: styles.css                 # Caminho para arquivo CSS.
+   fig_width: 7                    # Lagura das figuras.
+   fig_height: 6                   # Altura das figuras.
+   fig_caption: true               # Exibica??o de legenda.
+   code_folding: hide              # Esconder/exibir bloco de c?digo.
+   keep_md: true                   # Manter o arquivo md.
+   #template: quarterly_report.html # Caminho para o template.
 ---
 
 ```{r setup, include=FALSE}
