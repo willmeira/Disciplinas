@@ -19,6 +19,7 @@ library(hnp)
 data("nassCDS")
 dados <- nassCDS
 
+summary(dados)
 dados<-subset(dados,yearacc==2002 & yearVeh == 2000)
 dados <-dados[,c(-2,-9,-10,-11,-15)]
 
@@ -48,33 +49,79 @@ str(dados)
 ## Análise Descritiva
 #*********************************
 head(dados,10)
+summary(dados)
 summary(dados[ , c(1:8,10)])
 sum(dados$abfunc == 1)
 
 
 
 x11()
-par(mfrow=c(2,5))
-boxplot(dados$veloc, xlab = '', ylab = '', main = 'Adhes', las=1)
-boxplot(dados$sobrev, xlab = '', ylab = '', main = 'BNucl', las=1)
-boxplot(dados$airbag, xlab = '', ylab = '', main = 'Chrom', las=1)
-boxplot(dados$cinto, xlab = '', ylab = '', main = 'Epith', las=1)
-boxplot(dados$frontal, xlab = '', ylab = '', main = 'Mitos', las=1)
-boxplot(dados$sexo, xlab = '', ylab = '', main = 'NNucl', las=1)
+#par(mfrow=c(2,5))
+#avaliar com professor
 boxplot(dados$idade, xlab = '', ylab = '', main = 'Thick', las=1)
-
 mtext(side=2,cex=1.3,line=-1.5,text="Nota na Avaliação Médica",outer=TRUE)
 
-par(mfrow=c(3,3), las=1)
-hist(dados$Adhes, xlab = '', ylab = '', main = 'Adhes')
-hist(dados$BNucl, xlab = '', ylab = '', main = 'BNucl')
-hist(dados$Chrom, xlab = '', ylab = '', main = 'Chrom')
-hist(dados$Epith, xlab = '', ylab = '', main = 'Epith')
-hist(dados$Mitos, xlab = '', ylab = '', main = 'Mitos')
-hist(dados$NNucl, xlab = '', ylab = '', main = 'NNucl')
-hist(dados$Thick, xlab = '', ylab = '', main = 'Thick')
-hist(dados$UShap, xlab = '', ylab = '', main = 'UShap')
-hist(dados$USize, xlab = '', ylab = '', main = 'USize')
+
+x11()
+par(mfrow=c(4,3), las=1)
+plot(dados$abfunc, xlab = '', ylab = '', main = 'AB Funcionou')
+plot(dados$veloc, xlab = '', ylab = '', main = 'Velocidade')
+plot(dados$sobrev, xlab = '', ylab = '', main = 'Sobrevivente')
+plot(dados$airbag, xlab = '', ylab = '', main = 'Airbag')
+plot(dados$cinto, xlab = '', ylab = '', main = 'Cinto')
+plot(dados$frontal, xlab = '', ylab = '', main = 'Frontal')
+plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
+plot(dados$idade, xlab = '', ylab = '', main = 'Idade') ### ******* inverteu eixo
+plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
+plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
+
+
+
+################################################### até aqui no momento
+
+pie(table(dados$abfunc), 
+    main="Gráfico de setores: Grau de Instrução") 
+
+plot(dados$abfunc, xlab = '', ylab = '', main = 'AB Funcionou')
+plot(dados$veloc, xlab = '', ylab = '', main = 'Velocidade')
+plot(dados$sobrev, xlab = '', ylab = '', main = 'Sobrevivente')
+plot(dados$airbag, xlab = '', ylab = '', main = 'Airbag')
+plot(dados$cinto, xlab = '', ylab = '', main = 'Cinto')
+plot(dados$frontal, xlab = '', ylab = '', main = 'Frontal')
+plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
+plot(dados$idade, xlab = '', ylab = '', main = 'Idade') ### ******* inverteu eixo
+plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
+plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
+
+
+par(mfrow = c(2,2))
+
+plot(abfunc~veloc, data = dados)
+x11()
+plot(abfunc~veloc, data = dados, xlab = 'Taxa', ylab = 'Consumo')
+abline(lm(abfunc~veloc, data = dados), col=2, lwd = 2)
+
+plot(cons~licen, data = dados, xlab = 'Licença', ylab = 'Consumo')
+abline(lm(cons~licen, data = dados), col = 2, lwd = 2)
+
+plot(cons~renda, data = dados, xlab = 'Renda', ylab = 'Consumo')
+abline(lm(cons~renda, data = dados), col = 2, lwd = 2)
+
+plot(cons~estr, data = dados, xlab = 'Estrada', ylab = 'Consumo')
+abline(lm(cons~estr, data = dados), col = 2, lwd = 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 g1<-ggplot(dados, aes(x=factor(Class), y=Adhes, color=factor(Class))) + 
   geom_boxplot()+ xlab('Adhes')+ ylab('') +
