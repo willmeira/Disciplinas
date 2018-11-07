@@ -1,3 +1,5 @@
+# pacotes necessários
+library(DAAG)
 library(gridExtra)
 library(corrplot)
 library(car)
@@ -11,107 +13,56 @@ library(faraway)
 library(ggplot2)
 library(hnp)
 #*********************************
+## Carregando e ajustando a base de dados
+#*********************************
 
-##Modelos de Regressão para Dados Binários
-Lais
-Simone
-Willian
-Yasmin
+data("nassCDS")
+dados <- nassCDS
 
-Prof. Cesar Augusto Taconeli
+dados<-subset(dados,yearacc==2002 & yearVeh == 2000)
+dados <-dados[,c(-2,-9,-10,-11,-15)]
 
-Modelos Lineares Generalizados (CE225)
+dados$dvcat <- ifelse(dados$dvcat == '1-9km/h','01-09',
+               ifelse(dados$dvcat == '10-24','10-24',
+               ifelse(dados$dvcat == '25-39','25-39',
+               ifelse(dados$dvcat == '40-54','40-54','55+'))))
+dados$dead <- ifelse(dados$dead == 'alive', 1, 0)
+dados$airbag <- ifelse(dados$airbag == 'airbag',1,0)
+dados$seatbelt <- ifelse(dados$seatbelt == 'belted',1,0)
+dados$sex <- ifelse(dados$sex == 'm', 1, 0)
 
-Novembro/2018
+dados$dvcat<-as.factor(dados$dvcat)
+dados$dead<-as.factor(dados$dead)
+dados$airbag<-as.factor(dados$airbag)
+dados$seatbelt<-as.factor(dados$seatbelt)
+dados$frontal<-as.factor(dados$frontal)
+dados$sex<-as.factor(dados$sex)
+dados$occRole<-as.factor(dados$occRole)
+dados$deploy<-as.factor(dados$deploy)
+dados$injSeverity<-as.factor(dados$injSeverity)
 
-Base de dados com todas as tentativas de Field Goal da temporada regular de 2008 da NFL
-
-1. Dados
-Os dados estão disponíveis no site da Universidade da Flórida, no 
-link http://users.stat.ufl.edu/~winner/datasets.html
-
+names(dados)<-c('veloc','sobrev','airbag','cinto','frontal','sexo','idade','ocupantes','abfunc','grav')
+str(dados)
 
 #*********************************
-bd <- read.csv('nfl2008_fga.csv',header = TRUE,sep = ',')
-head(bd)
-
-dados <-bd[,c(4,9,10,14,15,16,21)]
-names(dados)<-c('qtr','down','togo','dist','home','diff','good')
-
-dados$qtr<-as.factor(dados$qtr)
-dados$down<-as.factor(dados$down)
-dados$home<-as.factor(dados$home)
-dados$good<-as.factor(dados$good)
-
-head(dados)
-summary(dados)
-str(dados)
-[,c(4,9,10,14,15,16,21)]
-
-ajuste0<-glm(good~.,family = binomial(link='logit'),data = dados)
-summary(ajuste0)
-#Verificamos que podemos retirar as covaríaveis "kickteam", "def" e "kicker"
-
-head(dados)
-summary(dados)
-str(dados)
-
-ajuste1<-glm(good~.,family = binomial(link='logit'),data = dados1)
-
-ajuste2<-glm(good~.,family = binomial(link='probit'),data = dados1)
-
-ajuste3<-glm(good~.,family = binomial(link='cloglog'),data = dados1)
-
-ajuste4<-glm(good~.,family = binomial(link='cauchit'),data = dados1)
-
-selec <- data.frame(ajuste=c('logito', 'probito', 'cloglog', 'cauchy'),
-                    aic=c(AIC(ajuste1), AIC(ajuste2), AIC(ajuste3), AIC(ajuste4)),
-                    logLik=c(logLik(ajuste1),logLik(ajuste2),logLik(ajuste3),logLik(ajuste4)))
-
-selec
-
-ajuste2.1 <- step(ajuste2, direction = "both")
-ajuste2.2 <- step(ajuste2, direction = "forward")
-ajuste2.3 <- step(ajuste2, direction = "backward")
-summary(ajuste3.2)
-
-selec2<- data.frame(ajuste=c('ajuste2.1', 'ajuste2.2', 'ajuste2.3'),
-                    aic=c(AIC(ajuste2.1), AIC(ajuste2.2), AIC(ajuste2.3)),
-                    logLik=c(logLik(ajuste2.1),logLik(ajuste2.2),logLik(ajuste2.3)),
-                    devresidual=c(deviance(ajuste2.1),deviance(ajuste2.2),deviance(ajuste2.3)))
-
-selec2
-
-summary(ajuste2.1)
+## Análise Descritiva
+#*********************************
+head(dados,10)
+summary(dados[ , c(1:8,10)])
+sum(dados$abfunc == 1)
 
 
-dados1<-dados[,c(4,5,7)]
-  
-head(dados1)
-summary(dados1)
-str(dados1)
 
-
-  
-  
-
-data(wbca)
-dados <- wbca
-sum(dados$Class==1)
-dados$Class <- ifelse(dados$Class == 0, 1, 0)
-sum(dados$Class==1)
-head(dados)
-summary(dados[ , 2:10])
+x11()
 par(mfrow=c(2,5))
-boxplot(dados$Adhes, xlab = '', ylab = '', main = 'Adhes', las=1)
-boxplot(dados$BNucl, xlab = '', ylab = '', main = 'BNucl', las=1)
-boxplot(dados$Chrom, xlab = '', ylab = '', main = 'Chrom', las=1)
-boxplot(dados$Epith, xlab = '', ylab = '', main = 'Epith', las=1)
-boxplot(dados$Mitos, xlab = '', ylab = '', main = 'Mitos', las=1)
-boxplot(dados$NNucl, xlab = '', ylab = '', main = 'NNucl', las=1)
-boxplot(dados$Thick, xlab = '', ylab = '', main = 'Thick', las=1)
-boxplot(dados$UShap, xlab = '', ylab = '', main = 'UShap', las=1)
-boxplot(dados$USize, xlab = '', ylab = '', main = 'USize', las=1)
+boxplot(dados$veloc, xlab = '', ylab = '', main = 'Adhes', las=1)
+boxplot(dados$sobrev, xlab = '', ylab = '', main = 'BNucl', las=1)
+boxplot(dados$airbag, xlab = '', ylab = '', main = 'Chrom', las=1)
+boxplot(dados$cinto, xlab = '', ylab = '', main = 'Epith', las=1)
+boxplot(dados$frontal, xlab = '', ylab = '', main = 'Mitos', las=1)
+boxplot(dados$sexo, xlab = '', ylab = '', main = 'NNucl', las=1)
+boxplot(dados$idade, xlab = '', ylab = '', main = 'Thick', las=1)
+
 mtext(side=2,cex=1.3,line=-1.5,text="Nota na Avaliação Médica",outer=TRUE)
 
 par(mfrow=c(3,3), las=1)
