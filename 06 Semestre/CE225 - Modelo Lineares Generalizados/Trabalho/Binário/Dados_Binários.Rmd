@@ -1,0 +1,88 @@
+---
+title: "Trabalho de dados Binários"
+author: Laís Hoffmann, Simone Matsubara, Yasmin Fernandes, Willian Meira
+date: '`r Sys.Date() `'
+output:
+  pdf_document:
+    keep_tex: true
+  html_document: 
+    code_folding: hide
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  word_document: default
+subtitle: "Acidentes de carro"
+header-includes: \usepackage[brazil]{babel}
+                 \usepackage{amsmath}
+                 \usepackage{float}
+                 \usepackage{bm}
+#csl: ABNT_UFPR_2011.csl
+#bibliography: refs.bib
+---
+```{r, include=FALSE}
+library(ggplot2)
+library(gridExtra)
+library(corrplot)
+library(carData)
+library(car)
+library(statmod)
+
+```
+
+# 1. Base de Dados
+
+# 2 Análise Descritiva
+
+**2.1 Medidas de Resumo**
+\newline **2.2 Boxplots** 
+\newline **2.3 Histogramas**
+\newline **2.4 Distribuição**
+\newline **2.5 Análise de correlações entre covariáveis**
+\newline **2.6 Gráficos de Disperção**
+
+# 3. AJUSTE DO MODELO DE REGRESSÃO
+
+**3.1 Ligação Logito**
+\newline **3.2 Ligação Probito**
+\newline **3.3 Ligação Complemento log-log**
+\newline **3.4 Ligação Cauchy**
+
+
+# 4. ESCOLHA DO MODELO
+
+# 5. ANÁLISE DO MODELO AJUSTADO SELECIONADO
+
+**5.1 Resumo do Modelo**
+\newline **5.2 Reajuste do Modelo**
+\newline **5.3 Análise de Resíduos**
+\newline **5.4 Medidas de Influencia**
+\newline **5.5 Resíduos Quantílicos Aleatoriazados**
+\newline **5.6 Gráfico Normal de Probabilidade com Envelope Simulado**
+\newline **5.7 Gráficos de Efeitos**
+
+# 6. PREDIÇÃO
+
+
+# 7. AVALIAÇÃO DO PODER PREDITIVO DO MODELO
+
+**7.1 Divisão da Base de dados**
+\newline **7.2 Ponto de Corte**
+\newline **7.3 Sensibilidade e Especificidade**
+\newline **7.4 Curva ROC**
+\newline **7.5 Outra Alternativa de validação**
+
+# 8. REFERÊNCIAS
+
+
+
+
+
+
+
+
+
+  
+  
+#
+
+
