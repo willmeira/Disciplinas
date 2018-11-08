@@ -15,25 +15,32 @@ library(hnp)
 #*********************************
 ## Carregando e ajustando a base de dados
 #*********************************
+
 data("nassCDS")
 dados <- nassCDS
+
+summary(dados)
 dados<-subset(dados,yearacc==2002 & yearVeh == 2000)
-#selecionando covariáveis
 dados <-dados[,c(-2,-9,-10,-11,-15)]
 
-#ajustando as variáveis
-dados$dvcat <- as.ordered(ifelse(dados$dvcat == '1-9km/h','01-09 mph',
-               ifelse(dados$dvcat == '10-24','10-24 mph',
-               ifelse(dados$dvcat == '25-39','25-39 mph',
-               ifelse(dados$dvcat == '40-54','40-54 mph','55+ mph')))))
-dados$dead <- as.factor(ifelse(dados$dead == 'alive','Sim','Não'))
-dados$airbag <- as.factor(ifelse(dados$airbag == 'airbag','Sim','Não'))
-dados$seatbelt <- as.factor(ifelse(dados$seatbelt == 'belted','Sim','Não'))
-dados$frontal <- as.factor(ifelse(dados$frontal == 1,'Sim','Não'))
-dados$sex <- as.factor(ifelse(dados$sex == 'm', 'Masc','Fem'))
-dados$occRole <- as.factor(ifelse(dados$occRole == 'driver','Driver','Pass'))
-dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','Não'))
-dados$injSeverity<-as.ordered(dados$injSeverity)
+dados$dvcat <- ifelse(dados$dvcat == '1-9km/h','01-09',
+               ifelse(dados$dvcat == '10-24','10-24',
+               ifelse(dados$dvcat == '25-39','25-39',
+               ifelse(dados$dvcat == '40-54','40-54','55+'))))
+dados$dead <- ifelse(dados$dead == 'alive', 1, 0)
+dados$airbag <- ifelse(dados$airbag == 'airbag',1,0)
+dados$seatbelt <- ifelse(dados$seatbelt == 'belted',1,0)
+dados$sex <- ifelse(dados$sex == 'm', 1, 0)
+
+dados$dvcat<-as.factor(dados$dvcat)
+dados$dead<-as.factor(dados$dead)
+dados$airbag<-as.factor(dados$airbag)
+dados$seatbelt<-as.factor(dados$seatbelt)
+dados$frontal<-as.factor(dados$frontal)
+dados$sex<-as.factor(dados$sex)
+dados$occRole<-as.factor(dados$occRole)
+dados$deploy<-as.factor(dados$deploy)
+dados$injSeverity<-as.factor(dados$injSeverity)
 
 names(dados)<-c('veloc','sobrev','airbag','cinto','frontal','sexo','idade','ocupantes','abfunc','grav')
 str(dados)
@@ -46,10 +53,12 @@ summary(dados)
 summary(dados[ , c(1:8,10)])
 sum(dados$abfunc == 1)
 
+
+
 x11()
 #par(mfrow=c(2,5))
 #avaliar com professor
-
+boxplot(dados$idade, xlab = '', ylab = '', main = 'Thick', las=1)
 mtext(side=2,cex=1.3,line=-1.5,text="Nota na Avaliação Médica",outer=TRUE)
 
 
@@ -62,40 +71,13 @@ plot(dados$airbag, xlab = '', ylab = '', main = 'Airbag')
 plot(dados$cinto, xlab = '', ylab = '', main = 'Cinto')
 plot(dados$frontal, xlab = '', ylab = '', main = 'Frontal')
 plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
-#plot(dados$idade, xlab = '', ylab = '', main = 'Idade') 
-boxplot(dados$idade~dados$abfunc,xlab = '', ylab = 'Idade', main = 'Idade') 
+plot(dados$idade, xlab = '', ylab = '', main = 'Idade') ### ******* inverteu eixo
 plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
 plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
 
+
+
 ################################################### até aqui no momento
-
-
-################################################### tabelas para gráficos de setor
-x11()
-par(mfrow=c(4,3), las=1)
-pie(table(dados$abfunc), main = 'AB Funcionou')
-pie(table(dados$veloc), main = 'Velocidade')
-aux<-paste0(round((table(dados$veloc)/sum(table(dados$veloc)))*100,1),'%')
-pie(table(dados$veloc),labels = paste0(names(table(dados$veloc)),' - ',aux))
-
-pie(table(dados$sobrev), main = 'Sobrevivente')
-pie(table(dados$airbag), main = 'Airbag')
-pie(table(dados$cinto), main = 'Cinto')
-pie(table(dados$frontal), main = 'Frontal')
-pie(table(dados$sexo), main = 'Sexo')
-pie(table(dados$idade), main = 'Idade')
-pie(table(dados$ocupantes), main = 'Ocupante')
-pie(table(dados$grav), main = 'Gravidade')
-                        
-    ###################################################
-
-
-
-
-
-###################################################
-
-
 
 pie(table(dados$abfunc), 
     main="Gráfico de setores: Grau de Instrução") 
@@ -107,7 +89,7 @@ plot(dados$airbag, xlab = '', ylab = '', main = 'Airbag')
 plot(dados$cinto, xlab = '', ylab = '', main = 'Cinto')
 plot(dados$frontal, xlab = '', ylab = '', main = 'Frontal')
 plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
-#plot(dados$idade, xlab = '', ylab = '', main = 'Idade') ### ******* inverteu eixo
+plot(dados$idade, xlab = '', ylab = '', main = 'Idade') ### ******* inverteu eixo
 plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
 plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
 
@@ -192,22 +174,22 @@ scatterplotMatrix(dados[ , 2:10],
                   lwd = 3, col = c(method=lm, lty=1, lwd=2, col=carPalette())
                   )
 #******************************
-ajuste1 <- glm(abfunc ~ .,family=binomial(link='logit'),data = dados)
-ajuste2 <- glm(abfunc ~ .,family=binomial(link = 'probit'),data = dados)
-ajuste3 <- glm(abfunc ~ .,family=binomial(link='cloglog'),data = dados)
-ajuste4 <- glm(abfunc ~ .,family=binomial(link='cauchit'),data = dados)
+ajuste11 <- glm(abfunc ~ .,family=binomial(link='logit'),data = dados)
+ajuste21 <- glm(abfunc ~ .,family=binomial(link = 'probit'),data = dados)
+ajuste31 <- glm(abfunc ~ .,family=binomial(link='cloglog'),data = dados)
+ajuste41 <- glm(abfunc ~ .,family=binomial(link='cauchit'),data = dados)
 
-summary(ajuste1)
-summary(ajuste2)
-summary(ajuste3)
-summary(ajuste4)
+summary(ajuste11)
+summary(ajuste21)
+summary(ajuste31)
+summary(ajuste41)
 
 
-selec <- data.frame(ajuste=c('logito', 'probito', 'cloglog', 'cauchy'),
-                    aic=c(AIC(ajuste1), AIC(ajuste2), AIC(ajuste3), AIC(ajuste4)),
-                    logLik=c(logLik(ajuste1),logLik(ajuste2),logLik(ajuste3),logLik(ajuste4)))
 
-selec
+selec2 <- data.frame(ajuste=c('logito', 'probito', 'cloglog', 'cauchy'),
+                    aic=c(AIC(ajuste11), AIC(ajuste21), AIC(ajuste31), AIC(ajuste41)),
+                    logLik=c(logLik(ajuste11),logLik(ajuste21),logLik(ajuste31),logLik(ajuste41)))
+
 selec2
 
 summary(ajuste2)
