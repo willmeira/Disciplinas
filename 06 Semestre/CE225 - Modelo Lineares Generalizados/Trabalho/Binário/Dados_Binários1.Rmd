@@ -119,6 +119,7 @@ plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
 #plot(dados$idade, xlab = '', ylab = '', main = 'Idade') ### ******* inverteu eixo
 plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
 plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
+mtext(side=2,cex=1.3,line=-1.5,text="Proporção das variaveis",outer=TRUE)
 ```
 
 **2.4 Distribuição**
@@ -141,9 +142,12 @@ a
 # 3. AJUSTE DO MODELO DE REGRESSÃO
 
 **3.1 Ligação Logito**
-\newline **3.2 Ligação Probito**
-\newline **3.3 Ligação Complemento log-log**
-\newline **3.4 Ligação Cauchy**
+
+**3.2 Ligação Probito**
+
+**3.3 Ligação Complemento log-log**
+
+**3.4 Ligação Cauchy**
 
 
 # 4. ESCOLHA DO MODELO
@@ -151,12 +155,18 @@ a
 # 5. ANÁLISE DO MODELO AJUSTADO SELECIONADO
 
 **5.1 Resumo do Modelo**
-\newline **5.2 Reajuste do Modelo**
-\newline **5.3 Análise de Resíduos**
-\newline **5.4 Medidas de Influencia**
-\newline **5.5 Resíduos Quantílicos Aleatoriazados**
-\newline **5.6 Gráfico Normal de Probabilidade com Envelope Simulado**
-\newline **5.7 Gráficos de Efeitos**
+
+**5.2 Reajuste do Modelo**
+
+**5.3 Análise de Resíduos**
+
+**5.4 Medidas de Influencia**
+
+**5.5 Resíduos Quantílicos Aleatoriazados**
+
+**5.6 Gráfico Normal de Probabilidade com Envelope Simulado**
+
+**5.7 Gráficos de Efeitos**
 
 # 6. PREDIÇÃO
 
@@ -164,10 +174,14 @@ a
 # 7. AVALIAÇÃO DO PODER PREDITIVO DO MODELO
 
 **7.1 Divisão da Base de dados**
-\newline **7.2 Ponto de Corte**
-\newline **7.3 Sensibilidade e Especificidade**
-\newline **7.4 Curva ROC**
-\newline **7.5 Outra Alternativa de validação**
+
+**7.2 Ponto de Corte**
+
+**7.3 Sensibilidade e Especificidade**
+
+**7.4 Curva ROC**
+
+**7.5 Outra Alternativa de validação**
 
 # 8. REFERÊNCIAS
 

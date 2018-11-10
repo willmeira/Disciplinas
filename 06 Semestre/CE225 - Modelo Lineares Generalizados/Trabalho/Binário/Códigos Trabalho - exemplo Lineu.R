@@ -14,6 +14,7 @@ library(ggplot2)
 library(hnp)
 #*********************************
 ## Carregando e ajustando a base de dados
+## 1. Descrição dos dados
 #*********************************
 data("nassCDS")
 dados <- nassCDS
@@ -40,6 +41,7 @@ str(dados)
 
 #*********************************
 ## AnÃ¡lise Descritiva
+#**2.1 Medidas de Resumo**
 #*********************************
 head(dados,10)
 summary(dados)
@@ -50,10 +52,11 @@ x11()
 #par(mfrow=c(2,5))
 #avaliar com professor
 
-mtext(side=2,cex=1.3,line=-1.5,text="Nota na AvaliaÃ§Ã£o MÃ©dica",outer=TRUE)
 
+#*********************************
+#**2.3 Histogramas**
+#*********************************
 
-x11()
 par(mfrow=c(4,3), las=1)
 plot(dados$abfunc, xlab = '', ylab = '', main = 'AB Funcionou')
 plot(dados$veloc, xlab = '', ylab = '', main = 'Velocidade')
@@ -65,12 +68,15 @@ plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
 #plot(dados$idade, xlab = '', ylab = '', main = 'Idade') 
 boxplot(dados$idade~dados$abfunc,xlab = '', ylab = 'Idade', main = 'Idade') 
 plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
-plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
+plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade') #variavel numerica 
+mtext(side=2,cex=1.3,line=-1.5,text="Proporção de respostas",outer=TRUE)
 
-################################################### atÃ© aqui no momento
+################################################### até aqui no momento
+
 
 
 ################################################### tabelas para grÃ¡ficos de setor
+#não utilizadas no relatório
 x11()
 par(mfrow=c(4,3), las=1)
 pie(table(dados$abfunc), main = 'AB Funcionou')
@@ -86,20 +92,14 @@ pie(table(dados$sexo), main = 'Sexo')
 pie(table(dados$idade), main = 'Idade')
 pie(table(dados$ocupantes), main = 'Ocupante')
 pie(table(dados$grav), main = 'Gravidade')
-                        
-    ###################################################
-
-
-
-
 
 ###################################################
-
+# duplicado
 
 
 pie(table(dados$abfunc), 
     main="GrÃ¡fico de setores: Grau de InstruÃ§Ã£o") 
-
+par(mfrow = c(3,3))
 plot(dados$abfunc, xlab = '', ylab = '', main = 'AB Funcionou')
 plot(dados$veloc, xlab = '', ylab = '', main = 'Velocidade')
 plot(dados$sobrev, xlab = '', ylab = '', main = 'Sobrevivente')
@@ -112,8 +112,9 @@ plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
 plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
 
 
-par(mfrow = c(2,2))
-
+#*********************************
+#**não foi incluido no relatório**
+#*********************************
 plot(abfunc~veloc, data = dados)
 x11()
 plot(abfunc~veloc, data = dados, xlab = 'Taxa', ylab = 'Consumo')
@@ -129,17 +130,9 @@ plot(cons~estr, data = dados, xlab = 'Estrada', ylab = 'Consumo')
 abline(lm(cons~estr, data = dados), col = 2, lwd = 2)
 
 
-
-
-
-
-
-
-
-
-
-
-
+#*********************************
+#**não foi incluido no relatório**
+#*********************************
 
 g1<-ggplot(dados, aes(x=factor(Class), y=Adhes, color=factor(Class))) + 
   geom_boxplot()+ xlab('Adhes')+ ylab('') +
@@ -179,12 +172,16 @@ g9<-ggplot(dados, aes(x=factor(Class), y=USize, color=factor(Class))) +
 
 grid.arrange(g1, g2, g3, g4, g5, g6, g7,g8 ,g9, ncol=3, nrow=3)
 
+#*********************************
+#**não foi incluido no relatório, função não roda - somente em dados numéricos**
+#*********************************
 
 cor <- cor(dados[ , 2:10])
 x11()
 corrplot.mixed(cor, upper = "ellipse")
 x11()
 scatterplotMatrix(dados[ , 2:10], col = c('Red', 'Red', 'Gray'), lwd = 3)
+
 
 #******************************
 #teste de cores
