@@ -1,3 +1,4 @@
+
 # pacotes necessários
 library(DAAG)
 library(gridExtra)
