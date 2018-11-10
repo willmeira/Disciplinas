@@ -20,25 +20,123 @@ header-includes: \usepackage[brazil]{babel}
 #bibliography: refs.bib
 ---
 ```{r, include=FALSE}
-library(ggplot2)
+library(lattice)
+library(DAAG)
 library(gridExtra)
 library(corrplot)
 library(carData)
 library(car)
 library(statmod)
-
+library(effects)
+library(ROCR)
+library(faraway)
+library(ggplot2)
 ```
 
 # 1. Base de Dados
 
+**1.1 Descrição dos dados**
+
+Os dados foram retirados do pacote "DAAG", sendo dados dos EUA, entre 1997-2002, de acidentes de carro relatados pela polícia nos quais há um evento prejudicial (pessoas ou propriedade) e do qual pelo menos um veículo foi rebocado.
+Os dados são restritos aos ocupantes do banco da frente, incluem apenas um subconjunto das variáveis registradas e são restritos de outras maneiras também.
+
+
+A base original possui uma base de dados com 26.217 observações nas 15 variáveis a seguir.
+
+1 - **veloc**: velocidades estimadas do impacto do acidente: 1-9km/h, 10-24, 25-39, 40-54, 55+
+\newline 2 - **pesos**: Pesos de observação
+\newline 3 - **sobrev**: Classificação se sobreviveu ao acidente: 1 = morreu ou 0 = sobreviveu
+\newline 4 - **airbag**: Se o carro possui airbag: com ou sem airbag
+\newline 5 - **cinto**: uso do cinto de segurança: com ou sem cinto
+\newline 6 - **frontal**: impacto do acidente: 0 = não frontal, 1 = impacto frontal
+\newline 7 - **sexo**: Sexo: 0 = Feminino ou 1 = Masculino
+\newline 8 - **idade**: Idade dos ocupantes do veículo
+\newline 9 - **anoaci**: Ano do acidente (1997-2002)
+\newline 10 - **anovei**: Ano do veículo (1953-2003)
+\newline 11 - **airbagcat**: Se Airbags foram acionados: deploy, nodeploy, unavail
+\newline 12 - **ocupantes**: Posição do airbag acionado: driver, pass
+\newline 13 - **abfunc**: Airbag acionados: 0: Se não possuia airbag ou não foi acionado, 1: Um ou mais airbags foram acionados
+\newline 14 - **grav**: Gravidade do acidente: 0:none, 1 = Possível Lesão, 2:no incapacity, 3:incapacity, 4:killed; 5:unknown, 6:prior death
+\newline 15 - **numcaso**: Número do caso.
+
+No entanto, escolhemos analisar os dados do ano do acidente de 2002 e veículos de ano 2000 e retirar as variaveis weight, abcat e caseid. 
+
+```{r, include=FALSE}
+## Carregando e ajustando a base de dados
+#*********************************
+data("nassCDS")
+summary(nassCDS)
+dados <- nassCDS
+dados<-subset(dados,yearacc==2002 & yearVeh == 2000)
+#selecionando covariáveis
+dados <-dados[,c(-2,-9,-10,-11,-15)]
+summary(dados)
+#ajustando as variáveis
+dados$dvcat <- as.ordered(ifelse(dados$dvcat == '1-9km/h','01-09 mph',
+                                 ifelse(dados$dvcat == '10-24','10-24 mph',
+                                        ifelse(dados$dvcat == '25-39','25-39 mph',
+                                               ifelse(dados$dvcat == '40-54','40-54 mph','55+ mph')))))
+dados$dead <- as.factor(ifelse(dados$dead == 'alive','Sim','Não'))
+dados$airbag <- as.factor(ifelse(dados$airbag == 'airbag','Sim','Não'))
+dados$seatbelt <- as.factor(ifelse(dados$seatbelt == 'belted','Sim','Não'))
+dados$frontal <- as.factor(ifelse(dados$frontal == 1,'Sim','Não'))
+dados$sex <- as.factor(ifelse(dados$sex == 'm', 'Masc','Fem'))
+dados$occRole <- as.factor(ifelse(dados$occRole == 'driver','Driver','Pass'))
+dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','Não'))
+dados$injSeverity<-as.numeric(dados$injSeverity)
+
+names(dados)<-c('veloc','sobrev','airbag','cinto','frontal','sexo','idade','ocupantes','abfunc','grav')
+str(dados)
+```
+
 # 2 Análise Descritiva
 
 **2.1 Medidas de Resumo**
-\newline **2.2 Boxplots** 
-\newline **2.3 Histogramas**
-\newline **2.4 Distribuição**
-\newline **2.5 Análise de correlações entre covariáveis**
-\newline **2.6 Gráficos de Disperção**
+```{r, include=FALSE}
+head(dados,10)
+summary(dados)
+summary(dados[ , c(1:8,10)])
+sum(dados$abfunc == 1)
+```
+
+```{r}
+summary(dados[ , c(1:8,10)])
+```
+
+**2.3 Histogramas**
+```{r}
+pie(table(dados$abfunc), 
+    main="Gráfico de setores: Grau de Instrução") 
+
+par(mfrow = c(3,3))
+plot(dados$abfunc, xlab = '', ylab = '', main = 'AB Funcionou')
+plot(dados$veloc, xlab = '', ylab = '', main = 'Velocidade')
+plot(dados$sobrev, xlab = '', ylab = '', main = 'Sobrevivente')
+plot(dados$airbag, xlab = '', ylab = '', main = 'Airbag')
+plot(dados$cinto, xlab = '', ylab = '', main = 'Cinto')
+plot(dados$frontal, xlab = '', ylab = '', main = 'Frontal')
+plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
+#plot(dados$idade, xlab = '', ylab = '', main = 'Idade') ### ******* inverteu eixo
+plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
+plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
+```
+
+**2.4 Distribuição**
+
+
+**2.5 Análise de correlações entre covariáveis**
+
+**2.6 Gráficos de Disperção**
+```{r, include=FALSE}
+a<- scatterplotMatrix(dados, lwd = 3)
+```
+
+```{r}
+a
+```
+
+
+
 
 # 3. AJUSTE DO MODELO DE REGRESSÃO
 
