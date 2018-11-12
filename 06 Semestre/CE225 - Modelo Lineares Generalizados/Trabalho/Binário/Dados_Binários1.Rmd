@@ -72,17 +72,17 @@ dados<-subset(dados,yearacc==2002 & yearVeh == 2000)
 dados <-dados[,c(-2,-9,-10,-11,-15)]
 summary(dados)
 #ajustando as variáveis
-dados$dvcat <- as.ordered(ifelse(dados$dvcat == '1-9km/h','01-09 mph',
-               ifelse(dados$dvcat == '10-24','10-24 mph',
-               ifelse(dados$dvcat == '25-39','25-39 mph',
-               ifelse(dados$dvcat == '40-54','40-54 mph','55+ mph')))))
-dados$dead <- as.numeric(ifelse(dados$dead == 'alive',1,0))
-dados$airbag <- as.numeric(ifelse(dados$airbag == 'airbag',1,0))
-dados$seatbelt <- as.numeric(ifelse(dados$seatbelt == 'belted',1,0))
-dados$frontal <- as.numeric(ifelse(dados$frontal == 1,1,0))
+dados$dvcat <- as.ordered(ifelse(dados$dvcat == '1-9km/h','01-09',
+               ifelse(dados$dvcat == '10-24','10-24',
+               ifelse(dados$dvcat == '25-39','25-39',
+               ifelse(dados$dvcat == '40-54','40-54','55+')))))
+dados$dead <- as.factor(ifelse(dados$dead == 'alive','Sim','Nao'))
+dados$airbag <- as.factor(ifelse(dados$airbag == 'airbag','Sim','Nao'))
+dados$seatbelt <- as.factor(ifelse(dados$seatbelt == 'belted','Sim','Nao'))
+dados$frontal <- as.factor(ifelse(dados$frontal == 1,'Sim','Nao'))
 dados$sex <- as.factor(ifelse(dados$sex == 'm', 'Masc','Fem'))
-dados$occRole <- as.numeric(ifelse(dados$occRole == 'driver',1,0))
-dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','Não'))
+dados$occRole <- as.factor(ifelse(dados$occRole == 'driver','Motorista','Passageiro'))
+dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','Nao'))
 dados$injSeverity<-as.ordered(dados$injSeverity)
 
 names(dados)<-c('veloc','sobrev','airbag','cinto','frontal','sexo','idade','ocupantes','abfunc','grav')
@@ -96,7 +96,7 @@ str(dados)
 head(dados,10)
 summary(dados)
 summary(dados[ , c(1:8,10)])
-sum(dados$abfunc == 1)
+sum(dados$abfunc == 'SIM')
 ```
 
 ```{r}
@@ -115,60 +115,25 @@ plot(dados$frontal, xlab = '', ylab = '', main = 'Frontal')
 plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
 plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
 plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade')
-mtext(side=2,cex=1.3,line=-1.5,text="Proporção das variaveis",outer=TRUE)
+mtext(side=2,cex=1.3,line=-1.5,text="Frequencias",outer=TRUE)
 ```
 
 **2.4 Distribuição**
 ```{r, include=FALSE}
-g1<-ggplot(dados, aes(x=factor(abfunc), y=veloc, color=factor(abfunc))) + 
-  geom_boxplot()+ xlab('veloc')+ ylab('') +
-  theme(legend.title=element_blank())
-
-g2<-ggplot(dados, aes(x=factor(abfunc), y=sobrev, color=factor(abfunc))) + 
-  geom_boxplot()+ xlab('sobrev')+ ylab('') +
-  theme(legend.title=element_blank())
-
-g3<-ggplot(dados, aes(x=factor(abfunc), y=airbag, color=factor(abfunc))) + 
-  geom_boxplot()+ xlab('airbag')+ ylab('') +
-  theme(legend.title=element_blank())
-
-g4<-ggplot(dados, aes(x=factor(abfunc), y=frontal, color=factor(abfunc))) + 
-  geom_boxplot()+ xlab('frontal')+ ylab('') +
-  theme(legend.title=element_blank())
-
-g5<-ggplot(dados, aes(x=factor(abfunc), y=sexo, color=factor(abfunc))) + 
-  geom_boxplot()+ xlab('sexo')+ ylab('') +
-  theme(legend.title=element_blank())
-
-g6<-ggplot(dados, aes(x=factor(abfunc), y=idade, color=factor(abfunc))) + 
+g1<-ggplot(dados, aes(y=idade)) + 
   geom_boxplot()+ xlab('idade')+ ylab('') +
   theme(legend.title=element_blank())
 
-g7<-ggplot(dados, aes(x=factor(abfunc), y=ocupantes, color=factor(abfunc))) + 
-  geom_boxplot()+ xlab('ocupantes')+ ylab('') +
-  theme(legend.title=element_blank())
 
-g8<-ggplot(dados, aes(x=factor(abfunc), y=grav, color=factor(abfunc))) + 
-  geom_boxplot()+ xlab('grav')+ ylab('') +
-  theme(legend.title=element_blank())
+
 ```
 
 ```{r}
-grid.arrange(g1, g2, g3, g4, g5, g6, g7,g8, ncol=3, nrow=3)
+g1
+
 ```
 
 
-**2.5 Análise de correlações entre covariáveis**
-
-
-**2.6 Gráficos de Disperção**
-```{r, include=FALSE}
-dis<- scatterplotMatrix(dados[ , c(1:8,10)], col = c('Green', 'Red', 'Gray'), lwd = 3)
-```
-
-```{r}
-dis
-```
 
 
 # 3. AJUSTE DO MODELO DE REGRESSÃO
@@ -211,31 +176,31 @@ O modelo que apresentou menor AIC e maior verossimilhança foi o modelo Binomial 
 
 **5.1 Resumo do Modelo**
 ```{r}
-summary(ajuste4)
+summary(ajuste3)
 ```
 
 **5.2 Reajuste do Modelo**
 ```{r}
-ajuste4.1 <- step(ajuste4, direction = "both")
-summary(ajuste4.1)
+ajuste3.1 <- step(ajuste3, direction = "both")
+summary(ajuste3.1)
 ```
 
 
 **5.3 Análise de Resíduos**
 ```{r}
-anova(ajuste4, ajuste4.1, test = 'Chisq')
+anova(ajuste3, ajuste3.1, test = 'Chisq')
 par(mfrow=c(2,2))
-plot(ajuste4.1, 1:4)
+plot(ajuste3.1, 1:4)
 ```
 
 
 **5.4 Medidas de Influencia**
 ```{r}
-influenceIndexPlot(ajuste4.1, vars=c("Cook"), main="Distância de Cook")
+influenceIndexPlot(ajuste3.1, vars=c("Cook"), main="Distância de Cook")
 ```
 
 ```{r}
-influenceIndexPlot(ajuste4.1, vars=c("Studentized"), main="Resíduos Padronizados")
+influenceIndexPlot(ajuste3.1, vars=c("Studentized"), main="Resíduos Padronizados")
 ```
 
 
@@ -244,7 +209,7 @@ influenceIndexPlot(ajuste4.1, vars=c("Studentized"), main="Resíduos Padronizados
 
 **5.7 Gráficos de Efeitos**
 ```{r}
-plot(allEffects(ajuste4.1), type = 'response', main = '')
+plot(allEffects(ajuste3.1), type = 'response', main = '')
 ```
 
 
