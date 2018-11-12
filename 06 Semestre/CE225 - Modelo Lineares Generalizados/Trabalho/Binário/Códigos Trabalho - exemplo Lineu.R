@@ -28,13 +28,13 @@ dados$dvcat <- as.ordered(ifelse(dados$dvcat == '1-9km/h','01-09 mph',
                ifelse(dados$dvcat == '10-24','10-24 mph',
                ifelse(dados$dvcat == '25-39','25-39 mph',
                ifelse(dados$dvcat == '40-54','40-54 mph','55+ mph')))))
-dados$dead <- as.factor(ifelse(dados$dead == 'alive','Sim','NÃ£o'))
-dados$airbag <- as.factor(ifelse(dados$airbag == 'airbag','Sim','NÃ£o'))
-dados$seatbelt <- as.factor(ifelse(dados$seatbelt == 'belted','Sim','NÃ£o'))
-dados$frontal <- as.factor(ifelse(dados$frontal == 1,'Sim','NÃ£o'))
+dados$dead <- as.numeric(ifelse(dados$dead == 'alive',1,0))
+dados$airbag <- as.numeric(ifelse(dados$airbag == 'airbag',1,0))
+dados$seatbelt <- as.numeric(ifelse(dados$seatbelt == 'belted',1,0))
+dados$frontal <- as.numeric(ifelse(dados$frontal == 1,1,0))
 dados$sex <- as.factor(ifelse(dados$sex == 'm', 'Masc','Fem'))
-dados$occRole <- as.factor(ifelse(dados$occRole == 'driver','Driver','Pass'))
-dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','NÃ£o'))
+dados$occRole <- as.numeric(ifelse(dados$occRole == 'driver',1,0))
+dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','Não'))
 dados$injSeverity<-as.ordered(dados$injSeverity)
 
 names(dados)<-c('veloc','sobrev','airbag','cinto','frontal','sexo','idade','ocupantes','abfunc','grav')
@@ -58,7 +58,7 @@ x11()
 #**2.3 Histogramas**
 #*********************************
 
-par(mfrow=c(4,3), las=1)
+par(mfrow=c(3,3))
 plot(dados$abfunc, xlab = '', ylab = '', main = 'AB Funcionou')
 plot(dados$veloc, xlab = '', ylab = '', main = 'Velocidade')
 plot(dados$sobrev, xlab = '', ylab = '', main = 'Sobrevivente')
@@ -67,7 +67,6 @@ plot(dados$cinto, xlab = '', ylab = '', main = 'Cinto')
 plot(dados$frontal, xlab = '', ylab = '', main = 'Frontal')
 plot(dados$sexo, xlab = '', ylab = '', main = 'Sexo')
 #plot(dados$idade, xlab = '', ylab = '', main = 'Idade') 
-boxplot(dados$idade~dados$abfunc,xlab = '', ylab = 'Idade', main = 'Idade') 
 plot(dados$ocupantes, xlab = '', ylab = '', main = 'Ocupante')
 plot(dados$grav, xlab = '', ylab = '', main = 'Gravidade') #variavel numerica 
 mtext(side=2,cex=1.3,line=-1.5,text="Proporção de respostas",outer=TRUE)
@@ -134,59 +133,56 @@ abline(lm(cons~estr, data = dados), col = 2, lwd = 2)
 #*********************************
 #**não foi incluido no relatório**
 #*********************************
-
-g1<-ggplot(dados, aes(x=factor(Class), y=Adhes, color=factor(Class))) + 
-  geom_boxplot()+ xlab('Adhes')+ ylab('') +
+summary(dados)
+g1<-ggplot(dados, aes(x=factor(abfunc), y=veloc, color=factor(abfunc))) + 
+  geom_boxplot()+ xlab('veloc')+ ylab('') +
   theme(legend.title=element_blank())
 
-g2<-ggplot(dados, aes(x=factor(Class), y=BNucl, color=factor(Class))) + 
-  geom_boxplot()+ xlab('BNucl')+ ylab('') +
+g2<-ggplot(dados, aes(x=factor(abfunc), y=sobrev, color=factor(abfunc))) + 
+  geom_boxplot()+ xlab('sobrev')+ ylab('') +
   theme(legend.title=element_blank())
 
-g3<-ggplot(dados, aes(x=factor(Class), y=Chrom, color=factor(Class))) + 
-  geom_boxplot()+ xlab('Chrom')+ ylab('') +
+g3<-ggplot(dados, aes(x=factor(abfunc), y=airbag, color=factor(abfunc))) + 
+  geom_boxplot()+ xlab('airbag')+ ylab('') +
   theme(legend.title=element_blank())
 
-g4<-ggplot(dados, aes(x=factor(Class), y=Epith, color=factor(Class))) + 
-  geom_boxplot()+ xlab('Epith')+ ylab('') +
+g4<-ggplot(dados, aes(x=factor(abfunc), y=frontal, color=factor(abfunc))) + 
+  geom_boxplot()+ xlab('frontal')+ ylab('') +
   theme(legend.title=element_blank())
 
-g5<-ggplot(dados, aes(x=factor(Class), y=Mitos, color=factor(Class))) + 
-  geom_boxplot()+ xlab('Mitos')+ ylab('') +
+g5<-ggplot(dados, aes(x=factor(abfunc), y=sexo, color=factor(abfunc))) + 
+  geom_boxplot()+ xlab('sexo')+ ylab('') +
   theme(legend.title=element_blank())
 
-g6<-ggplot(dados, aes(x=factor(Class), y=NNucl, color=factor(Class))) + 
-  geom_boxplot()+ xlab('NNucl')+ ylab('') +
+g6<-ggplot(dados, aes(x=factor(abfunc), y=idade, color=factor(abfunc))) + 
+  geom_boxplot()+ xlab('idade')+ ylab('') +
   theme(legend.title=element_blank())
 
-g7<-ggplot(dados, aes(x=factor(Class), y=Thick, color=factor(Class))) + 
-  geom_boxplot()+ xlab('Thick')+ ylab('') +
+g7<-ggplot(dados, aes(x=factor(abfunc), y=ocupantes, color=factor(abfunc))) + 
+  geom_boxplot()+ xlab('ocupantes')+ ylab('') +
   theme(legend.title=element_blank())
 
-g8<-ggplot(dados, aes(x=factor(Class), y=UShap, color=factor(Class))) + 
-  geom_boxplot()+ xlab('UShap')+ ylab('') +
+g8<-ggplot(dados, aes(x=factor(abfunc), y=grav, color=factor(abfunc))) + 
+  geom_boxplot()+ xlab('grav')+ ylab('') +
   theme(legend.title=element_blank())
 
-g9<-ggplot(dados, aes(x=factor(Class), y=USize, color=factor(Class))) + 
-  geom_boxplot()+ xlab('USize')+ ylab('') +
-  theme(legend.title=element_blank())
 
-grid.arrange(g1, g2, g3, g4, g5, g6, g7,g8 ,g9, ncol=3, nrow=3)
+grid.arrange(g1, g2, g3, g4, g5, g6, g7,g8, ncol=3, nrow=3)
 
 #*********************************
 #**não foi incluido no relatório, função não roda - somente em dados numéricos**
 #*********************************
-
-cor <- cor(dados[ , 2:10])
+summary(dados)
+cor <- cor(dados[ , 1:8])
 x11()
 corrplot.mixed(cor, upper = "ellipse")
 x11()
-scatterplotMatrix(dados[ , 2:10], col = c('Red', 'Red', 'Gray'), lwd = 3)
+scatterplotMatrix(dados[ , c(1:8)], col = c('Red', 'Red', 'Gray'), lwd = 3)
 
 
 #******************************
 #teste de cores
-scatterplotMatrix(dados[ , 2:10], 
+scatterplotMatrix(dados[ , c(1:8),9], 
                   lwd = 3, col = c(method=lm, lty=1, lwd=2, col=carPalette())
                   )
 #******************************
