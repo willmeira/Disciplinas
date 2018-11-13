@@ -1,0 +1,642 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Trabalho de dados Binários},
+            pdfauthor={Laís Hoffmann, Simone Matsubara, Yasmin Fernandes, Willian Meira},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Trabalho de dados Binários}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \subtitle{Acidentes de carro}
+  \author{Laís Hoffmann, Simone Matsubara, Yasmin Fernandes, Willian Meira}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2018-11-12}
+
+\usepackage[brazil]{babel} \usepackage{amsmath} \usepackage{float}
+\usepackage{bm}
+
+\begin{document}
+\maketitle
+
+\section{1. Base de Dados}\label{base-de-dados}
+
+\textbf{1.1 Descrição dos dados}
+
+Os dados foram retirados do pacote ``DAAG'', sendo dados dos EUA, entre
+1997-2002, de acidentes de carro relatados pela polícia nos quais há um
+evento prejudicial (pessoas ou propriedade) e do qual pelo menos um
+veículo foi rebocado. Os dados são restritos aos ocupantes do banco da
+frente, incluem apenas um subconjunto das variáveis registradas e são
+restritos de outras maneiras também.
+
+A base original possui uma base de dados com 26.217 observações nas 15
+variáveis a seguir.
+
+1 - \textbf{veloc}: velocidades estimadas do impacto do acidente:
+1-9km/h, 10-24, 25-39, 40-54, 55+ \newline 2 - \textbf{pesos}: Pesos de
+observação \newline 3 - \textbf{sobrev}: Classificação se sobreviveu ao
+acidente: 1 = morreu ou 0 = sobreviveu \newline 4 - \textbf{airbag}: Se
+o carro possui airbag: com ou sem airbag \newline 5 - \textbf{cinto}:
+uso do cinto de segurança: com ou sem cinto \newline 6 -
+\textbf{frontal}: impacto do acidente: 0 = não frontal, 1 = impacto
+frontal \newline 7 - \textbf{sexo}: Sexo: 0 = Feminino ou 1 = Masculino
+\newline 8 - \textbf{idade}: Idade dos ocupantes do veículo \newline 9 -
+\textbf{anoaci}: Ano do acidente (1997-2002) \newline 10 -
+\textbf{anovei}: Ano do veículo (1953-2003) \newline 11 -
+\textbf{airbagcat}: Se Airbags foram acionados: deploy, nodeploy,
+unavail \newline 12 - \textbf{ocupantes}: Posição do airbag acionado:
+driver, pass \newline 13 - \textbf{abfunc}: Airbag acionados: 0: Se não
+possuia airbag ou não foi acionado, 1: Um ou mais airbags foram
+acionados \newline 14 - \textbf{grav}: Gravidade do acidente: 0:none, 1
+= Possível Lesão, 2:no incapacity, 3:incapacity, 4:killed; 5:unknown,
+6:prior death \newline 15 - \textbf{numcaso}: Número do caso.
+
+No entanto, escolhemos analisar os dados do ano do acidente de 2002 e
+veículos de ano 2000 e retirar as variaveis weight, abcat e caseid.
+
+\section{2 Análise Descritiva}\label{analise-descritiva}
+
+\textbf{2.1 Medidas de Resumo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(dados[ , }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{8}\NormalTok{,}\DecValTok{10}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    veloc     sobrev    airbag    cinto     frontal     sexo    
+##  01-09: 12   Nao: 23   Nao:  1   Nao:121   Nao:183   Fem :254  
+##  10-24:293   Sim:470   Sim:492   Sim:372   Sim:310   Masc:239  
+##  25-39:121                                                     
+##  40-54: 46                                                     
+##  55+  : 21                                                     
+##                                                                
+##                                                                
+##      idade            ocupantes     grav    
+##  Min.   :16.00   Motorista :386   0   :145  
+##  1st Qu.:23.00   Passageiro:107   1   :102  
+##  Median :35.00                    2   : 81  
+##  Mean   :37.82                    3   :139  
+##  3rd Qu.:48.00                    4   : 19  
+##  Max.   :93.00                    5   :  3  
+##                                   NA's:  4
+\end{verbatim}
+
+\subsubsection{Nota-se na varável velocidade uma frequência maior na
+faixa 10-24
+milhas.}\label{nota-se-na-varavel-velocidade-uma-frequencia-maior-na-faixa-10-24-milhas.}
+
+\subsubsection{A maioria estava com cinto de segurança e os acidentes
+foram a maioria
+frontais.}\label{a-maioria-estava-com-cinto-de-seguranca-e-os-acidentes-foram-a-maioria-frontais.}
+
+\textbf{2.3 Histogramas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(dados$abfunc, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'AB Funcionou'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(dados$veloc, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Velocidade'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(dados$sobrev, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Sobrevivente'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(dados$airbag, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Airbag'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(dados$cinto, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Cinto'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(dados$frontal, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Frontal'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(dados$sexo, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Sexo'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(dados$ocupantes, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Ocupante'}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(dados$grav, }\DataTypeTok{xlab =} \StringTok{''}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{''}\NormalTok{, }\DataTypeTok{main =} \StringTok{'Gravidade'}\NormalTok{)}
+\KeywordTok{mtext}\NormalTok{(}\DataTypeTok{side=}\DecValTok{2}\NormalTok{,}\DataTypeTok{cex=}\FloatTok{1.3}\NormalTok{,}\DataTypeTok{line=}\NormalTok{-}\FloatTok{1.5}\NormalTok{,}\DataTypeTok{text=}\StringTok{"Frequencias"}\NormalTok{,}\DataTypeTok{outer=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\textbf{2.4 Distribuição}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1<-}\KeywordTok{ggplot}\NormalTok{(dados, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y=}\NormalTok{idade)) +}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{()+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\StringTok{'idade'}\NormalTok{)+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{''}\NormalTok{) +}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.title=}\KeywordTok{element_blank}\NormalTok{())}
+
+
+\NormalTok{g1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-6-1.pdf}
+\#\#\#Intuitivamente sabemos que para nosso escopo a variável idade não
+é significativa para o nosso modelo porém para comprovar adiante faremos
+um teste para evidênciar a irrelevancia da variável no modelo.
+
+\section{3. Ajuste do Modelo de
+Regressão}\label{ajuste-do-modelo-de-regressao}
+
+\subsection{\texorpdfstring{\textbf{3.1 Ligação
+Logito}}{3.1 Ligação Logito}}\label{ligacao-logito}
+
+Vamos ajustar um Modelo Linear Generalizado Binomial com função de
+ligação Logito. A expressão do modelo é dada por:
+
+\(ln (\frac{\pi_i}{1-\pi_i}) = \beta_0 + \beta_1 Veloc_i + \beta_2 Sobrev_i + \beta_3 Airbag_i + \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i + \beta_9 Grav_i\)
+
+No R, o modelo é declarado da seguinte forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ajuste1 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(abfunc ~}\StringTok{ }\NormalTok{.,}\DataTypeTok{family=}\KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link=}\StringTok{'logit'}\NormalTok{),}\DataTypeTok{data =} \NormalTok{dados)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\textbf{3.2 Ligação
+Probito}}{3.2 Ligação Probito}}\label{ligacao-probito}
+
+Vamos ajustar um Modelo Linear Generalizado Binomial com função de
+ligação Probito. A expressão do modelo é dada por:
+
+\(\phi^{-1} (\pi_i) = \beta_0 + \beta_1 Veloc_i + \beta_2 Sobrev_i + \beta_3 Airbag_i + \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i + \beta_9 Grav_i\)
+
+No R, o modelo é declarado da seguinte forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ajuste2 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(abfunc ~}\StringTok{ }\NormalTok{.,}\DataTypeTok{family=}\KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link =} \StringTok{'probit'}\NormalTok{),}\DataTypeTok{data =} \NormalTok{dados)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\textbf{3.3 Ligação Complemento
+log-log}}{3.3 Ligação Complemento log-log}}\label{ligacao-complemento-log-log}
+
+Vamos ajustar um Modelo Linear Generalizado Binomial com função de
+ligação Complemento Log Log. A expressão do modelo é dada por:
+
+\(ln[-ln(1-\pi_i)] = \beta_0 + \beta_1 Veloc_i + \beta_2 Sobrev_i + \beta_3 Airbag_i + \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i + \beta_9 Grav_i\)
+
+No R, o modelo é declarado da seguinte forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ajuste3 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(abfunc ~}\StringTok{ }\NormalTok{.,}\DataTypeTok{family=}\KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link=}\StringTok{'cloglog'}\NormalTok{),}\DataTypeTok{data =} \NormalTok{dados)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{\texorpdfstring{\textbf{3.4 Ligação
+Cauchy}}{3.4 Ligação Cauchy}}\label{ligacao-cauchy}
+
+Vamos ajustar um Modelo Linear Generalizado Binomial com função de
+ligação Cauchy. A expressão do modelo é dada por:
+
+\(tan[\pi_i(\mu_i- 0,5)] = \beta_0 + \beta_1 Veloc_i + \beta_2 Sobrev_i + \beta_3 Airbag_i + \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i + \beta_9 Grav_i\)
+
+No R, o modelo é declarado da seguinte forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ajuste4 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(abfunc ~}\StringTok{ }\NormalTok{.,}\DataTypeTok{family=}\KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link=}\StringTok{'cauchit'}\NormalTok{),}\DataTypeTok{data =} \NormalTok{dados)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{4. Escolha do Modelo}\label{escolha-do-modelo}
+
+XXXXXXX lineu Para seleção de modelos diversas medidas podem ser
+utilizadas, em especial vamos utilizar a verossimilhança dos modelos.
+
+O critério de informação AIC pode também ser utilizado, porém o AIC
+penaliza o número de parâmetros do modelo. Como os modelos tem o mesmo
+número de parâmetros, o critério aponta para a mesma direção da
+verossimilhança pois todos são penalizados da mesma forma; para fins de
+ilustração, as duas quantidades são exibidas: XXXXXXX
+
+\begin{verbatim}
+##    ajuste      aic    logLik
+## 1  logito 514.1660 -240.0830
+## 2 probito 514.1476 -240.0738
+## 3 cloglog 513.2723 -239.6361
+## 4  cauchy 514.4334 -240.2167
+\end{verbatim}
+
+O modelo que apresentou menor AIC e maior verossimilhança foi o modelo
+Binomial com função de ligação C Log-Log.
+
+\section{5. Análise do Modelo Ajustado
+Selecionado}\label{analise-do-modelo-ajustado-selecionado}
+
+\subsection{\texorpdfstring{\textbf{5.1 Resumo do
+Modelo}}{5.1 Resumo do Modelo}}\label{resumo-do-modelo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ajuste3) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = abfunc ~ ., family = binomial(link = "cloglog"), 
+##     data = dados)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.5970  -0.7381   0.1408   0.8342   2.5503  
+## 
+## Coefficients:
+##                       Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)         -17.117970 843.971464  -0.020 0.983818    
+## veloc10-24            1.657013   1.051727   1.576 0.115137    
+## veloc25-39            2.213254   1.056112   2.096 0.036112 *  
+## veloc40-54            3.083987   1.097654   2.810 0.004960 ** 
+## veloc55+              2.614381   1.115507   2.344 0.019095 *  
+## sobrevSim            -0.924814   0.741988  -1.246 0.212618    
+## airbagSim            14.650899 843.970429   0.017 0.986150    
+## cintoSim             -0.289103   0.168727  -1.713 0.086631 .  
+## frontalSim            1.678297   0.179356   9.357  < 2e-16 ***
+## sexoMasc             -0.056287   0.145436  -0.387 0.698737    
+## idade                -0.002542   0.004372  -0.581 0.560989    
+## ocupantesPassageiro  -0.017739   0.173337  -0.102 0.918490    
+## grav1                 0.624505   0.202880   3.078 0.002083 ** 
+## grav2                 0.832691   0.229412   3.630 0.000284 ***
+## grav3                 0.771844   0.203548   3.792 0.000149 ***
+## grav4                -0.472641   0.823550  -0.574 0.566031    
+## grav5                -0.039578   0.777019  -0.051 0.959376    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 670.27  on 488  degrees of freedom
+## Residual deviance: 479.27  on 472  degrees of freedom
+##   (4 observations deleted due to missingness)
+## AIC: 513.27
+## 
+## Number of Fisher Scoring iterations: 13
+\end{verbatim}
+
+XXXXXX LIneu O resumo do modelo ajustado indica que as variáveis adesão
+marginal, nucléolos nus, cromatina branda, nucléolo normal e espessura
+do aglomerado estão associadas a uma maior probabilidade de tumor
+maligno, enquanto as demais variáveis não apresentam relação com a
+resposta.
+
+XXXXXXX
+
+\subsection{\texorpdfstring{\textbf{5.2 Reajuste do
+Modelo}}{5.2 Reajuste do Modelo}}\label{reajuste-do-modelo}
+
+XXXXX Lineu Como as covariáveis são altamente correlacionadas, é válido
+inserir as covariáveis uma a uma no modelo para verificar sua
+significância na presença das outras, tal como o realizado pelo
+algoritmo stepwise.
+
+Sendo assim, o novo modelo fica da seguinte forma:
+
+XXXXX
+
+XXXXXX
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ajuste3}\FloatTok{.1} \NormalTok{<-}\StringTok{ }\KeywordTok{step}\NormalTok{(ajuste3, }\DataTypeTok{direction =} \StringTok{"both"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = abfunc ~ veloc + airbag + cinto + frontal + grav, 
+##     family = binomial(link = "cloglog"), data = dados)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.5133  -0.7352   0.1164   0.8654   2.5279  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -18.1312   843.9711  -0.021 0.982860    
+## veloc10-24    1.6646     1.0491   1.587 0.112586    
+## veloc25-39    2.2202     1.0524   2.110 0.034897 *  
+## veloc40-54    3.1220     1.0911   2.861 0.004219 ** 
+## veloc55+      2.7701     1.1111   2.493 0.012663 *  
+## airbagSim    14.6278   843.9704   0.017 0.986172    
+## cintoSim     -0.2896     0.1652  -1.753 0.079642 .  
+## frontalSim    1.6614     0.1777   9.348  < 2e-16 ***
+## grav1         0.6186     0.2002   3.089 0.002006 ** 
+## grav2         0.8201     0.2249   3.647 0.000266 ***
+## grav3         0.7718     0.1998   3.863 0.000112 ***
+## grav4         0.3550     0.4228   0.840 0.401014    
+## grav5        -0.1153     0.7652  -0.151 0.880218    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 670.27  on 488  degrees of freedom
+## Residual deviance: 481.18  on 476  degrees of freedom
+##   (4 observations deleted due to missingness)
+## AIC: 507.18
+## 
+## Number of Fisher Scoring iterations: 13
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{selec2 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{ajuste=}\KeywordTok{c}\NormalTok{(}\StringTok{'aj3'}\NormalTok{, }\StringTok{'aj3.1'}\NormalTok{),}
+                    \DataTypeTok{aic=}\KeywordTok{c}\NormalTok{(}\KeywordTok{AIC}\NormalTok{(ajuste3), }\KeywordTok{AIC}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{)),}
+                    \DataTypeTok{logLik=}\KeywordTok{c}\NormalTok{(}\KeywordTok{logLik}\NormalTok{(ajuste3),}\KeywordTok{logLik}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{)),}
+                    \DataTypeTok{Dev=}\KeywordTok{c}\NormalTok{(}\KeywordTok{deviance}\NormalTok{(ajuste3),}\KeywordTok{deviance}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{)))}
+
+\NormalTok{selec2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ajuste      aic    logLik      Dev
+## 1    aj3 513.2723 -239.6361 479.2723
+## 2  aj3.1 507.1838 -240.5919 481.1838
+\end{verbatim}
+
+O resumo do novo modelo ajustado:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(ajuste3, ajuste3}\FloatTok{.1}\NormalTok{, }\DataTypeTok{test =} \StringTok{'Chisq'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table
+## 
+## Model 1: abfunc ~ veloc + sobrev + airbag + cinto + frontal + sexo + idade + 
+##     ocupantes + grav
+## Model 2: abfunc ~ veloc + airbag + cinto + frontal + grav
+##   Resid. Df Resid. Dev Df Deviance Pr(>Chi)
+## 1       472     479.27                     
+## 2       476     481.18 -4  -1.9115    0.752
+\end{verbatim}
+
+\subsection{\texorpdfstring{\textbf{5.3 Análise de
+Resíduos}}{5.3 Análise de Resíduos}}\label{analise-de-residuos}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{, }\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: not plotting observations with leverage one:
+##   180
+\end{verbatim}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(ajuste3, }\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: not plotting observations with leverage one:
+##   180
+\end{verbatim}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-16-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{hnp}\NormalTok{(ajuste3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Binomial model
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hnp}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Binomial model
+\end{verbatim}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-16-3.pdf}
+
+\textbf{5.4 Medidas de Influencia}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{influenceIndexPlot}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{, }\DataTypeTok{vars=}\KeywordTok{c}\NormalTok{(}\StringTok{"Cook"}\NormalTok{), }\DataTypeTok{main=}\StringTok{"Distância de Cook"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{influenceIndexPlot}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{, }\DataTypeTok{vars=}\KeywordTok{c}\NormalTok{(}\StringTok{"Studentized"}\NormalTok{), }\DataTypeTok{main=}\StringTok{"Resíduos Padronizados"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\textbf{5.5 Resíduos Quantílicos Aleatoriazados}
+
+\subsection{\texorpdfstring{\textbf{5.6 Gráfico Normal de Probabilidades
+com Envelope
+Simulado}}{5.6 Gráfico Normal de Probabilidades com Envelope Simulado}}\label{grafico-normal-de-probabilidades-com-envelope-simulado}
+
+XXXXX Lineu O gráfico de resíduos simulados permite verificar a
+adequação do modelo ajustado mesmo que os resíduos não tenham uma
+aproximação adequada com a distribuição Normal. Neste tipo de gráfico
+espera-se, para um modelo bem ajustado, os pontos (resíduos) dispersos
+aleatoriamente entre os limites do envelope.
+
+Deve-se ficar atento à presença de pontos fora dos limites do envelope
+ou ainda a pontos dentro dos limites porém apresentando padrões
+sistemáticos.
+
+Vamos utilizar a função envelope implementada pelo professor Cesar
+Augusto Taconeli :
+
+XXXXX
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{hnp}\NormalTok{(ajuste3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Binomial model
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hnp}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Binomial model
+\end{verbatim}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\textbf{5.7 Gráficos de Efeitos}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{allEffects}\NormalTok{(ajuste3}\FloatTok{.1}\NormalTok{), }\DataTypeTok{type =} \StringTok{'response'}\NormalTok{, }\DataTypeTok{main =} \StringTok{''}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Dados_Binários1_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\section{6. PREDIÇÃO}\label{predicao}
+
+\section{7. AVALIAÇÃO DO PODER PREDITIVO DO
+MODELO}\label{avaliacao-do-poder-preditivo-do-modelo}
+
+\textbf{7.1 Divisão da Base de dados}
+
+\textbf{7.2 Ponto de Corte}
+
+\textbf{7.3 Sensibilidade e Especificidade}
+
+\textbf{7.4 Curva ROC}
+
+\textbf{7.5 Outra Alternativa de validação}
+
+\section{8. REFERÊNCIAS}\label{referencias}
+
+\section{}\label{section}
+
+
+\end{document}
