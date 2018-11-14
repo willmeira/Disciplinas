@@ -24,20 +24,7 @@ dados<-subset(dados,yearacc==2002 & yearVeh == 2000)
 dados <-dados[,c(-2,-9,-10,-11,-15)]
 
 #ajustando as variÃ¡veis
-dados$dvcat <- as.ordered(ifelse(dados$dvcat == '1-9km/h','01-09 mph',
-               ifelse(dados$dvcat == '10-24','10-24 mph',
-               ifelse(dados$dvcat == '25-39','25-39 mph',
-               ifelse(dados$dvcat == '40-54','40-54 mph','55+ mph')))))
-dados$dead <- as.numeric(ifelse(dados$dead == 'alive',1,0))
-dados$airbag <- as.numeric(ifelse(dados$airbag == 'airbag',1,0))
-dados$seatbelt <- as.numeric(ifelse(dados$seatbelt == 'belted',1,0))
-dados$frontal <- as.numeric(ifelse(dados$frontal == 1,1,0))
-dados$sex <- as.factor(ifelse(dados$sex == 'm', 'Masc','Fem'))
-dados$occRole <- as.numeric(ifelse(dados$occRole == 'driver',1,0))
-dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','Não'))
-dados$injSeverity<-as.ordered(dados$injSeverity)
 
-names(dados)<-c('veloc','sobrev','airbag','cinto','frontal','sexo','idade','ocupantes','abfunc','grav')
 str(dados)
 
 #*********************************

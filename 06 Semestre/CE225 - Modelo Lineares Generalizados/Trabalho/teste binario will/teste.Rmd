@@ -1,0 +1,386 @@
+---
+title: "Untitled"
+author: "Willian Meira Schlichta"
+date: "14 de novembro de 2018"
+output: html_document
+---
+```{r, include=FALSE}
+library(lattice)
+library(readxl)
+library(readr)
+library(tidyverse)
+#library(xlsx)
+library(MASS)
+library(DAAG)
+library(gridExtra)
+library(corrplot)
+library(carData)
+library(car)
+library(statmod)
+library(effects)
+library(ROCR)
+library(hnp)
+library(faraway)
+library(ggplot2)
+```
+
+# 1. Base de Dados
+
+
+Os dados foram retirados do pacote "DAAG", sendo dados dos EUA, entre 1997-2002, de acidentes de carro relatados pela polícia nos quais há um evento prejudicial (pessoas ou propriedade) e do qual pelo menos um veículo foi rebocado.
+Os dados são restritos aos ocupantes do banco da frente, incluem apenas um subconjunto das variáveis registradas e são restritos de outras maneiras também.
+
+**1.1 Descrição dos dados**
+
+A base original possui uma base de dados com 26.217 observações nas 15 variáveis a seguir:
+
+1 - **dvcat**: velocidades estimadas do impacto do acidente: 1-9km/h, 10-24, 25-39, 40-54, 55+
+<br/> 2 - **weight**: Pesos de observação
+<br/> 3 - **dead**: Classificação se sobreviveu ao acidente: 1 = sobreviveu ou 0 = morreu
+<br/> 4 - **airbag**: Se o carro possui airbag: com ou sem airbag
+<br/> 5 - **seatbelt**: Uso do cinto de segurança: com ou sem cinto
+<br/> 6 - **frontal**: Impacto do acidente: 0 = não frontal, 1 = impacto frontal
+<br/> 7 - **sex**: Sexo: 0 = Feminino ou 1 = Masculino
+<br/> 8 - **ageOFocc**: Idade dos ocupantes do veículo
+<br/> 9 - **yearacc**: Ano do acidente (1997-2002)
+<br/> 10 - **yearVeh**: Ano do veículo (1953-2003)
+<br/> 11 - **abcat**: Se Airbags foram acionados: deploy, nodeploy, unavail
+<br/> 12 - **occRole**: Posição do airbag acionado: driver, pass
+<br/> 13 - **deploy**: Airbag acionados: 0: Se não possuia airbag ou não foi acionado, 1: Um ou mais airbags foram acionados
+<br/> 14 - **injSeverity**: Gravidade do acidente: 0:none, 1 = Possível Lesão, 2:no incapacity, 3:incapacity, 4:killed; 5:unknown, 6:prior death
+<br/> 15 - **caseid**: ID do caso.
+
+O objetivo da análise foi modelar a probalidade de sobrevivencia dos acidentes de carro da base "nassCD" sob a influência do airbag e outros elementos.
+
+O escopo da análise tem como respota a variável "dead", que informa se o ocupante do veículo sobreviveu ou não após o acidente. As demais covariáveis serão explicativas, no entando, foi constatado, verificando os dados da base, que algumas delas são irrelevantes ou estão mal explicadas ("weight" e "caseid"). Foram retiradas também as variáveis "airbag", "ageOFocc", "yearVeh", "abcat" e "injSeverity", pois não convergiram ao rodar os modelos. 
+
+Outro detalhe, devido ao número elevado de registros (mais de 26000 linhas), pegamos uma amostra de aproximadamente 10% do total de registros.
+
+
+```{r, echo=FALSE, eval=TRUE, results="hide"}
+## Carregando e ajustando a base de dados
+#*********************************
+dados <- read.csv('base_vivo_morto.csv',header = TRUE)
+dados<-dados[,c(-1,-10)]
+levels(dados$veloc)
+```
+
+**1.2 Ajustando o formato dos dados**
+
+Para um melhor entendimento dos dados, renomeamos os campos e em seguida apresentamos uma prévia da base.
+
+```{r, echo=FALSE, eval=TRUE, results="markup"}
+dados$dvcat <- as.ordered(ifelse(dados$dvcat == '1-9km/h','01/09',
+                          ifelse(dados$dvcat == '10-24','10/24',
+                          ifelse(dados$dvcat == '25-39','25/39',
+                          ifelse(dados$dvcat == '40-54','40/54','55+')))))
+dados$dead <- as.factor(dados$dead)
+dados$seatbelt <- as.factor(ifelse(dados$seatbelt == 'belted','Sim','Nao'))
+dados$frontal <- as.factor(ifelse(dados$frontal == 1,'Sim','Nao'))
+dados$sex <- as.factor(ifelse(dados$sex == 'm', 'Masc','Fem'))
+dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','Nao'))
+names(dados)<-c('veloc','sobrev','cinto','frontal','sexo','idade','ocupantes','abfunc')
+```
+
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+names(dados)<-c('veloc','sobrev','cinto','frontal','sexo','idade','ocupantes','abfunc')
+```
+
+```{r, echo=FALSE, eval=TRUE, results="markup"}
+head(dados)
+```
+
+
+# 2 Análise Descritiva
+
+**2.1 Medidas de Resumo e gráficos de frequencia**
+
+Vamos avaliar o Summary do modelo:
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+summary(dados)
+```
+
+VER ANALISE
+Nota-se na variável velocidade uma frequência maior de acidentes na faixa de 25-39 milhas.
+A maioria estava com cinto de segurança e os acidentes foram a maioria frontais.
+
+<br/>
+```{r, echo=FALSE, eval=TRUE, results="hide"}
+par(mfrow = c(2,3))
+barplot(table(dados$sobrev,dados$veloc), beside=T, las = 1,
+        xlab = 'Faixa de velocidade')
+barplot(table(dados$sobrev,dados$cinto), beside=T, las = 1,
+        xlab = 'Cinto') 
+barplot(table(dados$sobrev,dados$frontal), beside=T, las = 1,
+        xlab = 'Frontal') 
+barplot(table(dados$sobrev,dados$sexo), beside=T, las = 1,
+        xlab = 'Sexo')
+barplot(table(dados$sobrev,dados$ocupantes), beside=T, las = 1,
+        xlab = 'Ocupantes', legend = c('Óbitos','Vivos'))
+barplot(table(dados$sobrev,dados$abfunc), beside=T, las = 1,
+        xlab = 'Airbag Funcionou')
+mtext(side=3,cex=1.3,line=-1.5,text="Gráficos de Frequencia",outer=TRUE)
+```
+
+
+VER ANALISE
+Intuitivamente sabemos que para nosso escopo a variável idade não é significativa para o nosso modelo porém para comprovar adiante faremos um teste para evidênciar a irrelevancia da variável no modelo.
+
+<br/>
+
+**2.2 Boxplot**
+
+```{r,echo=FALSE, eval=TRUE, results="markup"}
+
+g1<-ggplot(dados, aes( y=idade)) +  geom_boxplot()+ ylab('') + theme(legend.title=element_blank())
+g2<-ggplot(dados, aes(x=factor(sobrev), y=idade, color=factor(sobrev))) +  geom_boxplot()+ xlab('Idade')+ ylab('') + theme(legend.title=element_blank())
+```
+
+```{r,echo=FALSE, eval=TRUE, results="markup"}
+grid.arrange(g1,g2, ncol=2, nrow=1)
+```
+COLOCAR NOMES NOs BOXPLOTS
+  
+# 3. Ajuste do Modelo de Regressão
+
+
+**3.1 Ligação Logito**
+
+Vamos ajustar um Modelo Linear Generalizado Binomial com função de ligação Logito. A expressão do modelo é dada por:
+
+$ln (\frac{\pi_i}{1-\pi_i}) = \beta_0 + \beta_1 Veloc_i + \beta_2 Cinto_i + \beta_3 Frontal_i + \beta_4 Sexo_i + \beta_5  Idade_i + \beta_6 Ocupantes_i + \beta_7 AbFunc_i$
+
+
+No R, o modelo é declarado da seguinte forma:
+
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+ajuste1 <- glm(sobrev ~ .,family=binomial(link='logit'),data = dados)
+```
+
+
+
+**3.2 Ligação Probito**
+
+Vamos ajustar um Modelo Linear Generalizado Binomial com função de ligação Probito. A expressão do modelo é dada por:
+
+
+$\phi^{-1} (\pi_i) = \beta_0 + \beta_1 Veloc_i + \beta_2 Cinto_i + \beta_3 Frontal_i + \beta_4 Sexo_i + \beta_5  Idade_i + \beta_6 Ocupantes_i + \beta_7 AbFunc_i$
+
+
+No R, o modelo é declarado da seguinte forma:
+
+
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+ajuste2 <- glm(sobrev ~ .,family=binomial(link = 'probit'),data = dados)
+```
+
+
+
+**3.3 Ligação Complemento log-log**
+
+Vamos ajustar um Modelo Linear Generalizado Binomial com função de ligação Complemento Log Log. A expressão do modelo é dada por:
+
+
+$ln[-ln(1-\pi_i)] = \beta_0 + \beta_1 Veloc_i + \beta_2 Cinto_i + \beta_3 Frontal_i + \beta_4 Sexo_i + \beta_5  Idade_i + \beta_6 Ocupantes_i + \beta_7 AbFunc_i$
+
+
+No R, o modelo é declarado da seguinte forma:
+
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+ajuste3 <- glm(sobrev ~ .,family=binomial(link='cloglog'),data = dados)
+```
+
+
+
+**3.4 Ligação Cauchy**
+
+Vamos ajustar um Modelo Linear Generalizado Binomial com função de ligação Cauchy. A expressão do modelo é dada por:
+
+
+$tan[\pi_i(\mu_i- 0,5)] = \beta_0 + \beta_1 Veloc_i + \beta_2 Cinto_i + \beta_3 Frontal_i + \beta_4 Sexo_i + \beta_5  Idade_i + \beta_6 Ocupantes_i + \beta_7 AbFunc_i$
+
+No R, o modelo é declarado da seguinte forma:
+
+
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+ajuste4 <- glm(sobrev ~ .,family=binomial(link='cauchit'),data = dados)
+```
+
+
+# 4. Escolha do Modelo
+
+O critério de informação AIC pode também ser utilizado, porém o AIC penaliza o número de parâmetros do modelo. Como os modelos tem o mesmo número de parâmetr  os, o critério aponta para a mesma direção da verossimilhança pois todos são penalizados da mesma forma.
+
+
+
+
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+selec <- data.frame(ajuste=c('logito', 'probito', 'cloglog', 'cauchy'),
+                    aic=c(AIC(ajuste1), AIC(ajuste2), AIC(ajuste3), AIC(ajuste4)),
+                    logLik=c(logLik(ajuste1),logLik(ajuste2),logLik(ajuste3),logLik(ajuste4)))
+selec
+```
+
+
+O modelo que apresentou menor AIC e maior verossimilhança foi o modelo Binomial com função de ligação Complemento log-log
+
+# 5. Análise do Modelo Ajustado Selecionado
+
+
+**5.1 Resumo do Modelo**
+
+
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+summary(ajuste3) 
+```
+VER ANALISE 
+O resumo do modelo ajustado indica que as variáveis veloc-veloc.L, veloc-veloc.Q, cintoSim, frontalSim, sexoMasc, idade e ocupantespass estão associadas a uma maior probabilidade Óbito/Viver, enquanto as demais variáveis não apresentam relação com a resposta.
+
+
+**5.2 Reajuste do Modelo**
+
+Como próximo passo, iremos inserir as covariáveis uma a uma no modelo, para verificar sua significância na presença das outras. 
+Para isso usaremos o algoritmo stepwise. Sendo assim, o novo modelo fica da seguinte forma:
+
+
+```{r, echo=TRUE, eval=TRUE, results="hide"}
+ajuste3.1 <- step(ajuste3, direction = "both")
+```
+
+
+
+
+```{r, echo=FALSE, eval=TRUE, results="markup"}
+selec2 <- data.frame(ajuste=c('aj3', 'aj3.1'),
+                    aic=c(AIC(ajuste3), AIC(ajuste3.1)),
+                    logLik=c(logLik(ajuste3),logLik(ajuste3.1)),
+                    Dev=c(deviance(ajuste3),deviance(ajuste3.1)))
+```
+Comparando o modelo restrito com o modelo completo temos
+```{r, echo=FALSE, eval=TRUE, results="markup"}
+selec2
+```
+Verificamos que há pouca diferenças entre os modelos. Para confirmar testaremos as hipóteses:
+$H_0$: modelos não diferem X $H_1$: modelos diferem 
+```{r, echo=TRUE, eval=TRUE, results="markup"}
+anova(ajuste3, ajuste3.1, test = 'Chisq')
+```
+
+P-valor é de 0.26 os modelos não diferem ou seja airbag pode ser retirado do modelo
+
+Pelo teste acima, encontramos um p-valor 0,9483, que é relativamente alto, portanto concluimos que os modelos não diferem. que o modelo restrito se ajusta aos dados amostrais tão bem quanto o modelo considerando todas as covariáveis. Ou seja, podemos retirar do modelo a variável Assim, optamos por usar o modelo "ajuste3.1". Vamos verificar o Summary do modelo escolhido:
+
+```{r, echo=FALSE, eval=TRUE, results="markup"}
+summary(ajuste3.1)
+```
+
+A expressão do modelo é dada da seguinte forma:
+
+**NÃO SEI COMO QUEBRAR A LINHA**
+$ln[-ln(1-\pi_i)] = - 0,22 - 2,71*veloc.L - 0,54*veloc.Q + 0,10*veloc.C + 0,04 * veloc.4 + 0,94*cintoSim + 0,62*frontalSim - 0,18*sexoMasc - 0,02*idade - 0,22*ocupantespass$
+
+<br/>
+
+**5.3 Análise de Resíduos**
+
+```{r, echo=FALSE, eval=TRUE, results="markup"}
+par(mfrow=c(2,2))
+plot(ajuste3.1, 1:4)
+```
+
+<br/>
+**5.4 Medidas de Influencia**
+
+
+```{r, echo=FALSE, eval=TRUE, results="markup"}
+influenceIndexPlot(ajuste3.1, vars=c("Cook"), main="Distância de Cook")
+```
+
+
+```{r, echo=FALSE, eval=TRUE, results="markup"}
+influenceIndexPlot(ajuste3.1, vars=c("Studentized"), main="Resíduos Padronizados")
+```
+
+
+**5.5 Resíduos Quantílicos Aleatoriazados**
+?????
+
+**5.6 Gráfico Normal de Probabilidades com Envelope Simulado**
+
+Lineu
+O gráfico de resíduos simulados permite verificar a adequação do modelo ajustado mesmo que os resíduos não tenham uma aproximação adequada com a distribuição Normal. Neste tipo de gráfico espera-se, para um modelo bem ajustado, os pontos (resíduos) dispersos aleatoriamente entre os limites do envelope.
+
+Deve-se ficar atento à presença de pontos fora dos limites do envelope ou ainda a pontos dentro dos limites porém apresentando padrões sistemáticos.
+
+Vamos utilizar a função envelope implementada pelo professor Cesar Augusto Taconeli :
+
+```{r, echo=FALSE, eval=TRUE, results="hide"}
+#hnp
+
+#envSim(model = ajuste4.1, data = ajuste4.1$data)
+```
+
+**5.7 Gráficos de Efeitos**
+
+
+```{r, echo=FALSE, eval=TRUE, results="hide"}
+#plot(allEffects(ajuste4.1), type = 'response', main = '')
+```
+
+
+# 6. PREDIÇÃO
+
+
+# 7. AVALIAÇÃO DO PODER PREDITIVO DO MODELO
+
+Como temos uma base de tamanho razoável para fins preditivos, uma alternativa é separar a base em duas: uma para o ajuste do modelo, com 70% dos dados (com 477 observações) e outra para validação, com 30% (com 203 observações).
+
+
+## **7.1 Divisão da Base de dados**
+
+```{r}
+#set.seed(1909)
+#indices <- sample(1:680, size = 477) 
+#dadosajuste <- dados[indices,]
+#dadosvalid <- dados[-indices,]
+
+```
+
+
+## **7.2 Ponto de Corte**
+
+Como estamos modelando a probabilidade de tumor maligno, vamos estabelecer o ponto de corte 0.5, isso é, se a probabilidade estimada for maior que este valor o tumor será classificado como maligno.
+Vamos armazenar os valores preditos do modelo para os dados de validação:
+
+```{r}
+#pred <- predict(ajuste4.1, newdata = dadosvalid, type = 'response')
+#corte <- ifelse(pred > 0.5, 'maligno', 'benigno')
+
+```
+
+
+
+**7.3 Sensibilidade e Especificidade**
+
+Para fazer uso dos dados de validação, dois conceitos são necessários: sensibilidade e especificidade.
+
+Define-se por sensibilidade a capacidade do modelo de detectar tumores malignos, ou seja, de classificar como malignos os tumores que de fato o são .
+
+Já a especificidade é a capacidade do modelo de detectar classificar como benignos tumores verdadeiramente benignos.
+
+A sensibilidade é dada por
+
+```{r}
+#sens <- dados[2,2]/sum(dados[,2])
+#sens 
+```
+
+
+**7.4 Curva ROC**
+
+**7.5 Outra Alternativa de validação**
+
+# 8. REFERÊNCIAS
+
+
+
