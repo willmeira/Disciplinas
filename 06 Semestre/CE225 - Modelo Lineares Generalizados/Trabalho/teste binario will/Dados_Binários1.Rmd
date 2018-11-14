@@ -69,15 +69,15 @@ No entanto, escolhemos analisar os dados do ano do acidente de 2002 e veículos d
 data("nassCDS")
 summary(nassCDS)
 dados <- nassCDS
-#dados<-subset(dados,yearacc==2002 & yearVeh == 2000)
+dados<-subset(dados,dvcat=='55+')
 #selecionando covariáveis
-dados <-dados[,c(-2,-9,-10,-11,-15)]
+
 summary(dados)
 #ajustando as variáveis
-dados$dvcat <- as.factor(ifelse(dados$dvcat == '1-9km/h','01-09',
-               ifelse(dados$dvcat == '10-24','10-24',
-               ifelse(dados$dvcat == '25-39','25-39',
-               ifelse(dados$dvcat == '40-54','40-54','55+')))))
+#dados$dvcat <- as.factor(ifelse(dados$dvcat == '1-9km/h','01-09',
+#               ifelse(dados$dvcat == '10-24','10-24',
+#               ifelse(dados$dvcat == '25-39','25-39',
+#               ifelse(dados$dvcat == '40-54','40-54','55+')))))
 dados$dead <- as.factor(ifelse(dados$dead == 'alive','Sim','Nao'))
 dados$airbag <- as.factor(ifelse(dados$airbag == 'airbag','Sim','Nao'))
 dados$seatbelt <- as.factor(ifelse(dados$seatbelt == 'belted','Sim','Nao'))
@@ -86,8 +86,9 @@ dados$sex <- as.factor(ifelse(dados$sex == 'm', 'Masc','Fem'))
 dados$occRole <- as.factor(ifelse(dados$occRole == 'driver','Motorista','Passageiro'))
 dados$deploy<-as.factor(ifelse(dados$deploy == 1,'Sim','Nao'))
 dados$injSeverity<-as.factor(dados$injSeverity)
+dados <-dados[,c(-1,-2,-15)]
+names(dados)<-c('sobrev','airbag','cinto','frontal','sexo','idade','anoAcid','anoVeic','abcat','ocupantes','abfunc','grav')
 
-names(dados)<-c('veloc','sobrev','airbag','cinto','frontal','sexo','idade','ocupantes','abfunc','grav')
 str(dados)
 ```
 
@@ -150,7 +151,7 @@ No R, o modelo é declarado da seguinte forma:
 
 
 ```{r}
-ajuste1 <- glm(abfunc ~ .,family=binomial(link='logit'),data = dados)
+ajuste1 <- glm(sobrev ~ .,family=binomial(link='logit'),data = dados)
 ```
 
 ##**3.2 Ligação Probito**
