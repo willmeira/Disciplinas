@@ -1,6 +1,7 @@
 library(ggplot2)
 library(gridExtra)
 library(corrplot)
+library(readxl)
 
 dados <- read_xls('Base_final.xls',
                   col_types = c("text", "numeric", "numeric","numeric", "numeric",
@@ -14,7 +15,7 @@ summary(dados)
 summary(dados[ , 12:15])
 
 # Boxplots
-
+x11()
 par(mfrow=c(2,2))
 boxplot(dados$Obitos, xlab = '', ylab = '', main = 'Óbitos no Trânsito', las=1)
 boxplot(dados$Frota, xlab = '', ylab = '', main = 'Frota de Veículos', las=1)
@@ -31,6 +32,7 @@ boxplot(dados$IDH, xlab = '', ylab = '', main = 'IDH', las=1)
 
 
 # Histogramas
+x11()
 g1  <- ggplot(dados, aes(x=Obitos)) + geom_histogram()+ xlab('Óbitos no Trânsito')+ ylab('')
 g2  <- ggplot(dados, aes(x=Frota)) + geom_histogram()+ xlab('Frota de Veículos')+ ylab('')
 g3  <- ggplot(dados, aes(x=Pop)) + geom_histogram()+ xlab('População')+ ylab('')
@@ -80,3 +82,9 @@ boxplot(dados$lDensDem, xlab = '', ylab = '', main = 'log(Densidade)')
 
 ajuste01<-glm(Obitos~.-Munic,family = poisson(link = 'log'),data = dados)
 summary(ajuste01)
+
+head(dados[ ,c(2,12)],20)
+
+
+log(0, base = exp(1))
+ln(0)
