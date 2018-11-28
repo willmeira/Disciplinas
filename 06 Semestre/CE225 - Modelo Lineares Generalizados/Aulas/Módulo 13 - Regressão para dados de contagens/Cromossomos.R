@@ -54,7 +54,7 @@ dicentric$logx2 <- log(dicentric$Taxalib)^2
 ajuste5 <- glm(Anormais ~ logx2 + log(Taxalib) * Dose + offset(log(Células)), family = poisson, data = dicentric) 
 summary(ajuste5)
 
-
+  
 ### O efeito de interação é altamente significativo. Vamos mantê-lo no modelo.
 
 plot(allEffects(ajuste4))
