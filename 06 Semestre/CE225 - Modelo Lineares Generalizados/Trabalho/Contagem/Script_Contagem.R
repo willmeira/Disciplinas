@@ -147,7 +147,7 @@ plot(m1.4)
 # GLM com resposta Binomial Negativa
 
 # Modelo Glm.nb
-m2.1<-glm.nb(obit~vphab+log(dens)+purb+palf+pdes+rmed+idh, data=dados)
+m2.1<-glm.nb(obit~vphab+log(dens)+purb+palf+pdes+rmed+idh, data=dados) ## não utilizar
 summary(m2.1)
 x11()
 par(mfrow = c(2,2))
@@ -159,6 +159,9 @@ summary(m2.2)
 x11()
 par(mfrow = c(2,2))
 plot(m2.2)
+
+coef(m2.1)
+coef(m2.2)
 
 # Modelo Gamlss Binomial Negativa tipo II
 m2.3<-gamlss(obit~vphab+log(dens)+purb+palf+pdes+rmed+idh, family=NBII, data=dados)
@@ -205,11 +208,11 @@ Dev    = c(deviance(m1.1),deviance(m1.2),deviance(m1.3),deviance(m1.4),
 AIC    = c(AIC(m1.1),AIC(m1.2),AIC(m1.3),AIC(m1.4),
            AIC(m2.1),AIC(m2.2),AIC(m2.3),
            AIC(m2.4),AIC(m2.5),AIC(m2.6))
-MaxVer = c(logLik(m1.1),logLik(m1.2),logLik(m1.3),logLik(m1.4),
+LVeros = c(logLik(m1.1),logLik(m1.2),logLik(m1.3),logLik(m1.4),
            logLik(m2.1),logLik(m2.2),logLik(m2.3),
            logLik(m2.4),logLik(m2.5),logLik(m2.6))
 
-data.frame(Ajuste, Dev, AIC, MaxVer)
+data.frame(Ajuste, Dev, AIC, LVeros)
 
 # O modelo que apresentou menor AIC e maior verossimilhança foi o modelo Binomial Negativo 
 # da função Glm.bn
@@ -218,24 +221,6 @@ library(hnp)
 
 # Avaliando os modelos Poisson
 
-X11()
-par(mfrow = c(2,1))
-hnp(m1.1, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-hnp(m1.2, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-hnp(m1.3, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-hnp(m1.4, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-
-# Avaliando os modelos com Binomial Negativa
-X11()
-par(mfrow = c(3,2))
-hnp(m2.1, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-hnp(m2.2, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-hnp(m2.3, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-hnp(m2.4, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-hnp(m2.5, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-hnp(m2.6, xlab = 'Percentil da N(0,1)', ylab = 'Resíduos', main = 'Gráfico Normal de Probabilidades')
-
-# >>>> ERRO NOS MODELOS AJUSTADOS PELO PACOTE GAMLSS <<<<<
 
 
 X11()
@@ -278,10 +263,20 @@ summary(m2.1)
 # pelo algoritmo stepwise. Notou-se que ao retirar a variável log da frota, 
 # o log da população se mostra significativo
 
-m2.1.1 <- step(m2.1, direction = "both")
+m1.1.1 <- step(m1.1, direction = "both")
+summary(m1.1.1)
+m1.4.1 <- step(m1.4, direction = "both")
+summary(m1.4.1)
 
+m2.1.1 <- step(m2.1, direction = "both")
+m2.2.1 <- step(m2.2, direction = "both")
 # O resumo do novo modelo ajustado:
 summary(m2.1.1)
+summary(m2.2.1)
+
+coef(m2.1.1)
+coef(m2.2.1)
+
 
 # O algoritmo indica que as variáveis >>> grau de urbanização e log da frota <<< 
 # são significativas e tem relação positiva com o número de acidentes de trânsito.
@@ -302,8 +297,6 @@ anova(m2.1, m2.1.1)
 
 # Medidas de Influência 
 # Uma alternativa para verificação de medidas influentes está implementada no pacote car:
-
-library(car)
 
 influenceIndexPlot(m2.1.1, vars=c("Cook", "Studentized", "hat"), main="Medidas de Influência")
 
