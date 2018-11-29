@@ -1,0 +1,157 @@
+\documentclass[a4paper]{article} %% Classe do documento
+\usepackage[margin=2cm]{geometry} %% Dimens?es das margens
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{alltt}
+\usepackage{here}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{multirow}
+\usepackage{makeidx}
+\usepackage{wrapfig}
+\usepackage[all]{xy}
+\usepackage{fancybox}
+\usepackage{rotating}
+\usepackage{eso-pic}
+\usepackage{dcolumn}
+\usepackage{color}
+\usepackage{lscape}
+\usepackage{subfigure}
+\usepackage{scalefnt}
+
+\newcommand{\undertilde}[1]{\underset{\widetilde{}}{#1}}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\begin{titlepage}
+
+  \center{\rule{15cm}{2pt}}
+  \begin{center}{\bf Universidade Federal do Paran?\\
+      Departamento de Estat?stica\\[8cm]
+
+      {\large
+        Regress?o para Dados de Contagem - Mortalidade em Santa Catarina ano de 2016}\\[2cm]
+
+      { CE225 - Modelos Lineares Generalizados}\\[5cm]
+
+      { La?s Hoffmam GRR201}
+      
+      { Simone Matsubara GRR20124663}
+      
+      { Willian Meira GRR201}
+
+      { Yasmin Fernandes GRR201}
+
+      % \end{minipage}
+      \vfill
+      Curitiba, 24 de Novembro de 2018
+      \center{\rule{15cm}{2pt}}}
+  \end{center}
+\end{titlepage}
+
+\tableofcontents
+\pagebreak
+
+\section{Introdu??o}
+
+kkkk
+
+
+\section{Material e M?todos}
+\subsection{Material}
+
+
+
+
+\subsection{M?todos}
+
+contagem
+
+\section{An?lise Descritiva}
+
+<<>>=
+library(ggplot2)
+library(gridExtra)
+library(corrplot)
+library(readxl)
+
+dados <- read_xls('Base_fim.xls',
+                  col_types = c("text", "numeric", "numeric","numeric", "numeric",
+                                "numeric","numeric", "numeric", "numeric"))
+
+
+
+@
+
+<<fig=TRUE>>=
+# Quantidade de munic?pios por total de incid?ncia
+tabobt <- table(dados$obit)
+tabpobt <- table(round(dados$obit/sum(dados$obit)*100, digits = 2))
+barplot(tabobt)
+
+@
+
+
+<<fig=TRUE>>=
+#Boxplots
+
+par(mfrow=c(3,3))
+boxplot(dados$obit, xlab = '', ylab = '', main = '?bitos no Tr?nsito', las=1)
+boxplot(dados$vphab, xlab = '', ylab = '', main = 'Ve?culos a cada 100 Habit', las=1)
+boxplot(dados$dens, xlab = '', ylab = '', main = 'Densidade Demogr?fica', las=1)
+boxplot(dados$purb, xlab = '', ylab = '', main = '% Pop Urbana', las=1)
+boxplot(dados$palf, xlab = '', ylab = '', main = '% Alfabetizados', las=1)
+boxplot(dados$pdes, xlab = '', ylab = '', main = '% Desmpregados', las=1)
+boxplot(dados$rmed, xlab = '', ylab = '', main = '% Pop Baixa Renda', las=1)
+boxplot(dados$idh, xlab = '', ylab = '', main = 'IDH', las=1)
+@
+
+
+<<fig=TRUE>>=
+g1 <- ggplot(dados, aes(x=obit)) + geom_histogram()+ xlab('?bitos no Tr?nsito')+ ylab('')
+g2 <- ggplot(dados, aes(x=vphab)) + geom_histogram()+ xlab('Ve?culos a cada 100 Habit')+ ylab('')
+g3 <- ggplot(dados, aes(x=dens)) + geom_histogram()+ xlab('Densidade Demogr?fica')+ ylab('')
+g4 <- ggplot(dados, aes(x=purb)) + geom_histogram()+ xlab('% Pop Urbana')+ ylab('')
+g5 <- ggplot(dados, aes(x=palf)) + geom_histogram()+ xlab('% Alfabetizados')+ ylab('')
+g6 <- ggplot(dados, aes(x=pdes)) + geom_histogram()+ xlab('% Desmpregados')+ ylab('')
+g7 <- ggplot(dados, aes(x=rmed)) + geom_histogram()+ xlab('Renda M?dia')+ ylab('')
+g8 <- ggplot(dados, aes(x=idh)) + geom_histogram()+ xlab('IDH')+ ylab('')
+grid.arrange(g1, g2, g3, g4, g5, g6, g7, g8, ncol=3, nrow=3)
+@
+
+
+Pelos boxplots e histogramas verificamos uma grande assimetria na covari?vel "Densidade Demografica". Vale a pena fazer uma transforma??o nesta vari?vel, para melhorar a assimetria aplicando log.
+
+<<fig=TRUE>>=
+str(dados)
+dados$ldens  <- log(dados$dens)
+par(mfrow = c(1,2))
+hist(log(dados$dens), main = 'log(Densidade)', xlab = '', ylab = '')
+boxplot(log(dados$dens), xlab = '', ylab = '', main = 'log(Densidade)')
+@
+
+Aplicando log, verificamos uma melhora consider?vel na assimetria dos dados da vari?vel
+
+
+Vamos verificar a correla??o entre as vari?veis em estudo, substituino a vari?vel Densidade Demogr?fica pela log densidade.
+
+<<echo=TRUE, eval=TRUE, fig=TRUE>>=
+library(corrplot)
+
+cor <- cor(dados[ , c(2,3,10,5,6,7,8,9)])
+x11()
+corrplot.mixed(cor, upper = "ellipse")
+@
+
+
+
+\section{Ajuste dos Modelos de Regress?o}
+
+
+
+\end{document}

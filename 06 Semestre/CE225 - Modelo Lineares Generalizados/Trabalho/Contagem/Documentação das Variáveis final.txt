@@ -1,0 +1,25 @@
+Variáveis 
+obit - Número de óbitos em acidentes de trânsito *
+vphab - Número de veículos a cada 100 habitantes. 
+dens - Densidade demográfica por município, em habitantes por Km². 
+purb - Percentual de porpulação urbana por município. 
+palf - Percentual de porpulação alfabetiza por município. *
+pdes - Percentual de porpulação desempregada por município. *
+rmed - Renda média percapita por município *
+idh - Índice de desenvolvimente humano do município
+
+A base de dados refere-se ao estado de Santa Catarina, dividido por 
+municípios. A maior parte dos dados levantados foram retirados do site 
+do Datasus. Entre eles, o número de óbitos em acidentes de transporte 
+e população residente estimada, referente ao ano 2016. Na mesma 
+plataforma, foram coletados dados de renda per capita, total de 
+desempregados e alfabetizados, sendo ano 2010 a informação mais 
+atualizada. Coletamos também algumas variáveis sócio-demográficas no 
+site do Ipeadata, como população urbana e IDH referente ao ano 2000, 
+e área geográfica (2010). A informação sobre a frota de veículos 
+foi coletada no registro de emplacamento do Denatram, referente 
+dezembro 2016.
+
+
+
+

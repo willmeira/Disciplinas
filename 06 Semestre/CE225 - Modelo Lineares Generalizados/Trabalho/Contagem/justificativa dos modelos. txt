@@ -1,0 +1,20 @@
+Testamos quatro ajustes com modelos Poisson. Primeiramente 
+utilizamos a função “GLM” com a ligação canônica logaritmica. 
+Em seguinda testamos 3 ajustes usando o pacote Gamlss, onde avaliamos 
+também a questão de inflação de zeros, visto que nossa base 
+apresenta muitos municípios onde não foram registrado nenhum óbito.
+Porém, nenhum dos modelos apresentou um ajuste satisfatório aos dados.
+Por conta disso, avaliamos também alguns modelos com distribuição 
+Binomial Negativa. 
+
+Nestes modelos, fizemos um ajuste usando a função glm.bn do pacote 
+Mass e outros cinco ajustes com o auxílio do pacote Gamlss. Destes 5 
+modelos, os três primeiros foram com as distribuições Binomial 
+Negativa Tipo I (NBI), Tipo II (NBI) e Família Binomial Negativa 
+(NBF). E os últimos dois modelos foram com a Binomial Negativa 
+Inflacionada de Zero (ZINBI), testando com e sem os componentes de 
+excesso de zeros.
+
+Os modelos com Binomial Negativa se mostraram mais adequados ao nosso 
+estudo, uma vez que ela comporta melhor dados com superdisperção e 
+até mesmo a inflação de zeros.
