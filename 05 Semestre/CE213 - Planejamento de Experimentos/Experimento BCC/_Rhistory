@@ -1,0 +1,122 @@
+# Alcides Conte Neto
+# André
+# Caroline Selis
+# Caroline Stupka
+# Geverson Rosa
+# Alexandre Diaz
+# Eduardo
+# Adi
+# Willian Meira
+# Welton Chagas
+# -> São 6 blocos, sendo que cada um é uma pessoa.
+# -> Foi criada uma escala de 9 cm que vai de não macio
+# até macio.
+# -> Foram aleatorizados os tratamentos dentro de cada bloco e
+# os blocos.
+# -> Foi realizado um treinamento com os blocos de forma a
+# demonstrar o que e macio e o que não é.
+# -> Cada pessoa vai ao quadro e risca, de olhos vendados,
+# com os gizes das 5 marcas. O tamanho do risco é anotado
+# sendo essa a variável resposta.
+# -> A mesma pessoa realiza as medidas na escala com a
+# régua.
+# T1 = Delta Roxa
+# T2 = Delta Amarelo
+# T3 = Branco Piratinga
+# T4 = Zig Giz Branco
+# T5 = Zig Giz Colorido
+# B1 = Welton
+# B2 = Alexandre
+# B3 = Carol B.
+# B4 = Jeverson
+# B5 = Carol S.
+# B6 = Will
+trat <- c("T1", "T2", "T3", "T4", "T5")
+bloc <- c("B1", "B2", "B3", "B4", "B5", "B6")
+## Definindo a semente:
+# (B1)
+set.seed(16125)
+b1 <- sample(trat, 5)
+# (B2)
+set.seed(15125)
+b2 <- sample(trat, 5)
+# (B3)
+set.seed(14125)
+b3 <- sample(trat, 5)
+# (B4)
+set.seed(13125)
+b4 <- sample(trat, 5)
+# (B5)
+set.seed(12125)
+b5 <- sample(trat, 5)
+# (B6)
+set.seed(11125)
+b6 <- sample(trat, 5)
+tab <- data.frame(b1, b2, b3, b4, b5, b6)
+colnames(tab) <- bloc
+set.seed(10125)
+tab <- tab[, sample(1:6, 6)]
+tab
+#######################################################
+#######################################################
+##############################################
+## Leitura dos dados
+dados <- read.csv2("BCC.csv")
+##############################################
+## Gráficos
+plot(resp ~ trat + bloco, data = dados)
+d.meanT <- with(dados, tapply(resp, trat, mean))
+d.meanB <- with(dados, tapply(resp, bloco, mean))
+with(dados, plot.default(trat, resp))
+points(d.meanT, pch = "x", col = 2, cex = 1.5)
+# Não há motivos para acreditar que não haja
+# homocedasticidade entre os tratamentos (regra prática).
+with(dados, plot.default(bloco, resp))
+points(d.meanB, pch = "x", col = 2, cex = 1.5)
+# O mesmo ocorre com os blocos.
+##############################################
+## Anova
+d.aov <- aov(resp ~ trat + bloco, data = dados)
+anova(d.aov)
+# Como o tratamento foi significativo a 5%,
+# rejeita-se a hipótese nula, ou seja, há pelo
+# menos duas médias que diferem entre sí.
+# Não houve efeito de bloco.
+##############################################
+## Análise de Resíduos
+par(mfrow = c(2, 2))
+plot(d.aov)
+residuos <- (d.aov$residuals)
+par(mfrow = c(2,2))
+with(dados, plot(trat, residuos,
+main = "Resíduos vs Tratamento \n
+Homocedasticidade"))
+preditos <- (d.aov$fitted.values)
+with(dados, plot(residuos, preditos,
+main = "Resíduos vs Preditos \n Independência"))
+qqnorm(residuos, ylab = "Residuos", main = NULL)
+qqline(residuos)
+title("Grafico Normal de \n Probabilidade dos Resíduos")
+# Como os dados estão na ordem de execução do experimento,
+# o pressuposto de independência foi verificado.
+par(mfrow = c(2,1))
+respad <- (residuos/sqrt(anova(d.aov)$"Mean Sq"[2]))
+boxplot(respad)
+title("Resíduos Padronizados - outliers")
+plot(dados$bloco, residuos)
+title("Resíduos vs Blocos")
+shapiro.test(residuos)
+# Pelo teste de shapiro, não rejeita-se a hipótese
+# de normalidade.
+##############################################
+## Comparações Múltiplas
+d.tk <- TukeyHSD(d.aov, "trat", ord = T)
+plot(d.tk)
+# Houve diferença significativa apebas entre os
+# tratamentos T5 e T2.
+##############################################
+## Interação
+with(dados, interaction.plot(trat, bloco, resp))
+with(dados, interaction.plot(bloco, trat, resp))
+# Pela analise visual, não há motivos para acreditar
+# que o efeito de interação exista.
