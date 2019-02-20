@@ -1,6 +1,6 @@
 ---
-title: "Trabalho de dados Bin·rios"
-author: LaÌs Hoffmam, Simone Matsubara, Yasmin Fernandes, Willian Meira
+title: "Trabalho de dados Bin√°rios"
+author: La√≠s Hoffmam, Simone Matsubara, Yasmin Fernandes, Willian Meira
 date: '`r Sys.Date() `'
 output:
   pdf_document:
@@ -19,7 +19,7 @@ header-includes: \usepackage[brazil]{babel}
 #csl: ABNT_UFPR_2011.csl
 #bibliography: refs.bib
 ---
-¥¥¥{r, include=FALSE}
+¬¥¬¥¬¥{r, include=FALSE}
 library(lattice)
 library(readxl)
 library(readr)
@@ -36,42 +36,42 @@ library(ROCR)
 library(hnp)
 library(faraway)
 library(ggplot2)
-¥¥¥
+¬¥¬¥¬¥
 
 # 1. Base de Dados
 
-*1.1 DescriÁ„o dos dados*
+*1.1 Descri√ß√£o dos dados*
 
-Os dados foram retirados do pacote "DAAG", sendo dados dos EUA, entre 1997-2002, de acidentes de carro relatados pela polÌcia nos quais h· um evento prejudicial (pessoas ou propriedade) e do qual pelo menos um veÌculo foi rebocado.
-Os dados s„o restritos aos ocupantes do banco da frente, incluem apenas um subconjunto das vari·veis registradas e s„o restritos de outras maneiras tambÈm.
+Os dados foram retirados do pacote "DAAG", sendo dados dos EUA, entre 1997-2002, de acidentes de carro relatados pela pol√≠cia nos quais h√° um evento prejudicial (pessoas ou propriedade) e do qual pelo menos um ve√≠culo foi rebocado.
+Os dados s√£o restritos aos ocupantes do banco da frente, incluem apenas um subconjunto das vari√°veis registradas e s√£o restritos de outras maneiras tamb√©m.
 
 
-A base original possui uma base de dados com 26.217 observaÁıes nas 15 vari·veis a seguir.
+A base original possui uma base de dados com 26.217 observa√ß√µes nas 15 vari√°veis a seguir.
 
 1 - *veloc*: velocidades estimadas do impacto do acidente: 1-9km/h, 10-24, 25-39, 40-54, 55+
-\newline 2 - *pesos*: Pesos de observaÁ„o
-\newline 3 - *sobrev*: ClassificaÁ„o se sobreviveu ao acidente: 1 = sobreviveu ou 0 = morreu
+\newline 2 - *pesos*: Pesos de observa√ß√£o
+\newline 3 - *sobrev*: Classifica√ß√£o se sobreviveu ao acidente: 1 = sobreviveu ou 0 = morreu
 \newline 4 - *airbag*: Se o carro possui airbag: com ou sem airbag
-\newline 5 - *cinto*: uso do cinto de seguranÁa: com ou sem cinto
-\newline 6 - *frontal*: impacto do acidente: 0 = n„o frontal, 1 = impacto frontal
+\newline 5 - *cinto*: uso do cinto de seguran√ßa: com ou sem cinto
+\newline 6 - *frontal*: impacto do acidente: 0 = n√£o frontal, 1 = impacto frontal
 \newline 7 - *sexo*: Sexo: 0 = Feminino ou 1 = Masculino
-\newline 8 - *idade*: Idade dos ocupantes do veÌculo
+\newline 8 - *idade*: Idade dos ocupantes do ve√≠culo
 \newline 9 - *anoaci*: Ano do acidente (1997-2002)
-\newline 10 - *anovei*: Ano do veÌculo (1953-2003)
+\newline 10 - *anovei*: Ano do ve√≠culo (1953-2003)
 \newline 11 - *airbagcat*: Se Airbags foram acionados: deploy, nodeploy, unavail
-\newline 12 - *ocupantes*: PosiÁ„o do airbag acionado: driver, pass
-\newline 13 - *abfunc*: Airbag acionados: 0: Se n„o possuia airbag ou n„o foi acionado, 1: Um ou mais airbags foram acionados
-\newline 14 - *grav*: Gravidade do acidente: 0:none, 1 = PossÌvel Les„o, 2:no incapacity, 3:incapacity, 4:killed; 5:unknown, 6:prior death
-\newline 15 - *numcaso*: N˙mero do caso.
+\newline 12 - *ocupantes*: Posi√ß√£o do airbag acionado: driver, pass
+\newline 13 - *abfunc*: Airbag acionados: 0: Se n√£o possuia airbag ou n√£o foi acionado, 1: Um ou mais airbags foram acionados
+\newline 14 - *grav*: Gravidade do acidente: 0:none, 1 = Poss√≠vel Les√£o, 2:no incapacity, 3:incapacity, 4:killed; 5:unknown, 6:prior death
+\newline 15 - *numcaso*: N√∫mero do caso.
 
-O escopo da an·lise tem como vari·vel respota a sobrevivencia apÛs o acidente e ·s demais vari·veis ser„o as covari·veis explicativas.
+O escopo da an√°lise tem como vari√°vel respota a sobrevivencia ap√≥s o acidente e √°s demais vari√°veis ser√£o as covari√°veis explicativas.
 
-Antes da analise comeÁar foi verificado que algumas das vari·veis presentes na base s„o irrelevantes para o modelo.
+Antes da analise come√ßar foi verificado que algumas das vari√°veis presentes na base s√£o irrelevantes para o modelo.
 
-As vari·veis s„o:
+As vari√°veis s√£o:
 anoaci: ano do acidente
 anovei: ano do veiculo
-peso das observaÁıes: sem descriÁ„o
+peso das observa√ß√µes: sem descri√ß√£o
 airbagcat e abfunc: pois ja temos na base 
 numcaso:  id
 grav
@@ -89,7 +89,7 @@ dados$dvcat <- as.factor(dados$dvcat)
 
 
 
-# 2 An·lise Descritiva
+# 2 An√°lise Descritiva
 
 *2.1 Medidas de Resumo*
 
@@ -98,34 +98,34 @@ names(dados)<-c('veloc','sobrev','cinto','frontal','sexo','idade','ocupantes','a
 summary(dados)
 
 
-Nota-se na var·vel velocidade uma frequÍncia maior de acidentes na faixa de 25-39 milhas.
-A maioria estava com cinto de seguranÁa e os acidentes foram a maioria frontais.
+Nota-se na var√°vel velocidade uma frequ√™ncia maior de acidentes na faixa de 25-39 milhas.
+A maioria estava com cinto de seguran√ßa e os acidentes foram a maioria frontais.
 
 *2.3 Histogramas*
 {r}
 x11()
 par(mfrow = c(1,3))
 barplot(table(dados$sobrev,dados$cinto), beside=T, las = 1,
-        xlab = 'Cinto', ylab = 'FrequÍncia', legend = c('N„o','Sim')) 
+        xlab = 'Cinto', ylab = 'Frequ√™ncia', legend = c('N√£o','Sim')) 
 barplot(table(dados$sobrev,dados$frontal), beside=T, las = 1,
-        xlab = 'Frontal', ylab = 'FrequÍncia', legend = c('N„o','Sim')) 
+        xlab = 'Frontal', ylab = 'Frequ√™ncia', legend = c('N√£o','Sim')) 
 barplot(table(dados$sobrev,dados$sexo), beside=T, las = 1,
-        xlab = 'Sexo', ylab = 'FrequÍncia', legend = c('N„o','Sim'))
+        xlab = 'Sexo', ylab = 'Frequ√™ncia', legend = c('N√£o','Sim'))
 
 
 
 
-# 3. Ajuste do Modelo de Regress„o
+# 3. Ajuste do Modelo de Regress√£o
 
 
-##*3.1 LigaÁ„o Logito*
+##*3.1 Liga√ß√£o Logito*
 
-Vamos ajustar um Modelo Linear Generalizado Binomial com funÁ„o de ligaÁ„o Logito. A express„o do modelo È dada por:
+Vamos ajustar um Modelo Linear Generalizado Binomial com fun√ß√£o de liga√ß√£o Logito. A express√£o do modelo √© dada por:
 
 $ln (\frac{\pi_i}{1-\pi_i}) = \beta_0 + \beta_1 Veloc_i + \beta_2 Sobrev_i+ \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i + \beta_9 airbag_i$
 
 
-No R, o modelo È declarado da seguinte forma:
+No R, o modelo √© declarado da seguinte forma:
 
 
 {r}
@@ -133,15 +133,15 @@ ajuste1 <- glm(sobrev ~ .,family=binomial(link='logit'),data = dados)
 
 
 
-##*3.2 LigaÁ„o Probito*
+##*3.2 Liga√ß√£o Probito*
 
-Vamos ajustar um Modelo Linear Generalizado Binomial com funÁ„o de ligaÁ„o Probito. A express„o do modelo È dada por:
+Vamos ajustar um Modelo Linear Generalizado Binomial com fun√ß√£o de liga√ß√£o Probito. A express√£o do modelo √© dada por:
 
 
 $\phi^{-1} (\pi_i) = \beta_0 + \beta_1 Veloc_i + \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i + \beta_9 airbag_i$
 
 
-No R, o modelo È declarado da seguinte forma:
+No R, o modelo √© declarado da seguinte forma:
 
 
 {r}
@@ -149,15 +149,15 @@ ajuste2 <- glm(sobrev ~ .,family=binomial(link = 'probit'),data = dados)
 
 
 
-##*3.3 LigaÁ„o Complemento log-log*
+##*3.3 Liga√ß√£o Complemento log-log*
 
-Vamos ajustar um Modelo Linear Generalizado Binomial com funÁ„o de ligaÁ„o Complemento Log Log. A express„o do modelo È dada por:
+Vamos ajustar um Modelo Linear Generalizado Binomial com fun√ß√£o de liga√ß√£o Complemento Log Log. A express√£o do modelo √© dada por:
 
 
 $ln[-ln(1-\pi_i)] = \beta_0 + \beta_1 Veloc_i + \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i + \beta_9 airbag_i$
 
 
-No R, o modelo È declarado da seguinte forma:
+No R, o modelo √© declarado da seguinte forma:
 
 
 {r}
@@ -165,14 +165,14 @@ ajuste3 <- glm(sobrev ~ .,family=binomial(link='cloglog'),data = dados)
 
 
 
-##*3.4 LigaÁ„o Cauchy*
+##*3.4 Liga√ß√£o Cauchy*
 
-Vamos ajustar um Modelo Linear Generalizado Binomial com funÁ„o de ligaÁ„o Cauchy. A express„o do modelo È dada por:
+Vamos ajustar um Modelo Linear Generalizado Binomial com fun√ß√£o de liga√ß√£o Cauchy. A express√£o do modelo √© dada por:
 
 
 $tan[\pi_i(\mu_i- 0,5)] = \beta_0 + \beta_1 Veloc_i + \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i + \beta_9 airbag_i$
 
-No R, o modelo È declarado da seguinte forma:
+No R, o modelo √© declarado da seguinte forma:
 
 
 {r}
@@ -182,7 +182,7 @@ ajuste4 <- glm(sobrev ~ .,family=binomial(link='cauchit'),data = dados)
 
 # 4. Escolha do Modelo
 
-O critÈrio de informaÁ„o AIC pode tambÈm ser utilizado, porÈm o AIC penaliza o n˙mero de par‚metros do modelo. Como os modelos tem o mesmo n˙mero de par‚metros, o critÈrio aponta para a mesma direÁ„o da verossimilhanÁa pois todos s„o penalizados da mesma forma.
+O crit√©rio de informa√ß√£o AIC pode tamb√©m ser utilizado, por√©m o AIC penaliza o n√∫mero de par√¢metros do modelo. Como os modelos tem o mesmo n√∫mero de par√¢metros, o crit√©rio aponta para a mesma dire√ß√£o da verossimilhan√ßa pois todos s√£o penalizados da mesma forma.
 
 
 {r, echo=FALSE, eval=TRUE, results="hide"}
@@ -193,9 +193,9 @@ selec
 
 
 
-O modelo que apresentou menor AIC e maior verossimilhanÁa foi o modelo Binomial com funÁ„o de ligaÁ„o Cauchy.
+O modelo que apresentou menor AIC e maior verossimilhan√ßa foi o modelo Binomial com fun√ß√£o de liga√ß√£o Cauchy.
 
-# 5. An·lise do Modelo Ajustado Selecionado
+# 5. An√°lise do Modelo Ajustado Selecionado
 
 
 ##*5.1 Resumo do Modelo*
@@ -210,7 +210,7 @@ summary(ajuste4)
 
 
 
-Como prÛximo passo ser· usado o algoritmo stepwise para seleÁ„o de vari·veis do modelo.
+Como pr√≥ximo passo ser√° usado o algoritmo stepwise para sele√ß√£o de vari√°veis do modelo.
 
 O novo modelo fica da seguinte forma:
 
@@ -234,19 +234,19 @@ summary(ajuste4.1)
 
 
 Vamos testar a seguinte hipotese:
-$H_0$: modelos n„o diferem
+$H_0$: modelos n√£o diferem
 $H_1$: modelos diferem 
 
 {r}
 anova(ajuste4, ajuste4.1, test = 'Chisq')
 summary(ajuste4.1)
 
-P-valor È de 0.26 os modelos n„o diferem ou seja airbag pode ser retirado do modelo
+P-valor √© de 0.26 os modelos n√£o diferem ou seja airbag pode ser retirado do modelo
 
 O modelo final ficou da seguinte forma : 
 
 $tan[\pi_i(\mu_i- 0,5)] = \beta_0 + \beta_1 Veloc_i +  \beta_4 Cinto_i + \beta_5 Frontal_i + \beta_6 Sexo_i + \beta_7 Idade_i + \beta_8 Ocupantes_i $
-##*5.3 An·lise de ResÌduos*
+##*5.3 An√°lise de Res√≠duos*
 
 
 {r, echo=FALSE, eval=TRUE, results="hide"}
@@ -265,26 +265,26 @@ plot(ajuste4, 1:4)
 
 
 {r}
-influenceIndexPlot(ajuste4.1, vars=c("Cook"), main="Dist‚ncia de Cook")
+influenceIndexPlot(ajuste4.1, vars=c("Cook"), main="Dist√¢ncia de Cook")
 
 
 
 {r}
-influenceIndexPlot(ajuste4.1, vars=c("Studentized"), main="ResÌduos Padronizados")
+influenceIndexPlot(ajuste4.1, vars=c("Studentized"), main="Res√≠duos Padronizados")
 
 
 
-*5.5 ResÌduos QuantÌlicos Aleatoriazados*
+*5.5 Res√≠duos Quant√≠licos Aleatoriazados*
 
 
-##*5.6 Gr·fico Normal de Probabilidades com Envelope Simulado*
+##*5.6 Gr√°fico Normal de Probabilidades com Envelope Simulado*
 
 Lineu
-O gr·fico de resÌduos simulados permite verificar a adequaÁ„o do modelo ajustado mesmo que os resÌduos n„o tenham uma aproximaÁ„o adequada com a distribuiÁ„o Normal. Neste tipo de gr·fico espera-se, para um modelo bem ajustado, os pontos (resÌduos) dispersos aleatoriamente entre os limites do envelope.
+O gr√°fico de res√≠duos simulados permite verificar a adequa√ß√£o do modelo ajustado mesmo que os res√≠duos n√£o tenham uma aproxima√ß√£o adequada com a distribui√ß√£o Normal. Neste tipo de gr√°fico espera-se, para um modelo bem ajustado, os pontos (res√≠duos) dispersos aleatoriamente entre os limites do envelope.
 
-Deve-se ficar atento ‡ presenÁa de pontos fora dos limites do envelope ou ainda a pontos dentro dos limites porÈm apresentando padrıes sistem·ticos.
+Deve-se ficar atento √† presen√ßa de pontos fora dos limites do envelope ou ainda a pontos dentro dos limites por√©m apresentando padr√µes sistem√°ticos.
 
-Vamos utilizar a funÁ„o envelope implementada pelo professor Cesar Augusto Taconeli :
+Vamos utilizar a fun√ß√£o envelope implementada pelo professor Cesar Augusto Taconeli :
 
 {r, echo=FALSE, eval=TRUE, results="hide"}
 envSim <- function(model, data, nsim = 100){
@@ -300,7 +300,7 @@ envSim <- function(model, data, nsim = 100){
     qS <- apply(resM, 1 , quantile, c(0.025, 0.5, 0.975), na.rm = TRUE)
     qN <- qnorm((1:n-0.5)/n)
     plot(rep(qN, 2), c(qS[1,], qS[3,]), type = 'n', xlab = 'Percentil da N(0,1)',
-         ylab = 'ResÌduos Padronizados', main = 'Gr·fico Normal de Probabilidades')
+         ylab = 'Res√≠duos Padronizados', main = 'Gr√°fico Normal de Probabilidades')
     lines(qN, qS[1,], type = 'l')
     lines(qN, qS[2,], type = 'l', lty = 2, col = 4)
     lines(qN, qS[3,], type = 'l')
@@ -311,7 +311,7 @@ envSim <- function(model, data, nsim = 100){
 envSim(model = ajuste4.1, data = ajuste4.1$data)
 
 
-*5.7 Gr·ficos de Efeitos*
+*5.7 Gr√°ficos de Efeitos*
 
 
 {r, echo=FALSE, eval=TRUE, results="hide"}
@@ -319,15 +319,15 @@ plot(allEffects(ajuste4.1), type = 'response', main = '')
 
 
 
-# 6. PREDI«√O
+# 6. PREDI√á√ÉO
 
 
-# 7. AVALIA«√O DO PODER PREDITIVO DO MODELO
+# 7. AVALIA√á√ÉO DO PODER PREDITIVO DO MODELO
 
-Como temos uma base de tamanho razo·vel para fins preditivos, uma alternativa È separar a base em duas: uma para o ajuste do modelo, com 70% dos dados (com 477 observaÁıes) e outra para validaÁ„o, com 30% (com 203 observaÁıes).
+Como temos uma base de tamanho razo√°vel para fins preditivos, uma alternativa √© separar a base em duas: uma para o ajuste do modelo, com 70% dos dados (com 477 observa√ß√µes) e outra para valida√ß√£o, com 30% (com 203 observa√ß√µes).
 
 
-## *7.1 Divis„o da Base de dados*
+## *7.1 Divis√£o da Base de dados*
 
 {r}
 set.seed(1909)
@@ -340,8 +340,8 @@ dadosvalid <- dados[-indices,]
 
 ## *7.2 Ponto de Corte*
 
-Como estamos modelando a probabilidade de tumor maligno, vamos estabelecer o ponto de corte 0.5, isso È, se a probabilidade estimada for maior que este valor o tumor ser· classificado como maligno.
-Vamos armazenar os valores preditos do modelo para os dados de validaÁ„o:
+Como estamos modelando a probabilidade de tumor maligno, vamos estabelecer o ponto de corte 0.5, isso √©, se a probabilidade estimada for maior que este valor o tumor ser√° classificado como maligno.
+Vamos armazenar os valores preditos do modelo para os dados de valida√ß√£o:
 
 {r}
 pred <- predict(ajuste4.1, newdata = dadosvalid, type = 'response')
@@ -353,13 +353,13 @@ corte <- ifelse(pred > 0.5, 'maligno', 'benigno')
 
 *7.3 Sensibilidade e Especificidade*
 
-Para fazer uso dos dados de validaÁ„o, dois conceitos s„o necess·rios: sensibilidade e especificidade.
+Para fazer uso dos dados de valida√ß√£o, dois conceitos s√£o necess√°rios: sensibilidade e especificidade.
 
-Define-se por sensibilidade a capacidade do modelo de detectar tumores malignos, ou seja, de classificar como malignos os tumores que de fato o s„o .
+Define-se por sensibilidade a capacidade do modelo de detectar tumores malignos, ou seja, de classificar como malignos os tumores que de fato o s√£o .
 
-J· a especificidade È a capacidade do modelo de detectar classificar como benignos tumores verdadeiramente benignos.
+J√° a especificidade √© a capacidade do modelo de detectar classificar como benignos tumores verdadeiramente benignos.
 
-A sensibilidade È dada por
+A sensibilidade √© dada por
 
 {r}
 sens <- dados[2,2]/sum(dados[,2])
@@ -369,6 +369,6 @@ sens
 
 *7.4 Curva ROC*
 
-*7.5 Outra Alternativa de validaÁ„o*
+*7.5 Outra Alternativa de valida√ß√£o*
 
-# 8. REFER NCIAS
+# 8. REFER√äNCIAS

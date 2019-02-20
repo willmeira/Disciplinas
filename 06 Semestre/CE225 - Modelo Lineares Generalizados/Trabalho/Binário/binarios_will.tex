@@ -73,16 +73,17 @@
 }
 
 \setlength{\droptitle}{-2em}
+
   \title{Trabalho de dados Binários}
-  \pretitle{\vspace{\droptitle}\centering\huge}
+    \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
-\subtitle{Acidentes de carro}
+  \subtitle{Acidentes de carro}
   \author{Laís Hoffmam, Simone Matsubara, Yasmin Fernandes, Willian Meira}
-  \preauthor{\centering\large\emph}
+    \preauthor{\centering\large\emph}
   \postauthor{\par}
-  \predate{\centering\large\emph}
+      \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2018-11-14}
+    \date{2019-02-20}
 
 \usepackage[brazil]{babel} \usepackage{amsmath} \usepackage{float}
 \usepackage{bm}
@@ -96,8 +97,7 @@ library(corrplot) library(carData) library(car) library(statmod)
 library(effects) library(ROCR) library(hnp) library(faraway)
 library(ggplot2) ´´´
 
-\hypertarget{base-de-dados}{%
-\section{1. Base de Dados}\label{base-de-dados}}
+\section{1. Base de Dados}\label{base-de-dados}
 
 \emph{1.1 Descrição dos dados}
 
@@ -148,8 +148,7 @@ ifelse(dados\(dvcat == '10-24',2,  ifelse(dados\)dvcat == `25-39',3,
 ifelse(dados\(dvcat == '40-54',4,5)))) dados\)dvcat \textless{}-
 as.factor(dados\$dvcat)
 
-\hypertarget{analise-descritiva}{%
-\section{2 Análise Descritiva}\label{analise-descritiva}}
+\section{2 Análise Descritiva}\label{analise-descritiva}
 
 \emph{2.1 Medidas de Resumo}
 
@@ -169,11 +168,11 @@ barplot(table(dados\(sobrev,dados\)frontal), beside=T, las = 1, xlab =
 barplot(table(dados\(sobrev,dados\)sexo), beside=T, las = 1, xlab =
 `Sexo', ylab = `Frequência', legend = c(`Não',`Sim'))
 
-\hypertarget{ajuste-do-modelo-de-regressao}{%
 \section{3. Ajuste do Modelo de
-Regressão}\label{ajuste-do-modelo-de-regressao}}
+Regressão}\label{ajuste-do-modelo-de-regressao}
 
-\#\#\emph{3.1 Ligação Logito}
+\subsection{\texorpdfstring{\emph{3.1 Ligação
+Logito}}{3.1 Ligação Logito}}\label{ligacao-logito}
 
 Vamos ajustar um Modelo Linear Generalizado Binomial com função de
 ligação Logito. A expressão do modelo é dada por:
@@ -185,7 +184,8 @@ No R, o modelo é declarado da seguinte forma:
 \{r\} ajuste1 \textless{}- glm(sobrev \textasciitilde{}
 .,family=binomial(link=`logit'),data = dados)
 
-\#\#\emph{3.2 Ligação Probito}
+\subsection{\texorpdfstring{\emph{3.2 Ligação
+Probito}}{3.2 Ligação Probito}}\label{ligacao-probito}
 
 Vamos ajustar um Modelo Linear Generalizado Binomial com função de
 ligação Probito. A expressão do modelo é dada por:
@@ -197,7 +197,8 @@ No R, o modelo é declarado da seguinte forma:
 \{r\} ajuste2 \textless{}- glm(sobrev \textasciitilde{}
 .,family=binomial(link = `probit'),data = dados)
 
-\#\#\emph{3.3 Ligação Complemento log-log}
+\subsection{\texorpdfstring{\emph{3.3 Ligação Complemento
+log-log}}{3.3 Ligação Complemento log-log}}\label{ligacao-complemento-log-log}
 
 Vamos ajustar um Modelo Linear Generalizado Binomial com função de
 ligação Complemento Log Log. A expressão do modelo é dada por:
@@ -209,7 +210,8 @@ No R, o modelo é declarado da seguinte forma:
 \{r\} ajuste3 \textless{}- glm(sobrev \textasciitilde{}
 .,family=binomial(link=`cloglog'),data = dados)
 
-\#\#\emph{3.4 Ligação Cauchy}
+\subsection{\texorpdfstring{\emph{3.4 Ligação
+Cauchy}}{3.4 Ligação Cauchy}}\label{ligacao-cauchy}
 
 Vamos ajustar um Modelo Linear Generalizado Binomial com função de
 ligação Cauchy. A expressão do modelo é dada por:
@@ -221,8 +223,7 @@ No R, o modelo é declarado da seguinte forma:
 \{r\} ajuste4 \textless{}- glm(sobrev \textasciitilde{}
 .,family=binomial(link=`cauchit'),data = dados)
 
-\hypertarget{escolha-do-modelo}{%
-\section{4. Escolha do Modelo}\label{escolha-do-modelo}}
+\section{4. Escolha do Modelo}\label{escolha-do-modelo}
 
 O critério de informação AIC pode também ser utilizado, porém o AIC
 penaliza o número de parâmetros do modelo. Como os modelos tem o mesmo
@@ -238,15 +239,16 @@ selec
 O modelo que apresentou menor AIC e maior verossimilhança foi o modelo
 Binomial com função de ligação Cauchy.
 
-\hypertarget{analise-do-modelo-ajustado-selecionado}{%
 \section{5. Análise do Modelo Ajustado
-Selecionado}\label{analise-do-modelo-ajustado-selecionado}}
+Selecionado}\label{analise-do-modelo-ajustado-selecionado}
 
-\#\#\emph{5.1 Resumo do Modelo}
+\subsection{\texorpdfstring{\emph{5.1 Resumo do
+Modelo}}{5.1 Resumo do Modelo}}\label{resumo-do-modelo}
 
 \{r, echo=FALSE, eval=TRUE, results=``hide''\} summary(ajuste4)
 
-\#\#\emph{5.2 Reajuste do Modelo}
+\subsection{\texorpdfstring{\emph{5.2 Reajuste do
+Modelo}}{5.2 Reajuste do Modelo}}\label{reajuste-do-modelo}
 
 Como próximo passo será usado o algoritmo stepwise para seleção de
 variáveis do modelo.
@@ -264,8 +266,8 @@ summary(ajuste4)
 
 summary(ajuste4.1)
 
-Vamos testar a seguinte hipotese: h0: modelos não diferem h1: modelos
-diferem
+Vamos testar a seguinte hipotese: \(H_0\): modelos não diferem \(H_1\):
+modelos diferem
 
 \{r\} anova(ajuste4, ajuste4.1, test = `Chisq') summary(ajuste4.1)
 
@@ -293,7 +295,9 @@ main=``Resíduos Padronizados'')
 
 \emph{5.5 Resíduos Quantílicos Aleatoriazados}
 
-\#\#\emph{5.6 Gráfico Normal de Probabilidades com Envelope Simulado}
+\subsection{\texorpdfstring{\emph{5.6 Gráfico Normal de Probabilidades
+com Envelope
+Simulado}}{5.6 Gráfico Normal de Probabilidades com Envelope Simulado}}\label{grafico-normal-de-probabilidades-com-envelope-simulado}
 
 Lineu O gráfico de resíduos simulados permite verificar a adequação do
 modelo ajustado mesmo que os resíduos não tenham uma aproximação
@@ -331,29 +335,25 @@ envSim(model = ajuste4.1, data = ajuste4.1\$data)
 \{r, echo=FALSE, eval=TRUE, results=``hide''\}
 plot(allEffects(ajuste4.1), type = `response', main = '')
 
-\hypertarget{predicao}{%
-\section{6. PREDIÇÃO}\label{predicao}}
+\section{6. PREDIÇÃO}\label{predicao}
 
-\hypertarget{avaliacao-do-poder-preditivo-do-modelo}{%
 \section{7. AVALIAÇÃO DO PODER PREDITIVO DO
-MODELO}\label{avaliacao-do-poder-preditivo-do-modelo}}
+MODELO}\label{avaliacao-do-poder-preditivo-do-modelo}
 
 Como temos uma base de tamanho razoável para fins preditivos, uma
 alternativa é separar a base em duas: uma para o ajuste do modelo, com
 70\% dos dados (com 477 observações) e outra para validação, com 30\%
 (com 203 observações).
 
-\hypertarget{divisao-da-base-de-dados}{%
 \subsection{\texorpdfstring{\emph{7.1 Divisão da Base de
-dados}}{7.1 Divisão da Base de dados}}\label{divisao-da-base-de-dados}}
+dados}}{7.1 Divisão da Base de dados}}\label{divisao-da-base-de-dados}
 
 \{r\} set.seed(1909) indices \textless{}- sample(1:680, size = 477)
 dadosajuste \textless{}- dados{[}indices,{]} dadosvalid \textless{}-
 dados{[}-indices,{]}
 
-\hypertarget{ponto-de-corte}{%
 \subsection{\texorpdfstring{\emph{7.2 Ponto de
-Corte}}{7.2 Ponto de Corte}}\label{ponto-de-corte}}
+Corte}}{7.2 Ponto de Corte}}\label{ponto-de-corte}
 
 Como estamos modelando a probabilidade de tumor maligno, vamos
 estabelecer o ponto de corte 0.5, isso é, se a probabilidade estimada
@@ -384,8 +384,7 @@ A sensibilidade é dada por
 
 \emph{7.5 Outra Alternativa de validação}
 
-\hypertarget{referencias}{%
-\section{8. REFERÊNCIAS}\label{referencias}}
+\section{8. REFERÊNCIAS}\label{referencias}
 
 
 \end{document}
