@@ -1,0 +1,270 @@
+---
+title: "CE083 - Estatística Computacional I"
+author: "NOME Willian Meira Schlichta (GRR20159077)"
+date: "25 de Junho de 2019"
+output: html_document
+---
+
+# Prova de aproveitamento de conhecimento
+
+## Dados
+
+O abalone é um gênero de moluscos gastrópodes marinhos, encontrado na
+costa de diversos países. É explorado comercialmente e é um alimento
+altamente valorizado em países asiáticos.
+
+Os dados disponibilizados correspondem à diversos exemplares de abalone
+coletados na Tasmânia, em quatro áreas diferentes. Para cada indivíduo
+foram medidos o comprimento e determinado o número de anéis etários,
+para tentar se determinar a idade (cada anel etário corresponde à
+aproximadamente um ano de vida).
+
+As variáveis são:
+
+- `Area`: área de coleta (A, B, C, ou D)
+- `Sexo`: sexo dos indivíduos (M = macho, F = fêmea, I = indeterminado)
+- `Comprimento`: comprimento dos indivíduos (cm)
+- `Aneis`: número de anéis etários
+
+Faça a importação da base de dados:
+
+```{r, echo=TRUE, eval=TRUE, results="hide"}
+dados_abalone <- read.csv('dados_abalone.csv',header = TRUE, dec = '.')
+```
+
+Verifique sua estrutura e faça um sumário estatístico:
+
+```{r, echo=TRUE, eval=TRUE}
+str(dados_abalone)
+summary(dados_abalone)
+```
+
+Classifique as variáveis de acordo com suas características (ex.:
+qualitativa ordinal, etc)
+
+- `Area`: Qualitativa Nominal
+- `Sexo`: Qualitativa Nominal
+- `Comprimento`: Quantitativa Continua
+- `Aneis`: Quantitativa Discreta
+
+## Análise exploratória
+
+Faça uma tabela de frequência obsoluta com soma marginal para `Area`:
+
+```{r}
+tab_area <- table(dados_abalone$Area)
+tab_area
+```
+
+Faça uma tabela de frequência relativa com soma marginal para `Sexo`:
+
+```{r}
+tab_sexo <- table(dados_abalone$Sexo)
+tab_sexo/length(dados_abalone$Sexo)
+```
+
+Faça uma tabela de frequências absolutas com soma marginal entre as
+variáveis `Sexo` e `Area`:
+
+```{r}
+tab_sex_area <- with(dados_abalone, table(Sexo, Area))
+tab_sex_area
+
+```
+
+Faça um gráfico de barras para representar a tabela de frequências
+absolutas entre `Area` e `Sexo`, com as barras lado-a-lado:
+
+```{r}
+barplot(tab_sex_area, legend = TRUE)
+```
+
+Em uma mesma janela gráfica, faça um histograma para `Comprimento` e
+outro para `Aneis`:'
+
+```{r, fig.show='hold'}
+par(mfrow = c(1,2))
+hist(dados_abalone$Comprimento)
+hist(dados_abalone$Aneis)
+```
+
+Faça um gráfico de dispersão entre `Comprimento` e `Aneis`. O número de
+anéis etários depende do comprimento do indivíduo. Com essa informação,
+determine corretamente as variáveis que devem estar no eixo Y
+(resposta ou dependente) e no eixo X (explicativa ou independente):
+
+```{r}
+plot(x = dados_abalone$Comprimento, y = dados_abalone$Aneis)
+```
+
+Verifique o tamanho efetivo da amostra, em relação à variàvel `Aneis`.
+Ou seja, verifique o número de elementos nessa coluna que não sejam
+valores perdidos:
+
+```{r}
+dados_sem_NA <- subset(dados_abalone, dados_abalone$Aneis != "NA")
+length(dados_sem_NA$Aneis)
+
+```
+
+Calcule a média de `Aneis` e de `Comprimento` (separadamente ou com
+apenas uma função):
+
+```{r}
+mean(dados_sem_NA$Aneis)
+mean(dados_sem_NA$Comprimento)
+```
+
+Calcule a variância de `Aneis` e de `Comprimento` (separadamente ou com
+apenas uma função):
+
+```{r}
+var(dados_sem_NA$Aneis)
+var(dados_sem_NA$Comprimento)
+```
+
+Faça um sumário estatístico de `Aneis`, separado para cada `Area`:
+
+```{r}
+dados_A <- subset(dados_sem_NA, dados_sem_NA$Area == 'A')
+summary(dados_A)
+
+dados_B <- subset(dados_sem_NA, dados_sem_NA$Area == 'B')
+summary(dados_B)
+
+dados_C <- subset(dados_sem_NA, dados_sem_NA$Area == 'C')
+summary(dados_C)
+
+dados_D <- subset(dados_sem_NA, dados_sem_NA$Area == 'D')
+summary(dados_D)
+```
+
+Calcule a média de `'Aneis` para cada `Sexo`:
+
+```{r}
+with(dados_sem_NA, tapply(Aneis, Sexo, mean))
+```
+
+Calcule a média de `Aneis` para cada `Area`:
+
+```{r}
+with(dados_sem_NA, tapply(Aneis, Area, mean))
+```
+
+Calcule a média de `Aneis` por `Sexo` e `Area`:
+
+```{r}
+
+```
+
+Crie um novo objeto que seja um data frame com duas colunas: `Area` e
+média de anéis por área:
+
+```{r}
+dados_novo <- data.frame(with(dados_sem_NA, tapply(Aneis, Area, mean)))
+str(dados_novo)
+
+dados_novo
+```
+
+Faça um gráfico de linha (veja o argumento `type=` em `?plot`) para
+representar a média ao longo das áreas. (Para isso você precisará
+converter a coluna com as áreas no seu objeto criado acima para a classe
+`numeric`):
+
+```{r}
+
+```
+
+## Inferência
+
+Sabemos que o intervalo de confiança para média de uma distribuição
+normal com variância desconhecida, para uma amostra de tamanho $n$ é
+dado por:
+
+$$
+\left(\bar{x} - t_t \sqrt{\frac{s^2}{n}} \quad, \quad
+  \bar{x} + t_t \sqrt{\frac{s^2}{n}} \right)
+$$
+
+onde $t_t$ é o quantil de ordem $1-\alpha/2$ da distribuição $t$ de
+Student, com $n-1$ graus de liberdade.
+
+Considerando que estamos interessados em obter um intervalo de confiança
+para a média de `Aneis`:
+
+- Calcule o tamanho da amostra, a média e a variância amostral de
+  `Aneis`:
+
+```{r}
+tam_amostra_aneis <- length(dados_sem_NA$Aneis)
+med_aneis <- mean(dados_sem_NA$Aneis)
+var_aneis <- var(dados_sem_NA$Aneis)
+```
+
+- Monte o intervalo de confiança utilizando os quantis da distribuição
+  $t$, para obter um IC de 90\% de confiança:
+
+```{r}
+
+```
+
+Além do intervalo de confiança, podemos realizar um teste de hipótese
+para testar se a média dos `Aneis` é igual a determinado valor. Os
+procedimentos gerais para este teste de hipótese são:
+
+1. Definir a hipótese nula ($H_0$) e a alternativa ($H_1$)
+2. Definir um nível de **significância** $\alpha$ (ex.: $\alpha =
+  0,05$), que irá determinar o nível de **confiança** $100(1-\alpha)\%$
+  do teste
+3. Determinar a **região de rejeição** com base no nível de
+  significância $\rightarrow$ valor crítico
+4. Calcular a **estatística de teste**, sob a hipótese nula
+$$
+	t_{calc} = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}
+$$
+5. Rejeitar a hipótese nula se a estatística de teste calculada
+  estiver dentro da região de rejeição ($|t_{calc}| > |t_{crit}|$)
+
+Portanto, se desejamos testar a hipótese de que o número médio de anéis
+é igual a 10, temos as seguintes hipóteses:
+
+$$
+\begin{align}
+\text{H}_0: \mu = 10 \\
+\text{H}_1: \mu \neq 10 \\
+\end{align}
+$$
+
+Com isso:
+
+- Obtenha a estatística de teste $t_{calc}$:
+
+```{r}
+
+```
+
+- Obtenha o valor crítico $t_{crit}$, usando um nível de significância
+  $\alpha = 0,10$:
+
+```{r}
+
+```
+
+- Compare a estatística de teste com o valor crítico (usando uma
+  expressão lógica):
+
+```{r}
+
+```
+
+Realize agora esse mesmo teste de hipótese através da função `t.test()`
+e confira seus resultados:
+
+```{r}
+
+```
+
+Qual a sua conclusão a respeito do teste de hipótese?
+
+**Resposta**:

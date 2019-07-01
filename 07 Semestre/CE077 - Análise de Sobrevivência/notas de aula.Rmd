@@ -10,26 +10,46 @@ knitr::opts_chunk$set(echo = TRUE)
 
 senha slides: sgiolo2019
 
+Tutorial markdown: [Link 1](https://rstudio-pubs-static.s3.amazonaws.com/46674_35d398934e474467aa3655546d1531b0.html#1), [Link 2](http://www.leg.ufpr.br/~fernandomayer/palestra/useR-2015/Rmarkdown-rautu.html#outline)
+
 ## Aula 02 - 20/02/2019
 
 
 Slide 08 
 
+Slide 19
 
+$$S(t)=1-F(t)$$
 
-$\delta$
+$$S(t)=P(T\leq t)$$
 
 
 ```{r}
 
 ```
 
-# Aula 03 - 
+## Aula 03 - 25/02/2019
+ 
+### Slide 19 >> ver foto
+ 
+#### Slide 21
+Tempo médio de vida (TMV): área abixo da curva >> $TMV=t_m=\int_0^\infty S(t) dt$
 
-You can also embed plots, for example:
+Vida média residual (VMR): é uma probabilidade condicional >> $vmr(t)=\frac{\int_t^\infty S(u)du}{S(t)}$
+
+
+### Slide 24
+ Taxa de falha $\lambda (t)$
+
+### Slide 27
+ 
+Técnicas não paramétricas 
 
 ```{r, echo=FALSE}
 
 ```
+### Slide 64
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
