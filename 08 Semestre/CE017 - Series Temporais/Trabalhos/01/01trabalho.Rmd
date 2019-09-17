@@ -1,0 +1,32 @@
+---
+title: "Trabalho 01 - CE017 Análise Series Temporais"
+author: "Willian Meira Schlichta"
+date: "16/09/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercídio 1
+Considere um modelo sinal-mais-ruído da forma geral Xt=St+Wt, onde Wt é o ruído branco gaussiano com σ2W=1. Simule e mostre gráficamnte o resultado de n=200 observações de cada um dos dois modelos a seguir.
+ 
+
+```{r cars}
+s = c(rep(0,100), 10*exp(-(101:100)/20)*cos(2*pi*(101:200)/4))
+x = s + rnorm(200)
+plot.ts(x) 
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
