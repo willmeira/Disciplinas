@@ -1,0 +1,189 @@
+---
+title: 'Sabatina 08: Artigo - Confiabilidade e Precisão na Estimação de Médias'
+subtitle: "CE-092: Extensões de Modelos Lineares - Prof Paulo Justiniano e Walmes Zeviani"
+author: "Willian Meira Schlichta | GRR20159077"
+date: '`r Sys.Date() `'
+output: pdf_document
+
+---
+
+
+```{r, include=FALSE}
+require(lme4)
+require(lattice)
+require(MASS)
+require(nlme)
+require(tinytex)
+```
+
+## Exercício 01: Escreva a especificação do modelo considerado no artigo na forma de notação geral (matricial) vista em aulas para modelos de efeitos aleatórios Gaussianos. Forneça as matrizes e suas dimensões.
+
+$$
+\left[
+\begin{array}{l}
+Y_{11}\\
+Y_{12}\\
+Y_{13}\\
+Y_{14}\\
+Y_{21}\\
+Y_{22}\\
+Y_{23}\\
+Y_{24}\\
+Y_{31}\\
+Y_{32}\\
+Y_{33}\\
+Y_{34}\\
+Y_{41}\\
+Y_{42}\\
+Y_{43}\\
+Y_{44}\\
+Y_{51}\\
+Y_{52}\\
+Y_{53}\\
+Y_{54}\\
+\end{array}
+\right]_{20 \times 1}
+=
+\left[
+\begin{array}{l}
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+{1}\\
+\end{array}
+\right]_{20 \times 1}
+\left[
+\begin{array}{l}
+{\mu}\\
+\end{array}
+\right]_{1 \times 1}
++
+\left[
+\begin{array}{lllll}
+{1} & {0} & {0} & {0} & {0}\\
+{1} & {0} & {0} & {0} & {0}\\
+{1} & {0} & {0} & {0} & {0}\\
+{1} & {0} & {0} & {0} & {0}\\
+{0} & {1} & {0} & {0} & {0}\\
+{0} & {1} & {0} & {0} & {0}\\
+{0} & {1} & {0} & {0} & {0}\\
+{0} & {1} & {0} & {0} & {0}\\
+{0} & {0} & {1} & {0} & {0}\\
+{0} & {0} & {1} & {0} & {0}\\
+{0} & {0} & {1} & {0} & {0}\\
+{0} & {0} & {1} & {0} & {0}\\
+{0} & {0} & {0} & {1} & {0}\\
+{0} & {0} & {0} & {1} & {0}\\
+{0} & {0} & {0} & {1} & {0}\\
+{0} & {0} & {0} & {1} & {0}\\
+{0} & {0} & {0} & {0} & {1}\\
+{0} & {0} & {0} & {0} & {1}\\
+{0} & {0} & {0} & {0} & {1}\\
+{0} & {0} & {0} & {0} & {1}\\
+\end{array}
+\right]_{20 \times 5}
+\left[
+\begin{array}{l}
+\alpha_{01}\\
+\alpha_{02}\\
+\alpha_{03}\\
+\alpha_{04}\\
+\alpha_{05}\\
+\end{array}
+\right]_{5 \times 1}
++
+\left[
+\begin{array}{l}
+\epsilon_{11}\\
+\epsilon_{12}\\
+\epsilon_{13}\\
+\epsilon_{14}\\
+\epsilon_{21}\\
+\epsilon_{22}\\
+\epsilon_{23}\\
+\epsilon_{24}\\
+\epsilon_{31}\\
+\epsilon_{32}\\
+\epsilon_{33}\\
+\epsilon_{34}\\
+\epsilon_{41}\\
+\epsilon_{42}\\
+\epsilon_{43}\\
+\epsilon_{44}\\
+\epsilon_{51}\\
+\epsilon_{52}\\
+\epsilon_{53}\\
+\epsilon_{54}\\
+\end{array}
+\right]_{20 \times 1}
+$$
+
+
+
+## Exercício 02: Carregue os dados do artigo e reproduza análise dos dados utilizando algum pacote/função do R. Mostre o comando e as estimativas dos parâmetros fixos e aleatórios.
+
+
+
+```{r}
+dt <- read.table("http://www.leg.ufpr.br/~paulojus/CE092/singer.dat",header=TRUE, dec = ",")
+dt$Local <- as.factor(dt$Local)
+m1 <- lme(Concentra ~ 1, random = ~1 | Local, dt)
+```
+
+Resultados obtidos:
+```{r, echo=TRUE}
+m1
+```
+
+## Estimativas dos parâmetros aleatórios
+
+```{r}
+coef(m1)
+```
+ 
+
+## Estimativa do parâmetro fixo
+
+```{r}
+fixef(m1)
+```
+
+## Exercício 03: Mostre comandos para simular dados utilizando a mesma estritura e estimativas obtidas do modelo para os dados do artigo.
+
+```{r}
+md1 <- 119
+a1 <- rnorm(5, 0, 10)
+ep1 <- rnorm(20, 0, 1)
+
+resp = rep(md1, 20) + a1 + ep1
+resp
+```
+
+## Exercício 04: Defina a partir de sua notação o coeficiente de correlação intraclasse e explique seu significado.
+
+
+Cálculo do coeficiente de correlação intraclasse para os dados do artigo:
+```{r}
+1074.4510/(1074.4510+235.3777)
+```
+
+
+O Coeficiente de Correlação intraclasse dos dados do artigo resultou em um valor considerado alto (0.82), ele mede a variação das medidas repetidas na mesma unidade experimental. Como as observações intraunidades amostrais são mais homogêneas, o valor do coeficiente se fica próximo de 1. Assim, consideramos que as observações são homogêneas e que há boa confiabilidade na estimação da média.
+
+O coeficiente de correlação intraclasse é interpretado como a medida da proporção da variabilidade total atribuída a variabilidade intra indivíduos.

@@ -1,0 +1,6 @@
+\babel@toc {portuguese}{}
+\beamer@subsectionintoc {0}{1}{Motiva\IeC {\c c}\IeC {\~a}o}{4}{0}{0}
+\beamer@subsectionintoc {0}{2}{Introdu\IeC {\c c}\IeC {\~a}o}{6}{0}{0}
+\beamer@subsectionintoc {0}{3}{Metodologia}{8}{0}{0}
+\beamer@subsectionintoc {0}{4}{Resultados e Discuss\IeC {\~a}o}{12}{0}{0}
+\beamer@subsectionintoc {0}{5}{Considera\IeC {\c c}\IeC {\~o}es Finais}{23}{0}{0}

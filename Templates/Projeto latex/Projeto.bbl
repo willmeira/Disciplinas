@@ -1,0 +1,23 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.6 }
+
+\bibitem[Abadi et al. 2011]{abadi}
+\abntrefinfo{Abadi et al.}{ABADI et al.}{2011}
+{ABADI, A. et al. Comparison of aalen’s additive and cox proportional hazards
+  models for breast cancer survival: analysis of population-based data from
+  british columbia, canada.
+\emph{Asian Pacific Journal of Cancer Prevention}, v.~12, n.~11, p. 3113--3116,
+  2011.}
+
+\bibitem[Kaplan e Meier 1958]{kaplan}
+\abntrefinfo{Kaplan e Meier}{KAPLAN; MEIER}{1958}
+{KAPLAN, E.~L.; MEIER, P. Nonparametric estimation from incomplete
+  observations.
+\emph{Journal of the American Statistical Association}, Taylor \& Francis,
+  v.~53, n.~282, p. 457--481, 1958.}
+
+\end{thebibliography}

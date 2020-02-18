@@ -1,0 +1,21 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.6 }
+
+\bibitem[Chatterjee e Qiu 2009]{chatterjee2009distribution}
+\abntrefinfo{Chatterjee e Qiu}{CHATTERJEE; QIU}{2009}
+{CHATTERJEE, S.; QIU, P. Distribution-free cumulative sum control charts using
+  bootstrap-based control limits.
+\emph{The Annals of Applied Statistics}, JSTOR, p. 349--369, 2009.}
+
+\bibitem[Park 2009]{park2009median}
+\abntrefinfo{Park}{PARK}{2009}
+{PARK, H.-I. Median control charts based on bootstrap method.
+\emph{Communications in Statistics—Simulation and
+  Computation{\textregistered}}, Taylor \& Francis, v.~38, n.~3, p. 558--570,
+  2009.}
+
+\end{thebibliography}

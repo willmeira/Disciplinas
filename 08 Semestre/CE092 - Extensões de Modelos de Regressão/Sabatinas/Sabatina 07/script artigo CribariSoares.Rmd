@@ -1,0 +1,59 @@
+---
+title: 'Sabatina 07: Artigo - Inferência em Modelos Heterocedásticos - Francisco Cribari Neto e Ana Cristina Nunes Soares'
+subtitle: "CE-092: Extensões de Modelos Lineares - Prof Paulo Justiniano e Walmes Zeviani"
+author: "Willian Meira Schlichta | GRR20159077"
+date: '`r Sys.Date() `'
+output: pdf_document
+
+---
+
+
+```{r, include=FALSE}
+require(lme4)
+require(lattice)
+require(MASS)
+require(nlme)
+require(tinytex)
+```
+
+
+## 1. Mostre comandos para simular dados do mesmo modelo que foi utilizado para simular os dados do artigo.
+
+
+## 2. Qual a principal proposta/contribuição do artigo?
+A principal proposta do artigo é avaliar como é o comportamento do estimador de White na
+presença de dados heterocedásticos. Os resultados revelam que o estimador de White pode ser
+muito viesado em amostras finitas, conduzindo a testes quase-t liberais. Mostram ainda, que a
+existência de pontos de alta alavancagem tem grande influência sobre o desempenho dos
+estimadores consistentes e testes associados. A grande contribuição do artigo foi que ele
+apresentou formas para contornar este problema, propondo um novo estimador, construído a
+partir do estimador HC3, que utiliza ponderações para as diferentes observações que são
+calculadas a partir de seus respectivos graus de alavancagem. Os resultados numéricos revelam
+que este estimador conduz a testes quase-t que não são marcadamente liberais e,
+consequentemente, a inferências mais confiáveis. Mostra-se ainda que a realização de
+inferência via testes de bootstrap duplo também é confiável. De fato, os dois enfoques
+apresentam desempenho similar em amostras de tamanho típico. A vantagem da utilização do
+estimador proposto pelo artigo e denominado HC4 sobre esquemas de bootstrap duplo reside
+em sua simplicidade prática e computacional.
+
+
+## 3. O artigo aborda várias formas de corrigir erros padrões de estimativas de coeficientes originadas a partir da proposta de White. Como você descreveria (de forma simples e objetiva, máximo de 50 palavras) a ideia central da proposta de White?
+
+A ideia central proposta por White foi sugerir um estimador mais consistente quanto a sua
+matriz de covariância para a realização de inferências, uma vez que o estimador tradicional é
+viesado e não consistente quando a suposição de homocedasticidade é violada.
+
+
+## 4. Qual seria uma abordagem alternativa à correção dos erros padrão?
+A abordagem proposta para a correção de erros padrão em dados heterocedásticos e em
+amostras finitas seria a utilização do estimador HC3 e/ou o bootstrap ponderado.
+
+
+## 5. Se você tivesse um conjunto de dados, que tipo de análises ou considerações fariam você considerar utilizar algum método/modelo para dados heterocedásticos?
+A análise de dados provenientes de um corte transversal em um conjunto de dados comumente
+apresenta padrões de heterocedasticidade, provocada pelas variâncias condicionais que não são
+constantes ao longo de todas as observações, este é um fator que nos leva a considerar a
+utilização de modelos específicos para dados heterocedásticos.
+
+
+

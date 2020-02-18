@@ -4,6 +4,7 @@ install.packages('astsa')
 
 library(astsa)
 
+rm(list=ls())
 
 ##########################################################################################
 ## I. Características da série temporal

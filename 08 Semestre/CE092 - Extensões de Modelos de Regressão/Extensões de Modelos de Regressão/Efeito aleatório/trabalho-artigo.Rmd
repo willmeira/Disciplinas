@@ -1,0 +1,58 @@
+---
+title: "Resenha sobre o artigo: ***Amamentação e crescimento infantil: um estudo longitudinal
+  em crianças do Rio de Janeiro, Brasil, 1999/2001.***"
+author: "Vincius Larangeiras de Souza"
+date: "30 de outubro de 2018"
+output: pdf_document
+---
+
+  O devido artigo analisado faz um estudo sobre a utilização de modelos mistos para estimar e predizer o crescimento infantil dado o período de amamentação através de algumas variáveis explicativas. Foi utilizado como variável resposta peso ou comprimento da criança.
+
+  Apesar do trabalho ser sobre modelos mistos, o foco principal dessa resenha será aprofundado na parte dos efeitos aleatórios. Os autores optaram por modelos mistos no intuito de melhorar a precisão das estimativas. E é aí que entra os efeitos aleatórios, pois esses efeitos vão ajudar a controlar fontes de variação entre crianças, que não podem ser controladas, devido alguma dificuldade de mensuração.
+
+  Ou seja, os autores estão considerando como efeito aleatório, o comportamento de cada criança, pois cada criança tem um comportamento diferente em relação ao comportamento médio populacional. Portanto o modelo de efeito aleatório permitiu estimar a variação dos desvios individuais (de peso(kg)/comprimento) em torno da média populacional.
+
+  O modelo utilizado foi: $Y_i=X_i\beta+Z_ib_i+\epsilon_i$
+
+  Onde $Y_i$ é o vetor de resposta (conhecido);
+
+  $X_i$ e $Z_i$ são as matrizes de covariáveis (conhecidas);
+
+  $\beta$ representa o efeito fixo (assumido igual para todas as crianças);
+
+  $b_i$ representa o efeito aleatório do modelo (diferente para cada criança, por isso é representado pelo índice i);
+
+  E $\epsilon$ é o vetor de erros ou resíduos (aleatório, não conhecido).
+
+  Inicialmente foram ajustados 2 modelos (um para variável dependente peso e outro para comprimento), com as seguintes variáveis explicativas: **duração de amamentação predominante, sexo e idade**. Foi considerado variáveis significantes com p<0,20.
+
+  Segundo o autor, a modelagem utilizada neste estudo permitiu que em primeiro estágio, considerar que as unidades amostrais sejam selecionadas aleatoriamente da população de interesse e, em segundo estágio que um número de medidas seja observado de cada unidade do primeiro estágio.
+
+  Essas foram as principais informações que puderam ser extraídas desse artigo, os autores conseguiram concluir o objetivo deles, que era de prever se algumas variáveis explicavam o comportamento do peso e do comprimento de crianças recém-nascidas ao longo do tempo.
+Porém eles poderiam ter ido além, e ter explicado mais sobre as variáveis e sobre os modelos, que acabou causando algumas confusões na minha análise.
+
+  Eles poderiam por exemplo mostrar o desenvolvimento de como foi feita a escolha das variáveis para o estudo como foi feita para decidir quais eram fixas e quais eram aleatórias.
+  
+  Faltou também um diagnóstico mais aprimorado(aprofundado) dos modelos para poder ter uma visão das comparações dos possíveis modelos que poderiam ser ajustados. Pois em nenhum momento foi mostrado o comportamento dos resíduos desses modelos.
+
+  Mas percebemos que para esse estudo a escolha de efeitos aleatórios foi necessária, pois existem muitas fontes de variação que não podem ser consideradas compatíveis para todas as crianças. 
+  
+  Eu sugiro um modelo simples, analisando somente o comprimento das crianças, e utilizando peso como variável explicativa.
+ 
+  $$ comprimento(cm)_i= \alpha+\beta+b_i+\epsilon$$
+  
+  Em que o comprimento i é explicada pelo efeito fixo $\beta$ e pelo efeito aleatório bi, que se soma ao valor do intercepto fixo do modelo, $\alpha$, para formar o intercepto do comprimento i. Veja que o índice i está atrelado a bi e, portanto, o modelo permite que cada uma das crianças apresente uma relação diferente entre comprimento e as covariáveis selecionadas. Já $\beta$ faz parte do efeito fixo, e não possuí nenhum índice i atrelado a ele. Finalmente, $\epsilon$ representa o erro associado a cada uma das amostras.
+
+Para poder fazer uma seleção de variáveis eu precisaria me aprofundar mais nesse estudo e entender melhor cada uma para ver quais poderia incluir no modelo e, saber quais seriam as melhores variaveis explicativas para esse modelo, vendo quais as que melhor iriam explicar esse modelo.
+
+**Artigo analisado:** Amamentação e crescimento infantil: um estudo longitudinal em crianças do Rio de Janeiro, Brasil, 1999/2001.
+
+**Autores:** Maria Helena Constantino Spyrides
+
+Cláudio José Struchiner
+
+Maria Tereza Serrano Barbosa
+
+Gilberto Kac
+
+**Esse artigo pode ser encontrado em:** https://www.scielosp.org/scielo.php?pid=S0102-311X2005000300009&script=sci_arttext&tlng=pt
