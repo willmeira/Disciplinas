@@ -1,0 +1,72 @@
+---
+title: "Trabalho 1 de Metodos Markovianos"
+output: word_document
+---
+Exercicio 1 - Suponha que a profissão de um homem pode ser classificada como profissional, trabalhador qualificado ou operário não qualificado. Suponha
+que, dos filhos de homens profissionais, 80 por cento são profissionais,
+10 porcento são trabalhadores qualificados e 10 por cento são trabalhadores não qualificados. No caso dos filhos de operários especializados,
+60 porcento são hábeis trabalhadores qualificados, 20 porcento são
+profissionais e 20 porcento são trabalhadores não qualificados. Finalmente, no caso de trabalhadores não qualificados, 50 porcento dos
+filhos são trabalhadores não qualificados e 25 porcento em cada um
+são as chances das outras duas categorias. Suponha que cada homem
+tem pelo menos um filho e que seguindo a profissão de um filho escolhido aleatoriamente de uma determinada família através de várias
+gerações temos definida uma Cadeia de Markov. Configure a matriz
+de probabilidades de transição. Encontre a probabilidade de que um
+neto escolhido aleatoriamente de um trabalhador não qualificado seja
+um homem profissional.
+```{r}
+library(markovchain)
+estados = c("Profissionais","Qualificados","Não Qualificados")
+Prob.T=matrix(c(0.8,0.1,0.1,0.6,0.2,0.2,0.5,0.25,0.25),nrow=3,
+              ncol=3,byrow=T, dimnames=list(estados,estados))
+ProbT = new("markovchain", states=estados, transitionMatrix=Prob.T,
+            name="Classificação de profissão de um homem")
+ProbT
+
+# Suponha que cada homem tem pelo menos um filho e que seguindo a profissão de um filho escolhido 
+#aleatoriamente de uma determinada família através de várias gerações temos definida uma Cadeia de Markov
+ProbT^2
+
+#Encontre a probabilidade de que um
+#neto escolhido aleatoriamente de um trabalhador não qualificado seja
+#um homem profissional.
+P.nqp <- ProbT[3,1]^3
+P.nqp
+
+```
+
+
+Exercicio 2 - Seja {Xn : n ??? 0} uma Cadeia de Markov. Mostre que
+P(X0 = x0|X1 = x1, · · · , Xn = xn) = P(X0 = x0|X1 = x1)·
+
+```{r cars}
+
+```
+
+Exercicio 3 - Uma Cadeia de Markov a três estados tem a seguinte matriz de
+probabilidades de transição:
+
+```{r pressure, echo=FALSE}
+PT=matrix(c(0.25,0.5,0.25,0.4,0.6,0,1,0,0),nrow=3,
+              ncol=3,byrow=T)
+PT = new("markovchain", transitionMatrix=PT,
+            name="Matriz de probabilidades de transição")
+PT
+```
+
+a) Qual é o valor aproximado de p(100)1,3? Que interpretação você da a
+esse resultado?
+```{r}
+PT[1,3]^100
+```
+
+
+b) Qual é a probabilidade de que após o terceiro passo a cadeia esteja
+no estado 3 se o vector de probabilidades inicial é (1/3, 1/3, 1/3)?
+
+```{r}
+g=PT[3,1]
+c(1.3, 1.3, 1.3)%*%solve(g)
+
+```
+

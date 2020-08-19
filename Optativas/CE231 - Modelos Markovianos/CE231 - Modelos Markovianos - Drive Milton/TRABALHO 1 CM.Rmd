@@ -1,0 +1,287 @@
+---
+title: "CADEIAS DE MARKOV - TRABALHO 1"
+author: "Willian Meira Schlichta - GRR20159077"
+date: "5 de agosto de 2020"
+output: html_document
+---
+
+**Exercício 01**.Uma matriz de transição para o número de linhas telefónicas ocupadas.
+Suponha que o número de linhas usadas nos tempos 1, 2, ... formem uma Cadeia de Markov com matriz de probabilidades de transição estacionária. Essa cadeia possui seis estados possíveis 0, 1, ..., 5, onde $i$ é o estado no qual exatamente $i$ linhas estão sendo usadas em um determinado momento (i=0,1,⋯,5). Suponha que a matriz de transição Γ seja a seguinte: 
+
+![](C:\Users\55419\Documents\Git\disciplinas\Optativas\CE231 - Modelos Markovianos\Trabalho 1 - M1.PNG)
+
+(a) Supondo que todas as cinco linhas estejam em uso em um determinado momento de observação, determinar a probabilidade de que exatamente quatro linhas serão usadas no próximo tempo de observação.
+    
+    $P(C_{n+1}=4/C_{n}=5) = 0,4 = 40%$
+
+(b) Supondo que nenhuma linha esteja em uso em um determinado momento, determinar a probabilidade de que pelo menos uma linha esteja em uso no próximo momento de observação.
+
+    $P(C_{n+1}\geqslant 1/C_{n}=0) = 0,4 +0,2 +0,1 +0,1 +0,1 = 0,9 = 90%$
+
+
+
+
+**Exercício 02**. Mostre que o seguinte processo auto-regressivo é um processo Markov: 
+         $Cn=ρC_{n−1}+ξ_n$, e $C_0=0$, onde $ξ_1,⋯,ξ_n$ são variáveis aleatórias independentes e igualmente distribuídas.
+
+$C_{0} = 0$
+
+$C_{n}=PC_{n-1}+\epsilon_{n}$ onde $\epsilon_{n}$ são variáveis aleatórias $iid$  
+
+$P(C_{n+1}=cn+1/C_{n}=cn)=P(PC_{n}+\epsilon_{n+1}=cn+1)PC_{n-1}+\epsilon_{n}=C_{n})$
+
+$PC_{n}+\epsilon_{n+1}=cn+1 \rightarrow \epsilon_{n+1}=cn+1 - PC_{n}$
+
+De $P(C_{n}=cn/C_1=c1, C_2=c_2,C_n=cn)$
+
+Observamos que:
+ 
+$C1=c1 \rightarrow \epsilon_{1}=C1-PC_{0}=C1$ 
+$C2=c2 \rightarrow \epsilon_{2}=C2-PC_{1}$ 
+$C3=c3 \rightarrow \epsilon_{3}=C3-PC_{2}$ 
+ 
+$Cn=cn \rightarrow \epsilon_{n}=Cn-PC_{n-1}$ 
+
+Da fórmula de Bayez temos que P(A/B)=\frac{P(A,B)}{P(B)} = P(A)
+
+Então:
+ 
+$P(\epsilon_{n+1}=C_{n+1}-P_{cn}/\epsilon_{1}=C_{1},\cdots , \epsilon_{n}=cn-P_{c}-1)$
+ 
+Como as variáveis $\epsilon_{n}$ são independentes, a equação acima pode reescrita como:
+ 
+$P(\epsilon_{n+1}=cn+1 - P_{cn})$
+ 
+Como $\epsilon_{n}$ dependem somente do instante anterior, é uma cadeia de Markov
+
+
+
+**Exercício 05**. Seja {$\bar{C_n}$} a sequência de médias amostrais calculadas a partir de $C1,C2,⋯$, uma sequência de variáveis aleatórias independentes e identicamente distribuídas, isto é, $\bar{C_n}=1/n(C_1+C_2+⋯+C_n)$⋅
+
+(a) É {$\bar{C_n}$} um processo de Markov?
+    
+Sim. Pois temos ${\delta }= {\delta}'$
+
+*${\delta }= (n+1) \bar{C}_{n+1}-n\bar{C}n$
+
+**${\delta}'=(n+1) \bar{C}_{n+1}-\sum_{k=1}^{n}C_{k}$
+
+em que $\sum_{k=1}^{n}C_{k}=n\bar{C}n$
+
+Com isso temos que:
+
+$(n+1) \bar{C}_{n+1}-n\bar{C}n=(n+1)\bar{C}_{n+1} - \sum_{k=1}^{n}C_{k}$
+
+$(n+1) \bar{C}_{n+1}-n\bar{C}n=(n+1) \bar{C}_{n+1}-n\bar{C}n$
+
+Logo temos que:
+
+${\delta }= {\delta}'$
+  
+    
+(b) Se a resposta à primeira parte é sim, encontrar a probabilidade de transição $P(\bar{C}_{n+1}=y|\bar{C}_{n−1}=x)$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------
+
+
+
+
+
+```{r}
+library(markovchain)
+estados = c("Profissionais","Qualificados","Não Qualificados")
+Prob.T=matrix(c(0.8,0.1,0.1,0.6,0.2,0.2,0.5,0.25,0.25),nrow=3,
+              ncol=3,byrow=T, dimnames=list(estados,estados))
+ProbT = new("markovchain", states=estados, transitionMatrix=Prob.T,
+            name="Classificação de profissão de um homem")
+ProbT
+
+```
+
+Probabilidade dos netos a partir da matriz de transição atingirem o estado da classificação:
+
+```{r cars}
+ProbT^2
+```
+
+Neste caso conforme solicitado no exercício temos que o neto de um neto de um trabalhador não qualificado se tornar
+também um trabalhador não qualificado e de aproximadamente 37,5%.
+
+2.Seja {$X_n$ : $n \geq 0$} uma Cadeia de Markov. Mostre que
+
+$$P(X_0=x_0|X_1=x_1,...,X_n=x_n)=P(X_0=x_0|X_1=x_1)$$
+
+Para essa demonstração, vou utilizar outra notação, será provado que:
+
+$$P(A_{3}|A_{1}\cap A_{2})=P(A_{3}|A_{2})$$
+$$P(A_{3}|A_{1}\cap A_{2})=\frac{P(A_{1}\cap A_{2} \cap A_{3})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{1}\cap A_{3}|A_{2})P(A_{1})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{3}|A_{2})P(A_{1}A_{2})P(A_{2})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{3}|A_{2})P(A_{1}\cap A_{2})}{P(A_{1}\cap A_{2})}$$
+$$=P(A_{3}|A_{2})$$
+Ou seja, se dado o estado atual, os estados passados nÃO tem influencia sobre o futuro.
+
+
+3.  Uma Cadeia de Markov a três estados tem a seguinte matriz de probabilidades de transição:
+
+```{r pressure, echo=FALSE}
+
+PT=matrix(c(0.4,0.5,0.1,0.4,0.5,0.1,0.4,0.5,0.1),nrow=3,
+              ncol=3,byrow=T)
+
+```
+
+a)Qual é o valor aproximado de (1001,3) ? Que interpretação você dá a esse resultado?
+```{r}
+estados3 = c("1","2","3")
+Prob.T3=matrix(c(0.4,0.5,0.1,0.4,0.5,0.1,0.4,0.5,0.1),nrow=3,
+              ncol=3,byrow=T, dimnames=list(estados3,estados3))
+Prob.T3 = new("markovchain", states=estados3, transitionMatrix=Prob.T3,
+            name="MATRIZ DE TRANSIÇÃO")
+aj <- c(1,0,0)
+valoraprox <- aj*(Prob.T3^100)
+valoraprox
+
+```
+Neste caso observamos que a probabilidade de estarmos no estado 3 após a centésima interação partindo de 1 e de 10%,
+definida pela matriz estacionária.
+A potência da matriz de probabilidades em transição de um estado para outro é
+dada pelo expoente, logo a probabilidade de ir do estado um para o três em 100 transições é dada
+por essa matriz.
+
+b) Qual é a probabilidade de que após o terceiro passo a cadeia esteja no estado 3 se o vector de probabilidades
+inicial é (1/3, 1/3, 1/3)?
+```{r}
+pb <- rep(1/3 , 3)
+passo3 <- pb*(Prob.T3^3)
+passo3
+mean(passo3[,3])
+
+```
+Encontramos a probabilidade de aproximadamente 0,1
+
+4.Considere como espaço de estados S = {0, 1, ... , 6} de uma Cadeia de Markov com matriz de transição
+```{r}
+
+estados4 = c("0", "1" , "2" , "3" , "4" , "5" , "6")
+prob.T4 = matrix (c(1/2,0,1/8,1/4,1/8,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1/2,0,1/2,0,0,0,0,1/2,1/2,0,0,0,0,0,0,1/2,1/2),
+                nrow=7, ncol=7, byrow=T,
+                dimnames=list(estados4,estados4))
+prob.T4 = new ("markovchain", states=estados4, transitionMatrix=prob.T4, name="Cadeia de Markoviana")
+
+prob.T4
+```
+a)Determine quais estados sÃ£o transientes e quais recorrentes
+```{r}
+transientStates(prob.T4)
+
+steadyStates(prob.T4)
+```
+
+
+Observamos que os estados de 1 a 6 são recorrentes, restando apenas o estado 0 como trasiente
+
+b)Encontre $\rho_{0,y}$ para y=0,...,6.
+```{r}
+is.accessible(object = prob.T4, from = "0", to = "0")
+is.accessible(object = prob.T4, from = "0", to = "1")
+is.accessible(object = prob.T4, from = "0", to = "2")
+is.accessible(object = prob.T4, from = "0", to = "3")
+is.accessible(object = prob.T4, from = "0", to = "4")
+is.accessible(object = prob.T4, from = "0", to = "5")
+is.accessible(object = prob.T4, from = "0", to = "6")
+firstPassage(prob.T4, 0, 6)
+```
+
+5.Num estudo com homens criminosos em Filadélfia descobriram que a probabilidade de que um tipo de ataque seja seguido por um outro tipo pode ser descrito pela seguinte matriz de transição.
+```{r}
+estados5 = c("Outro", "Injúria" , "Roubo" , "Dano" , "Misto")
+prob.T5 = matrix (c(0.645,0.099,0.152,0.033,0.071,0.611,0.138,0.128,0.033,0.090,0.514,0.067,0.271,0.030,0.118,0.609,0.107,0.178,0.064,0.042,0.523,0.093,0.183,0.022,0.179),
+                nrow=5, ncol=5, byrow=T,
+                dimnames=list(estados5,estados5))
+prob.T5 = new ("markovchain", states=estados5, transitionMatrix=prob.T5, name="Homens Criminosos")
+
+prob.T5
+
+
+```
+
+a)Para um criminoso que comete roubo, qual é a probabilidade que o seu próximo crime também seja um roubo?
+```{r}
+roubou1 <- prob.T5^1
+roubo <- 0.271
+roubo
+```
+Conforme visto na tabela acima encontramos a probabilidade de aproximadamente 27%
+
+b)Para um criminoso que comete roubo, qual é a probabilidade de que seu segundo crime depois do atual também seja um roubo?
+```{r}
+roubos2<- prob.T5^2
+roubos2
+```
+Encontramos a probabilidade de aproximadamente 19%
+
+c)Se essas tendências continuarem, quais são as probabilidades de longo prazo para cada tipo de crime?
+```{r}
+longoprazo <- steadyStates(prob.T5)
+longoprazo
+```
+
+6.Considere uma Cadeia de Markov com espaço de estados S={0,1,2} e  matriz de probabilidades de transição
+a)Mostre que esta cadeia tem uma única distribuição estacionária $\pi$ e encontre-a.
+```{r}
+estados6 = c("0", "1" , "2")
+prob6 = matrix (c(0.4,0.4,0.2,0.3,0.4,0.3,0.2,0.4,0.4),
+                nrow=3, ncol=3, byrow=T,
+                dimnames=list(estados6,estados6))
+prob6 = new ("markovchain", states=estados6, transitionMatrix=prob6, name="Cadeia de Markov 3")
+
+prob6
+
+steadyStates(prob6)
+```
+Podemos observar a distribuição estacionária sendo 0,3 / 0,4 / 0,3 para os estados 1 / 2 / 3 respectivamente.
+
+
+7.Considere uma Cadeia de Markov sendo S={0,1,2,3,4} o espaço de estados e com matriz de probabilidades de transição
+```{r}
+estados7 = c("0", "1" , "2" , "3" , "4")
+prob7 = matrix (c(0,1/3,2/3,0,0,0,0,0,1/4,3/4,0,0,0,1/4,3/4,1,0,0,0,0,1,0,0,0,0),
+                nrow=5, ncol=5, byrow=T,
+                dimnames=list(estados7,estados7))
+prob7 = new ("markovchain", states=estados7, transitionMatrix=prob7, name="Matriz de Transição VII")
+
+prob7
+
+```
+
+a)Mostre que esta é uma cadeia irredutível
+```{r,echo=FALSE}
+is.irreducible(prob7)
+prob7
+```
+
+b)Encontre o período
+```{r,echo=FALSE}
+period(prob7)
+```
+
+c)Encontre a distribuição estacionária
+```{r,echo=FALSE}
+steadyStates(prob7)
+
+```
+
+

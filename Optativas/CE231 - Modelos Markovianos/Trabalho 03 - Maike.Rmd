@@ -1,0 +1,131 @@
+---
+title: "Trabalho 3 - Modelos Markovianos"
+author: "Maike W. Martins - GRR20159111"
+date: "10/08/2020"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(markovchain)
+```
+
+## Exercicio 1
+
+Mostrar que se o estado *x* é recorrente e do não se comunica com o estado *y* então $\gamma_{x,y}=0$.
+
+Respota:
+
+Seja S(x,y) onde *x* é um estado recorrente, logo $\left \{ \rho_{x,x}=1 \;e \; \rho_{x,y}=0  \right \}$. Seja $C_{n}$ uma cadeia de markov com espaço de estados *S* onde $N(y)=$ n° de vezes que a cadeia esta no espaço *y*, então:
+$$N(y)=\sum_{n=1}^{\infty}l_{y}(C_{n})$$
+
+Também observamos que $N(y)\geq 1$ é o mesmo que $T_{y}<\infty$ logo:
+$$P_{x}(N(y)\geq1)=P_{x}(T_{y}<\infty)=\rho_{x,y}$$
+Sejam m e n números inteiros positivos.Sabemos que a probabilidade com a qual a cadeia começando em *x* visitar a primeira vez *y* no tempo m e visitar novamente no tempo n é:
+$$P_{x}(T_{y}=m)P_{y}(T_{y}=n)$$
+Logo:
+$$P_{x}(N(y)\geq2)=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}P_{x}(T_{y}=m).P_{y}(T_{y}=n)\\
+=\left [ \sum_{m=1}^{\infty}P_{x}(T_{y}=m) \right ].\left [ \sum_{n=1}^{\infty}P_{y}(T_{y}=m) \right ]\\
+=\rho_{x,x}\rho_{x,y}=1*0=0$$
+
+
+## Exercicio 3
+
+Mostre que se o estado *x* se comunica com *y* e *y* se comunica com *z*, então *x* se comunica com *z*.
+
+Resposta:
+
+Se *x* se comunica com *y*, então temos $P_{x}(T_{y}=n)>0$ para algum n finito.Partindo do mesmo princípio, se *y* se comunica com *z* temos $P_{y}(T_{z}=m)>0$ para algum m finito.Portanto $P_{x}(T_{z}=m+n)>0$ o que demonstra que *x* se comunica com *z*
+
+## Exercicio 4
+Considere uma cadeia de marvok com espaço de estados *{1,2,...,9}* e matriz de probabilidade de transição:
+ $$\Gamma=\begin{bmatrix}
+0 & 0.5 & 0 & 0.5 & 0 & 0 & 0 & 0 & 0\\ 
+0 & 0 & 1.0 & 0 & 0 & 0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 1.0 & 0 & 0 & 0 & 0 & 0\\ 
+1.0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\  
+0 & 0 & 0 & 0 & 0 & 1.0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0 & 0 & 0 & 1.0 & 0 & 0\\ 
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1.0 & 0\\ 
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1.0\\ 
+1.0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\ 
+\end{bmatrix}$$
+
+Esta cadeira é irredutível? ou seja, prove que o conjunto de estados erredutíveis $F$ satisfaz $F=S$, sendo $S=\left \{ 1,..,9\right \}$. Prove também que esta cadeia é recorrente, ou seja, prove que cada estado em $S$ é recorrente.
+
+Resposta:
+
+```{r}
+library(markovchain)
+mat4 <- matrix(c(0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,
+                 0.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+                 0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+                 0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,
+                 0.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+                 0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,
+                 0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,
+                 0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,
+                 0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0), nrow=9)
+estados4 = c("0","1","2","3","4","5","6","7","8")
+mc4 <- new("markovchain", states=estados4, transitionMatrix=mat4, name="Exercicio 4")
+mc4
+transientStates(mc4)
+steadyStates(mc4)
+steadyStates(mc4^1000)
+transientStates(mc4)
+summary(mc4)
+```
+
+
+## Exercicio 6
+*A Fiscalía de Mídia* identificou seis estados associados à televisão: 0(nunca assiste TC), 1(assiste apenas noticias), 2(assiste TC com bastante frequência), 3(viciado), 4(em modificação de comportamento) e 5(morte encefálica). As transições de estado para estado podem ser modeladas com uma cadeira de Markov com a seguinte matriz de transição:
+
+$$\Gamma=\begin{bmatrix}
+1.0 & 0 & 0 & 0 & 0.5 & 0\\ 
+0.5 & 0 & 0.5 & 0 & 0 & 0\\  
+0.1 & 0 & 0.5 & 0.3 & 0 & 0.1\\ 
+0 & 0 & 0 & 0.7 & 0.1 & 0.2\\ 
+1/3 & 0 & 0 & 1/3 & 1/3 & 0\\ 
+0 & 0 & 0 & 0 & 0 & 1\\ 
+\end{bmatrix}$$
+
+a)Quais estados são recorrentes e quais transientes?
+
+Resposta:
+
+```{r}
+#Resposta
+```
+
+b)Començando do estado 1, qual é a probabilidade de o estado 5 ser atingido antes do estado 0, ou seja, qual é a probabilidade de um isualizador de notícias acabar com morte cerebral?
+
+Resposta:
+$$f(x)=\sum_{y \epsilon S_{R}}\gamma_{x,y}+\sum_{y \epsilon S_{T}}\gamma_{x,y}f(y) \;x \epsilon S_{T}\\
+f(1)=(\gamma_{1,0}+\gamma_{1,5})+(\gamma_{1,1}f(1)+\gamma(1,2)f(2)+\gamma_{1,3}f(3)+\gamma_{1,4}f(4))=0,5+0,5f(2)\\
+f(2)=(\gamma_{2,0}+\gamma_{2,5})+(\gamma_{2,1}f(1)+\gamma(2,2)f(2)+\gamma_{2,3}f(3)+\gamma_{2,4}f(4))=0,1+0,1+0,5f(2)+0,3f(3)\\
+f(3)=(\gamma_{3,0}+\gamma_{3,5})+(\gamma_{3,1}f(1)+\gamma(3,2)f(2)+\gamma_{3,3}f(3)+\gamma_{3,4}f(4))=0,2+0,7f(3)+0,1f(4)\\
+f(4)=(\gamma_{4,0}+\gamma_{4,5})+(\gamma_{4,1}f(1)+\gamma(4,2)f(2)+\gamma_{4,3}f(3)+\gamma_{4,4}f(4))=1/3+1/3f(3)+1/3f(4)\\$$
+
+$$
+\left\{\begin{matrix}
+ f(1)-1/2f(2)+0f(3)+0f(4) &=1/2 \\ 
+ 0f(1)+1/2f(2)-0,3f(3)+0f(4) &=1/5 \\ 
+ 0f(1)+0f(2)+0,3f(3)-0,1f(4) &=1/5 \\  
+ 0f(1)+0f(2)-1/3f(3)+2/3f(4) &=1/3 \\ 
+\end{matrix}\right.\\
+\; \\
+\begin{bmatrix}
+1 &-0,5  &0  &0 \\ 
+0 &0,5  &-0,3  &0 \\ 
+0 &0  &0,3  &-0,1 \\ 
+0 &0  &-1/3  &2/3 
+\end{bmatrix}*\begin{bmatrix}
+ 0,5\\ 
+ 0,2\\ 
+ 0,2\\ 
+1/3
+\end{bmatrix}$$

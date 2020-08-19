@@ -8,6 +8,7 @@ options(device = 'x11')
 data(rent) ### Dados sobre aluguéis de imóveis em Munique, 1980.
 help(rent) ### Acessando a documentação da base de dados.
 
+head(rent)
 ### Vamos considerar para a análise o valor do aluguel dos imóveis (R)
 ### além de quatro covariáveis: Fl, A, H e loc. 
 

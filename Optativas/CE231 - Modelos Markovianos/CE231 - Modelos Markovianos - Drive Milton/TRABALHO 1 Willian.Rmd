@@ -1,0 +1,125 @@
+---
+title: "CADEIAS DE MARKOV - TRABALHO 1"
+author: "Willian Meira Schlichta - GRR20159077"
+date: "5 de agosto de 2020"
+output: word_document
+---
+
+**Exercício 01**.Uma matriz de transição para o número de linhas telefónicas ocupadas.
+Suponha que o número de linhas usadas nos tempos 1, 2, ... formem uma Cadeia de Markov com matriz de probabilidades de transição estacionária. Essa cadeia possui seis estados possíveis 0, 1, ..., 5, onde $i$ é o estado no qual exatamente $i$ linhas estão sendo usadas em um determinado momento (i=0,1,⋯,5). Suponha que a matriz de transição Γ seja a seguinte: 
+
+![](C:\Users\55419\Documents\Git\disciplinas\Optativas\CE231 - Modelos Markovianos\Trabalho 1 - M1.PNG)
+
+(a) Supondo que todas as cinco linhas estejam em uso em um determinado momento de observação, determinar a probabilidade de que exatamente quatro linhas serão usadas no próximo tempo de observação.
+    
+    $P(C_{n+1}=4/C_{n}=5) = 0,4 = 40%$
+
+(b) Supondo que nenhuma linha esteja em uso em um determinado momento, determinar a probabilidade de que pelo menos uma linha esteja em uso no próximo momento de observação.
+
+    $P(C_{n+1}\geqslant 1/C_{n}=0) = 0,4 +0,2 +0,1 +0,1 +0,1 = 0,9 = 90%$
+
+
+
+__________________________________________________________________________________________________________________________________________
+**Exercício 02**. Mostre que o seguinte processo auto-regressivo é um processo Markov: 
+         $Cn=ρC_{n−1}+ξ_n$, e $C_0=0$, onde $ξ_1,⋯,ξ_n$ são variáveis aleatórias independentes e igualmente distribuídas.
+
+$C_{0} = 0$
+
+$C_{n}=PC_{n-1}+\epsilon_{n}$ onde $\epsilon_{n}$ são variáveis aleatórias $iid$  
+
+$P(C_{n+1}=cn+1/C_{n}=cn)=P(PC_{n}+\epsilon_{n+1}=cn+1)PC_{n-1}+\epsilon_{n}=C_{n})$
+
+$PC_{n}+\epsilon_{n+1}=cn+1 \rightarrow \epsilon_{n+1}=cn+1 - PC_{n}$
+
+De $P(C_{n}=cn/C_1=c1, C_2=c_2,C_n=cn)$
+
+Observamos que:
+ 
+$C1=c1 \rightarrow \epsilon_{1}=C1-PC_{0}=C1$ 
+$C2=c2 \rightarrow \epsilon_{2}=C2-PC_{1}$ 
+$C3=c3 \rightarrow \epsilon_{3}=C3-PC_{2}$ 
+ 
+$Cn=cn \rightarrow \epsilon_{n}=Cn-PC_{n-1}$ 
+
+Da fórmula de Bayez temos que P(A/B)=\frac{P(A,B)}{P(B)} = P(A)
+
+Então:
+ 
+$P(\epsilon_{n+1}=C_{n+1}-P_{cn}/\epsilon_{1}=C_{1},\cdots , \epsilon_{n}=cn-P_{c}-1)$
+ 
+Como as variáveis $\epsilon_{n}$ são independentes, a equação acima pode reescrita como:
+ 
+$P(\epsilon_{n+1}=cn+1 - P_{cn})$
+ 
+Como $\epsilon_{n}$ dependem somente do instante anterior, é uma cadeia de Markov
+
+
+__________________________________________________________________________________________________________________________________________
+**Exercício 05**. Seja {$\bar{C_n}$} a sequência de médias amostrais calculadas a partir de $C1,C2,⋯$, uma sequência de variáveis aleatórias independentes e identicamente distribuídas, isto é, $\bar{C_n}=\frac{1}{n}(C_1+C_2+⋯+C_n)$⋅
+
+(a) É {$\bar{C_n}$} um processo de Markov?
+    
+Sim. 
+
+${\delta }= {\delta}'$
+
+*${\delta }= (n+1) \bar{C}_{n+1}-n\bar{C}n$
+
+**${\delta}'=(n+1) \bar{C}_{n+1}-\sum_{k=1}^{n}C_{k}$
+
+em que $\sum_{k=1}^{n}C_{k}=n\bar{C}n$
+
+Com isso temos que:
+
+$(n+1) \bar{C}_{n+1}-n\bar{C}n=(n+1)\bar{C}_{n+1} - \sum_{k=1}^{n}C_{k}$
+
+$(n+1) \bar{C}_{n+1}-n\bar{C}n=(n+1) \bar{C}_{n+1}-n\bar{C}n$
+
+Logo temos que:
+
+${\delta }= {\delta}'$
+  
+    
+(b) Se a resposta à primeira parte é sim, encontrar a probabilidade de transição $P(\bar{C}_{n+1}=y|\bar{C}_{n−1}=x)$.
+
+$\gamma_{xy} = P(\overline{C}_{n}=y/\overline{C}_{n-1}=x) = \frac{P([\overline{C}_{n}=y]\bigcap P([\overline{C}_{n-1}=x]}{P(\overline{C}_{n-1}=x)}$
+  
+  dado que $\overline{C}_{n}=\frac{1}{n}(\sum_{i=1}^{n}C_{i})$ temos:
+  
+  $\overline{C}_{n-1}=\frac{1}{n}(\sum_{i=1}^{n}C_{i})=x \rightarrow \sum_{i=1}^{n}C_{i}=(n-1)x$
+  
+  $\overline{C}_{n}=\frac{1}{n}(\sum_{1=1}^{n}C_{i}) \rightarrow \frac{1}{n}(C_{n}+\sum_{i=1}^{n-1}C_{i})$
+  
+  Então:
+  
+  $\frac{P([\frac{1}{n}(C_{n}+\sum_{i=1}^{n-1}C_{i})=y]\bigcap[\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $\frac{P([\frac{1}{n}(C_{n}+(n-1)x)=y]\bigcap [\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $\frac{P([C_{n}=ny-(n-1)x]\bigcap [\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$ 
+  
+sendo $iid$
+  
+  $\frac{P([C_{n}=ny-(n-1)x].P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $P(C_{n+1}=y =ny-(n-1)x)$
+
+
+__________________________________________________________________________________________________________________________________________
+**Exercício 19**. Seja {$C_n:n≥0$} uma Cadeia de Markov. Mostre que $P(C_0=c+0|C_1=c_1,⋯,C_n=c_n)=P(C_0=c_0|C_1=c_1)$⋅
+
+ Para demonstrar, utilizaremos a notação de probabilidade condicional:
+
+$$P(A_{3}|A_{1}\cap A_{2})=P(A_{3}|A_{2})$$
+$$P(A_{3}|A_{1}\cap A_{2})=\frac{P(A_{1}\cap A_{2} \cap A_{3})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{1}\cap A_{3}|A_{2})P(A_{1})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{3}|A_{2})P(A_{1}A_{2})P(A_{2})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{3}|A_{2})P(A_{1}\cap A_{2})}{P(A_{1}\cap A_{2})}$$
+$$=P(A_{3}|A_{2})$$
+Assim verificamos que tendo informação do estado atual, os estados passados não influem no próximo instante.
+
+
+
+
+

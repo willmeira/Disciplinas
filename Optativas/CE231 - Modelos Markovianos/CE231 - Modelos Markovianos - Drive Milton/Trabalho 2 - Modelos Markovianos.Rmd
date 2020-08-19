@@ -1,0 +1,179 @@
+---
+title: "Trabalho 2 - Modelos Markovianos"
+author: "Willian Meira Schlichta - GRR20159077"
+date: "05 de agosto de 2020"
+output: html_document
+---
+
+
+1. **Uma matriz de transição para o número de linhas telefónicas ocupadas.**
+  
+    Suponha que o número de linhas usadas nos tempos 1, 2, ... formem uma Cadeia de Markov com matriz de probabilidades de transição estacionária. Essa cadeia possui seis estados possíveis 0, 1, ..., 5, onde $i$ é o estado no qual exatamente i linhas estão sendo usadas em um determinado momento (i=0,1,⋯,5). Suponha que a matriz de transição Γ seja a seguinte:
+
+
+Para avaliar o desempenho e a eficácia do modelo de Cadeia de Markov
+de ordem superior o resultado da predição é medido pela precisão de predição
+
+$r$ definida como
+
+$$r=\frac{1}{n-m}\sum^n_{t=m+1} a_t 100\%$$
+
+onde $n$ é o comprimento da sequência de dados, $m$ a ordem da cadeia e 
+$$\left\{\begin{matrix}
+  1,\quad se\quad\hat{x}_t=x_t
+  \\ 
+  \quad \quad 0,\quad caso \quad contrário
+  \end{matrix}\right.$$
+    
+Nesta expressão $\hat{x}_t$ representa os valores preditos para a cadeia
+e $x_t$ as observações.
+Aplicar o modelo de Cadeia de Markov ao preço e volume de vendas
+para problemas de previsão de carne bovina em um supermercado. A
+série temporal do preço e volume de vendas de carne bovina em um
+supermercado em Ankang é dada no arquivo de dados anexo. O preço
+da carne pode ser classificado em cinco estados possíveis {1, 2, 3, 4, 5}.
+As séries de preços são expressas como 1 = muito baixo, 2 = baixo, 3 =
+médio, 4 = alto e 5 = muito alto. Da mesma forma, o volume de vendas
+de carne bovina também pode ser classificado em cinco estados possíveis
+{1, 2, 3, 4, 5}. A série de volume de vendas são expressas como 1 =
+muito baixa (=50kg), 2 = baixa (50kg~55kg), 3 = meio (55kg~60kg),
+4 = alta (60kg~65kg), 5 = muito alta (=65kg ). Essas expressões são
+úteis tanto do ponto de vista de marketing quanto de planejamento de
+produção.
+Por um lado, o supermercado precisa estimar a demanda de vendas por
+carne bovina, a fim de minimizar o acúmulo de estoque; por outro lado,
+os clientes gostariam de prever o preço da carne bovina para decidir
+a estratégia de compra. Além disso, o supermercado pode entender o
+padrão de vendas de seu cliente e depois desenvolver uma política de
+marketing para lidar com os clientes.
+
+(a) No caso da série de preços, o preço de hoje depende principalmente
+do preço de ontem. Selecionamos então como mais adequado o
+modelo de Cadeia de Markov de primeira ordem. Primeiro estimar
+a matriz de probabilidades de transição de um passo e também
+estime a distribuição estacionária da série de preços. Verifique se
+a precisão de previsão do modelo proposto é r = 0.5362.
+  
+
+
+```{r setup, include=FALSE}
+sprecos <- c(5, 5, 5, 5, 4, 5, 3, 5, 3, 3, 4, 2, 5, 5, 3, 1, 1, 1, 3, 3, 4,
+           1, 5, 1, 1, 3, 3, 2, 5, 1, 5, 1, 5, 5, 5, 5, 2, 1, 4, 1, 1, 1,
+           2, 4, 5, 5, 1, 4, 2, 4, 1, 3, 4, 2, 2, 5, 2, 2, 5, 5, 2, 5, 4,
+           4, 4, 2, 2, 5, 2, 2, 5, 5, 5, 5, 3, 2, 2, 5, 4, 5, 2, 4, 5, 5,
+           4, 1, 1, 1, 2, 2, 3, 2, 4, 5, 5, 5, 2, 5, 2, 5, 5, 2, 4, 2, 5,
+           5, 2, 5, 5, 1, 2, 3, 4, 3, 3, 1, 3, 1, 4, 3, 5, 4, 5, 5, 4, 5,
+           5, 2, 5, 2, 5, 2, 2, 3, 5, 5, 3, 5, 2, 5, 4, 2, 1, 5, 2, 5, 2,
+           2, 2, 2, 5, 5, 4, 5, 5, 2, 2, 5, 2, 2, 2, 3, 4, 4, 4, 5, 4, 5,
+           1, 5, 5, 1, 3, 5, 5, 5, 1, 5, 2, 2, 2, 5, 5, 5, 5, 2, 4, 5, 2,
+           2, 5, 2, 5, 2, 2, 2, 4, 2, 2, 2, 4, 5, 5, 5, 3, 2, 2, 5, 2, 5,
+           4, 4, 4, 5, 3, 3, 5, 3, 1, 1, 4, 2, 2, 5, 5, 2, 5, 5, 5, 2, 5,
+           5, 3, 5, 5, 4, 1, 5, 5, 1, 5, 5, 1, 5, 1, 5, 5, 5, 5, 1, 5, 5,
+           5, 2, 1, 2, 5, 2, 5, 5, 2, 3, 5, 5, 5, 5, 5, 2, 5)
+sprecos <- as.vector(sprecos)
+str(sprecos)
+```
+Matriz de Transição:
+
+```{r}
+require(markovchain)
+require(Rsolnp)
+ajuste = markovchainFit(data=sprecos)
+ajuste$estimate
+```
+Estimação da Distribuição Estacionária:
+
+```{r}
+steadyStates(ajuste$estimate)
+```
+Previsão do Modelo:
+
+```{r}
+n=length(sprecos)
+n
+```
+Cadeia de ordem 1:
+
+```{r}
+m = 1
+pred = predict(ajuste$estimate, newdata=sprecos[1],n.ahead=n-m)
+pred
+```
+Vetor Definido:
+
+```{r}
+vd = pred
+vd = ifelse(pred==sprecos[(m+1):n],1,0)
+vd
+```
+Precisão de previsão:
+
+```{r}
+a = pred
+a = ifelse(pred==sprecos[(m+1):n],1,0)
+pp = (1/(n-m))*sum(a)
+pp
+```
+Portanto podemos observar que a previsão do modelo proposto ficou bem abaixo do
+previsto pelo problema ( 0.46 < 0,5362).
+
+
+(b) Mas a série de volume de vendas é muito mais complicada. Propomos escolher a ordem arbitrariamente como sendo cinco, ou seja, m = 5. Primeiro devem-se estimar todas as matrizes de probabilidades de transiçãao e também deve-se estimar a distribuição
+estacionária. Encontre a precisão de previsão do modelo proposto.
+
+```{r}
+svendas = c(5, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 3, 2, 2, 5, 1, 5,
+5, 1, 2, 3, 3, 2, 3, 3, 2, 2, 1, 1, 5, 2, 3, 3, 3,
+3, 2, 3, 1, 2, 1, 1, 5, 2, 2, 5, 5, 2, 3, 4, 3, 4,
+2, 2, 1, 5, 5, 1, 5, 1, 5, 5, 1, 1, 5, 3, 3, 3, 3,
+3, 3, 4, 3, 3, 5, 1, 5, 5, 1, 1, 5, 1, 5, 5, 1, 5,
+5, 1, 5, 5, 1, 5, 1, 5, 2, 3, 3, 3, 3, 3, 3, 3, 5,
+1, 5, 5, 1, 5, 1, 5, 5, 5, 5, 1, 5, 1, 1, 5, 3, 3,
+3, 3, 3, 3, 5, 2, 2, 5, 1, 1, 1, 5, 1, 5, 1, 1, 1,
+1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 5, 3, 4, 4, 4, 4, 1,
+3, 5, 5, 1, 5, 5, 1, 1, 5, 1, 1, 1, 1, 5, 1, 2, 1,
+1, 2, 5, 2, 1, 1, 2, 3, 3, 3, 3, 4, 4, 3, 2, 2, 5,
+1, 5, 1, 1, 1, 5, 2, 1, 1, 1, 1, 4, 4, 3, 3, 3, 3,
+2, 5, 1, 5, 5, 1, 5, 1, 5, 1, 1, 2, 2, 3, 3, 4, 3,
+3, 1, 1, 1, 2, 1, 1, 5, 1, 1, 1, 5, 1, 1, 1, 1, 1,
+1, 1, 2, 3, 3, 1, 1, 4, 3, 1, 3, 2, 1, 1, 1, 1, 1,
+5, 5, 1, 5, 1, 5, 1, 1, 1, 1, 1, 1, 1)
+
+```
+Estimação das Matrizes:
+
+```{r}
+svendas = as.matrix(as.factor(svendas))
+n = dim(svendas)[1]
+m = 5
+est= as.character(c(1:5))
+```
+Ajustando a cadeia:
+
+```{r}
+require(markovchain)
+require(Rsolnp)
+ajusteb = fitHighOrderMultivarMC(seqMat = svendas, order=m,Norm=2)
+print(ajusteb)
+```
+Distribuição estacionária:
+```{r}
+de<-seq2matHigh(svendas, order = 5)
+de
+```
+Calculando a precisao de predição:
+
+```{r}
+
+require(truncnorm)
+n = dim(svendas)[1]
+m = 5
+preditos = predictHommc(ajusteb, t = n - m, init = t(svendas[1:m, ]))
+a = preditos
+a = ifelse(preditos[1,] == t(svendas[(m+1):n, 1]), 1, 0)
+preditos
+r = (1/(n-m))*sum(a)
+r
+
+```
+Portanto podemos observar que a precisão de previsão do modelo proposto ficou de 0,21673.

@@ -1,0 +1,124 @@
+---
+title: "CE231 - Tópicos de Estatística (Modelos Markovianos)"
+subtitle: "Trabalho 1"
+author: "Brendha Rodrigues de Lima - GRR:20149163"
+date: "05 de Agosto de 2020"
+output:
+  word_document: default
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+### Exercicio 1
+
+![](C:/Users/brend/OneDrive/Documents/UFPR/Markov/1.png)
+
+*R:*
+
+a) $P(C_{n+1}=4/C_{n}=5)$ = 0,4 = 40%
+
+b) $P(C_{n+1}\geqslant 1/C_{n}=0)$ = 0,4 +0,2 +0,1 +0,1 +0,1 = 0,9 = 90%
+
+  
+### Exercicio 2
+
+![](C:/Users/brend/OneDrive/Documents/UFPR/Markov/2.png)
+
+*R:*
+
+ $C_{0}$ = 0
+ $C_{n}=PC_{n-1}+\epsilon_{n}$ onde $\epsilon_{n}$ são V.A IID
+ 
+ $P(C_{n+1}=cn+1/C_{n}=cn)=P(PC_{n}+\epsilon_{n+1}=cn+1)PC_{n-1}+\epsilon_{n}=C_{n})$
+ 
+ $PC_{n}+\epsilon_{n+1}=cn+1 \rightarrow \epsilon_{n+1}=cn+1 - PC_{n}$
+ 
+ De $P(C_{n}=cn/C1=c1, C2=c2,\geqslant,Cn=cn)$
+ 
+ Podemos observar que:
+ 
+ $C1=c1 \rightarrow \epsilon_{1}=C1-PC_{0}=C1$ 
+ $C2=c2 \rightarrow \epsilon_{2}=C2-PC_{1}$ 
+ $C3=c3 \rightarrow \epsilon_{3}=C3-PC_{2}$ 
+ 
+ $Cn=cn \rightarrow \epsilon_{n}=Cn-PC_{n-1}$ 
+
+ Da fórmula de Bayer temos que P(A/B)=\frac{P(A,B)}{P(B)} = P(A)
+
+Então:
+ 
+ $P(\epsilon_{n+1}=C_{n+1}-P_{cn}/\epsilon_{1}=C_{1},\cdots , \epsilon_{n}=cn-P_{c}-1)$
+ 
+ Como as V.A $\epsilon_{n}$ são independentes, a equação acima pode ser escrita somente como:
+ 
+ $P(\epsilon_{n+1}=cn+1 - P_{cn})$
+ 
+ Como $\epsilon_{n}$ dependem somente do instante anterior, é uma cadeia de Markov
+ 
+### Exercicio 5
+
+ ![](C:/Users/brend/OneDrive/Documents/UFPR/Markov/5.png)
+  
+  
+ *R:*
+ 
+  *a)*
+  
+  ${\delta }= {\delta}'$
+  
+  *${\delta }= (n+1) \bar{C}_{n+1}-n\bar{C}n$
+  
+  **${\delta}'=(n+1) \bar{C}_{n+1}-\sum_{k=1}^{n}C_{k}$
+  
+  em que $\sum_{k=1}^{n}C_{k}=n\bar{C}n$
+  
+  Com isso temos que:
+  
+  $(n+1) \bar{C}_{n+1}-n\bar{C}n=(n+1)\bar{C}_{n+1} - \sum_{k=1}^{n}C_{k}$
+
+ $(n+1) \bar{C}_{n+1}-n\bar{C}n=(n+1) \bar{C}_{n+1}-n\bar{C}n$
+ 
+ Logo temos que:
+ 
+  ${\delta }= {\delta}'$
+  
+ 
+  *b)*
+ 
+  $\gamma xy = P(\overline{C}_{n}=y/\overline{C}_{n-1}=x) = \frac{P([\overline{C}_{n}=y]\bigcap P([\overline{C}_{n-1}=x]}{P(\overline{C}_{n-1}=x)}$
+  
+  dado que $\overline{C}_{n}=\frac{1}{n}(\sum_{i=1}^{n}C_{i})$ temos:
+  
+  $\overline{C}_{n-1}=\frac{1}{n}(\sum_{i=1}^{n}C_{i})=x \rightarrow \sum_{i=1}^{n}C_{i}=(n-1)x$
+  
+  $\overline{C}_{n}=\frac{1}{n}(\sum_{1=1}^{n}C_{i}) \rightarrow \frac{1}{n}(C_{n}+\sum_{i=1}^{n-1}C_{i})$
+  
+  Então:
+  
+  $\frac{P([\frac{1}{n}(C_{n}+\sum_{i=1}^{n-1}C_{i})=y]\bigcap [\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $\frac{P([\frac{1}{n}(C_{n}+(n-1)x)=y]\bigcap [\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $\frac{P([C_{n}=ny-(n-1)x]\bigcap [\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$ 
+  
+sendo IID
+  
+  $\frac{P([C_{n}=ny-(n-1)x].P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $P(C_{n}=ny-(n-1)x$
+  
+### Exercicio 19
+ 
+ ![](C:/Users/brend/OneDrive/Documents/UFPR/Markov/19.png)
+ 
+ *R:*
+ 
+ Para essa demonstração, vou utilizar outra notação, será provado que:
+
+$$P(A_{3}|A_{1}\cap A_{2})=P(A_{3}|A_{2})$$
+$$P(A_{3}|A_{1}\cap A_{2})=\frac{P(A_{1}\cap A_{2} \cap A_{3})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{1}\cap A_{3}|A_{2})P(A_{1})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{3}|A_{2})P(A_{1}A_{2})P(A_{2})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{3}|A_{2})P(A_{1}\cap A_{2})}{P(A_{1}\cap A_{2})}$$
+$$=P(A_{3}|A_{2})$$
+Ou seja, se dado o estado atual, os estados passados não tem influencia sobre o futuro.

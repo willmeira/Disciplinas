@@ -1,0 +1,253 @@
+---
+title: "CADEIAS DE MARKOV - TRABALHO 1"
+author: "Willian Meira Schlichta - GRR20159077"
+date: "5 de agosto de 2020"
+output: html_document
+---
+
+
+Exercícios 1, 3, 4, 8, 12. Entregar até o dia 12/08/20.
+10/08/20. Exercícios.
+
+
+**Exercício 01** Encontre as matrizes $Γ^2$, $Γ^3$, $Γ^4$ e $Γ^n$ para uma Cadeia de Markov com matriz de probabilidades de transição $$Γ=\left(\begin{array}{cc} 1 & 0\\ 0 & 1 \end{array}\right)$$. 
+Faça o mesmo se a matriz de transição fosse $$Γ=\left(\begin{array}{cc} 0 & 1\\ 1 & 0 \end{array}\right)$$. Interprete o que acontece em cada um destes processos.
+
+
+**Matriz 1**
+```{r , echo=TRUE}
+library(markovchain)
+
+estados = c("Estado 1","Estado 2")
+Prob.T1=matrix(c(1,0,0,1),nrow=2, ncol=2,byrow=T, dimnames=list(estados,estados))
+ProbT1 = new("markovchain", states=estados, transitionMatrix=Prob.T1, name="Matriz Gama")
+ProbT1
+ProbT1^2
+ProbT1^3
+ProbT1^4
+``` 
+
+Para a 1ª matriz de transição, quando realizamos a potência dela observamos a mesma matriz, ou seja: $Γ^2=Γ^3=Γ^4=Γ^n$. Também, uma vez em um dos 2 estados, ficará no mesmo estado independentemente do número de repetições.
+
+
+
+**Matriz 2**
+```{r , echo=TRUE}
+estados = c("Estado 1","Estado 2")
+Prob.T2=matrix(c(0,1,1,0),nrow=2, ncol=2,byrow=T, dimnames=list(estados,estados))
+ProbT2 = new("markovchain", states=estados, transitionMatrix=Prob.T2, name="Matriz Gama")
+ProbT2
+ProbT2^2
+ProbT2^3
+ProbT2^4
+ProbT2^5
+``` 
+
+
+Para a 2ª matriz de transição, observamos que:
+ Γ=Γ^3=Γ^5=⋯=Γ^n (Caso n ímpar) 
+No caso de n ímpar, na próxima repetição alterará com probabilidade = 1 para o outro estado.
+ Γ^2=Γ^4=⋯=Γ^n (Caso n par).
+Nesse caso, se n for par ela se comporta igual a 1ª matriz (permanece no mesmo estado na próxima repetição). 
+
+
+
+**Exercício 03**
+Seja ${C_n:n≥0}$ uma Cadeia de Markov com dois estados.
+(a) Encontre $P0(T_0=n)$
+(b) Encontre $P0(T_1=n)$
+
+Teorema 2
+Definição 11
+
+
+
+**Exercício 04** Considere a Cadeia de Markov com estados ${0,1,2}$ e matriz de probabilidades de transição $Γ=(0.3,0.3,0.4,0.2,0.7,0.1,0.2,0.3,0.5)$
+
+
+
+estados = c("S_1","S_2","S_3")
+
+Prob.T=matrix(c(0.3,0.3,0.4,0.2,0.7,0.1,0.2,0.3,0.5),nrow=3, ncol=3,byrow=T, dimnames=list(estados,estados))
+
+ProbT = new("markovchain", states=estados, transitionMatrix=Prob.T, name="Matriz Gama")
+
+ProbT
+
+ProbT^16
+
+
+
+
+$P(C_{n+2}=1|C_n=1)=P(C_{n+2}=1,C_{n+1}=1|C_n=1)+P(C_{n+2}=1,C_{n+1}=2|C_n=1)$⋅
+
+Pelo Teorema 4 temos que
+P(C_{n+2}=1,C_{n+1}=1|C_n=1)=P(Cn+1=1|Cn=1)×P(Cn+2=1|Cn+1=1)=0.9×0.9=0.81⋅
+Similarmente
+P(Cn+2=1,Cn+1=2|Cn=1)=P(Cn+1=2|Cn=1)×P(Cn+2=1|Cn+1=2)=0.1×0.6=0.06⋅
+
+Segue que P(Cn+2=1|Cn=1)=0.81+0.06=0.87
+e, portanto, P(Cn+2=2|Cn=1)=1−0.87=0.13. De maneira similar, se Cn=2,
+P(Cn+2=1|Cn=2)=0.06×0.9+0.4×0.6=0.78
+e
+P(Cn+2=2|Cn=2)=1−0.78=0.22⋅
+
+
+
+
+
+
+
+
+
+
+
+Ver exemplo 
+
+
+Encontre as probabilidadaes P(C16=2|C0=0) e P(C12=2,C16=2|C0=0). 
+
+**Exercício 08** Mostre que $ρ_{x,y}>0$ se, e somente se, $γ^{(n)}_{x,y}>0$ para algum inteiro positivo $n$. 
+
+$\rho_{x,y}=P_x(T_y<\infty)$
+  pela Definição 12, $\rho_{x,y} = P_{x}(T_y < \infty)$ é a probabilidade
+  de chegar em $x$ e atinja $y$ num tempo finito.
+  Se $\gamma_{x,y}^{(n)} > 0$, então $P_{x}(T_y = y) > 0$.
+  Logo, $\rho_{x,y} > 0$.
+  Suponha agora que $\rho_{x,y} > 0$, então vamos provar que $\gamma_{x,y}^{(n)} > 0$
+  pelo Teorema 8.  
+    
+    
+    
+  $γ(n)x,y=∑m=1nPx(Ty=m)γ^{(n−m)}_{y,y}$,
+    
+
+
+
+
+**Exercício 12** Para cada uma das seguintes matrizes de transição, encontrar as cinco primeiras potências da matriz. Em seguida, encontrar a probabilidade de que o estado 2 mude para o estado 4 após 5 repetições do experimento.
+
+    (a)$Γ=(0.10.20.20.30.10.20.10.10.10.30.20.10.40.10.10.30.20.20.20.10.20.40.10.30.4)
+    (b)$Γ=(0.30.40.10.20.10.20.20.30.10.10.30.10.20.30.40.10.20.20.20.20.10.10.20.20.2)
+    
+                     
+    
+    
+**Exercício 01**.Uma matriz de transição para o número de linhas telefónicas ocupadas.
+Suponha que o número de linhas usadas nos tempos 1, 2, ... formem uma Cadeia de Markov com matriz de probabilidades de transição estacionária. Essa cadeia possui seis estados possíveis 0, 1, ..., 5, onde $i$ é o estado no qual exatamente $i$ linhas estão sendo usadas em um determinado momento (i=0,1,⋯,5). Suponha que a matriz de transição Γ seja a seguinte: 
+
+![](C:\Users\55419\Documents\Git\disciplinas\Optativas\CE231 - Modelos Markovianos\Trabalho 1 - M1.PNG)
+
+(a) Supondo que todas as cinco linhas estejam em uso em um determinado momento de observação, determinar a probabilidade de que exatamente quatro linhas serão usadas no próximo tempo de observação.
+    
+    $P(C_{n+1}=4/C_{n}=5) = 0,4 = 40%$
+
+(b) Supondo que nenhuma linha esteja em uso em um determinado momento, determinar a probabilidade de que pelo menos uma linha esteja em uso no próximo momento de observação.
+
+    $P(C_{n+1}\geqslant 1/C_{n}=0) = 0,4 +0,2 +0,1 +0,1 +0,1 = 0,9 = 90%$
+
+
+
+__________________________________________________________________________________________________________________________________________
+**Exercício 02**. Mostre que o seguinte processo auto-regressivo é um processo Markov: 
+         $Cn=ρC_{n−1}+ξ_n$, e $C_0=0$, onde $ξ_1,⋯,ξ_n$ são variáveis aleatórias independentes e igualmente distribuídas.
+
+$C_{0} = 0$
+
+$C_{n}=PC_{n-1}+\epsilon_{n}$ onde $\epsilon_{n}$ são variáveis aleatórias $iid$  
+
+$P(C_{n+1}=cn+1/C_{n}=cn)=P(PC_{n}+\epsilon_{n+1}=cn+1)PC_{n-1}+\epsilon_{n}=C_{n})$
+
+$PC_{n}+\epsilon_{n+1}=cn+1 \rightarrow \epsilon_{n+1}=cn+1 - PC_{n}$
+
+De $P(C_{n}=cn/C_1=c1, C_2=c_2,C_n=cn)$
+
+Observamos que:
+ 
+$C1=c1 \rightarrow \epsilon_{1}=C1-PC_{0}=C1$ 
+$C2=c2 \rightarrow \epsilon_{2}=C2-PC_{1}$ 
+$C3=c3 \rightarrow \epsilon_{3}=C3-PC_{2}$ 
+ 
+$Cn=cn \rightarrow \epsilon_{n}=Cn-PC_{n-1}$ 
+
+Da fórmula de Bayez temos que P(A/B)=\frac{P(A,B)}{P(B)} = P(A)
+
+Então:
+ 
+$P(\epsilon_{n+1}=C_{n+1}-P_{cn}/\epsilon_{1}=C_{1},\cdots , \epsilon_{n}=cn-P_{c}-1)$
+ 
+Como as variáveis $\epsilon_{n}$ são independentes, a equação acima pode reescrita como:
+ 
+$P(\epsilon_{n+1}=cn+1 - P_{cn})$
+ 
+Como $\epsilon_{n}$ dependem somente do instante anterior, é uma cadeia de Markov
+
+
+__________________________________________________________________________________________________________________________________________
+**Exercício 05**. Seja {$\bar{C_n}$} a sequência de médias amostrais calculadas a partir de $C1,C2,⋯$, uma sequência de variáveis aleatórias independentes e identicamente distribuídas, isto é, $\bar{C_n}=\frac{1}{n}(C_1+C_2+⋯+C_n)$⋅
+
+(a) É {$\bar{C_n}$} um processo de Markov?
+    
+Sim. 
+
+${\delta }= {\delta}'$
+
+*${\delta }= (n+1) \bar{C}_{n+1}-n\bar{C}n$
+
+**${\delta}'=(n+1) \bar{C}_{n+1}-\sum_{k=1}^{n}C_{k}$
+
+em que $\sum_{k=1}^{n}C_{k}=n\bar{C}n$
+
+Com isso temos que:
+
+$(n+1) \bar{C}_{n+1}-n\bar{C}n=(n+1)\bar{C}_{n+1} - \sum_{k=1}^{n}C_{k}$
+
+$(n+1) \bar{C}_{n+1}-n\bar{C}n=(n+1) \bar{C}_{n+1}-n\bar{C}n$
+
+Logo temos que:
+
+${\delta }= {\delta}'$
+  
+    
+(b) Se a resposta à primeira parte é sim, encontrar a probabilidade de transição $P(\bar{C}_{n+1}=y|\bar{C}_{n−1}=x)$.
+
+$\gamma_{xy} = P(\overline{C}_{n}=y/\overline{C}_{n-1}=x) = \frac{P([\overline{C}_{n}=y]\bigcap P([\overline{C}_{n-1}=x]}{P(\overline{C}_{n-1}=x)}$
+  
+  dado que $\overline{C}_{n}=\frac{1}{n}(\sum_{i=1}^{n}C_{i})$ temos:
+  
+  $\overline{C}_{n-1}=\frac{1}{n}(\sum_{i=1}^{n}C_{i})=x \rightarrow \sum_{i=1}^{n}C_{i}=(n-1)x$
+  
+  $\overline{C}_{n}=\frac{1}{n}(\sum_{1=1}^{n}C_{i}) \rightarrow \frac{1}{n}(C_{n}+\sum_{i=1}^{n-1}C_{i})$
+  
+  Então:
+  
+  $\frac{P([\frac{1}{n}(C_{n}+\sum_{i=1}^{n-1}C_{i})=y]\bigcap[\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $\frac{P([\frac{1}{n}(C_{n}+(n-1)x)=y]\bigcap [\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $\frac{P([C_{n}=ny-(n-1)x]\bigcap [\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x])}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$ 
+  
+sendo $iid$
+  
+  $\frac{P([C_{n}=ny-(n-1)x].P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}{P(\frac{1}{n}(\sum_{i=1}^{n-1}C_{i})=x)}$
+  
+  $P(C_{n+1}=y =ny-(n-1)x)$
+
+
+__________________________________________________________________________________________________________________________________________
+**Exercício 19**. Seja {$C_n:n≥0$} uma Cadeia de Markov. Mostre que $P(C_0=c+0|C_1=c_1,⋯,C_n=c_n)=P(C_0=c_0|C_1=c_1)$⋅
+
+ Para demonstrar, utilizaremos a notação de probabilidade condicional:
+
+$$P(A_{3}|A_{1}\cap A_{2})=P(A_{3}|A_{2})$$
+$$P(A_{3}|A_{1}\cap A_{2})=\frac{P(A_{1}\cap A_{2} \cap A_{3})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{1}\cap A_{3}|A_{2})P(A_{1})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{3}|A_{2})P(A_{1}A_{2})P(A_{2})}{P(A_{1}\cap A_{2})}$$
+$$=\frac{P(A_{3}|A_{2})P(A_{1}\cap A_{2})}{P(A_{1}\cap A_{2})}$$
+$$=P(A_{3}|A_{2})$$
+Assim verificamos que tendo informação do estado atual, os estados passados não influem no próximo instante.
+
+
+
+
+

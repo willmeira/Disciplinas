@@ -1,0 +1,52 @@
+---
+title: "TRABALHO 1 - CADEIAS DE MARKOV"
+output: html_document
+---
+
+
+
+
+1.Suponha que a profissão de um homem pode ser classificada como profissional, trabalhador qualificado ou operário não qualificado. Suponha que, dos filhos de homens profissionais, 80 por cento são profissionais, 10 porcento são trabalhadores qualificados e 10 por cento são trabalhadores não qualificados. No caso dos filhos de operários especializados, 60 porcento são hábeis trabalhadores qualificados, 20 porcento são profissionais e 20 porcento são trabalhadores não qualificados. Finalmente, no caso de trabalhadores não qualificados, 50 porcento dos filhos são trabalhadores não qualificados e 25 porcento em cada um são as chances das outras duas categorias. Suponha que cada homem tem pelo menos um filho e que seguindo a profissão de um filho escolhido aleatoriamente de uma determinada família através de várias gerações temos definida uma Cadeia de Markov. Configure a matriz de probabilidades de transição. Encontre a probabilidade de que um neto escolhido aleatoriamente de um trabalhador não qualificado seja um homem profissional.
+
+
+```{r setup, include=FALSE}
+library(markovchain)
+
+
+estados = c("Profissionais","Qualificados","Não Qualificados")
+Prob.T=matrix(c(0.8,0.1,0.1,0.2,0.6,0.2,0.25,0.25,0.5),nrow=3,
+              ncol=3,byrow=T, dimnames=list(estados,estados))
+ProbT = new("markovchain", states=estados, transitionMatrix=Prob.T,
+            name="Classificação de profissão de um homem")
+ProbT
+
+```
+
+Probabilidade dos netos a partir da matriz de transição atingirem o estado da classificação:
+
+```{r cars}
+ProbT^2
+```
+
+Neste caso conforme solicitado no exercício temos que o neto de um neto de um trabalhador não qualificado se tornar
+também um trabalhador não qualificado e de aproximadamente 37,5%.
+
+
+2. Seja { Xn : n >= 0 } uma Cadeia de Markov. Mostre que
+P (X0 = x0|X1 = x1, · · · , Xn = xn) = P (X0 = x0|X1 = x1)
+Demostrando a propriedade temos:
+Além disso:
+Assim sendo fazendo a substituição na equação anterior teremos:
+??? ???0 = ???0 ???1 = ???1 , . , ?????? = ?????? )
+=
+??? ???
+??? = ?????? ) ??? ?????????1 = ?????????1 ?????? = ?????? ) . ??? ???1 = ???1 ???2 = ???2 ) ??? ???0 = ???0 ???1 = ???1
+??? ???
+??? = ?????? ) ??? ?????????1 = ?????????1 ?????? = ?????? ) . ??? ???1 = ???1 ???2 = ???2 )
+Que leva ao resultado:
+P (X0 = x0|X1 = x1, · · · , Xn = xn) = P (X0 = x0|X1 = x1) - comprovando a demostração.
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
