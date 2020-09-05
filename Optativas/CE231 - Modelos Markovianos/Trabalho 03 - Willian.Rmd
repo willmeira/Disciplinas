@@ -1,0 +1,206 @@
+---
+title: "3º CE231 - Modelos Markovianos"
+subtitle: "III Decomposição do espaço de estados"
+author: "XXXX"
+date: "17 de Agosto de 2020"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width=8, fig.height=4, fig.path='Figs/',                     echo=F,warning=T,message=FALSE,cache=F,comment=NULL)
+```
+
+```{r}
+##LIMPESA DO HISTORICO DO R
+rm(list = ls())
+
+##PACOTES USADOS
+library(dplyr)
+library(markovchain)
+```
+
+### Exercicio 1
+
+ Seja S(x,y) onde *x* é um estado recorrente e não se comunica com *y*, ou seja, $\rho_{x,x}=1 \;e \; \rho_{x,y}=0$.
+
+**R:**
+Seja $C_{n}$ uma cadeia de markov com espaço de estados *S* onde $N(y)$ é o número de vezes em que a cadeia permanece no espaço *y*, então:
+$$N(y)=\sum_{n=1}^{\infty}l_{y}(C_{n})$$
+
+Também observamos que $N(y)\geq 1$ é o mesmo que $T_{y}<\infty$ logo:
+$$P_{x}(N(y)\geq1)=P_{x}(T_{y}<\infty)=\rho_{x,y}$$
+Temos que a probabilidade com a qual a cadeia começando em *x* visitar a primeira vez *y* no tempo *m* e visitar novamente no tempo *n* (onde *m* e *n* são inteiros positivos) é:
+$$P_{x}(T_{y}=m).P_{y}(T_{y}=n)$$
+Logo:
+$$P_{x}(N(y)\geq2)=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}P_{x}(T_{y}=m).P_{y}(T_{y}=n)\\
+=\left [ \sum_{m=1}^{\infty}P_{x}(T_{y}=m) \right ].\left [ \sum_{n=1}^{\infty}P_{y}(T_{y}=m) \right ]\\
+=\rho_{x,x}\rho_{x,y}=1*0=0$$
+
+\pagebreak
+
+### Exercicio 3
+ 
+ Mostre que se o estado $x$ se comunica com $y$ e $y$ se comunica com $z$, então $x$ se comunica com $z$
+
+**R:**
+Pela Definição 19, temos que se $x$ se comunica com $y$, então temos $\rho_{x}(\Gamma_{y}=n)>0$ para algum $n$ finito. Portanto do mesmo princípio, se $y$ se comunica com $z$ temos $\rho_{y}(\Gamma_{z}=m)>0$ para algum $m$ finito. Portanto $\rho_{x}(\Gamma_{z}=m+n)>0$ o que demonstra que $x$ se comunica com $z$
+
+\pagebreak
+
+### Exercicio 4
+
+$$\Gamma = \begin{pmatrix}
+0.0 & 0.5 & 0.0 & 0.0 & 0.5 & 0.0 & 0.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 \\
+1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0
+\end{pmatrix}$$
+ 
+ Esta cadeia é irredutível? ou seja, prove que o conjunto de estados irredutíveis $F$ satisfaz $F=S$, sendo $S=(1,\cdots ,9)$. Prove também que está cadeia é recorrente, ou seja, prove que cada estado em $S$ é recorrente 
+ 
+**R:**
+
+Seja $F=S=${$1,2,3,4,5,6,7,8,9$} a partir do teorema 12, temos que $E_{y}=(N_{y})=\infty$ para todo $y$ e $S$, portanto a cadeia $S$ é recorrente, pois não apresenta valores proximos ou iguais a zero conforme resultado obtido no R
+
+1) $\gamma_{1,2}=0.5$ 
+2) $\gamma_{2,3}=1.0$ 
+3) $\gamma_{3,4}=1.0$ 
+4) $\gamma_{4,1}=1.0$ 
+5) $\gamma_{1,5}=1.0$ 
+6) $\gamma_{5,6}=1.0$ 
+7) $\gamma_{6,7}=1.0$ 
+8) $\gamma_{7,8}=1.0$ 
+9) $\gamma_{8,9}=1.0$ 
+10) $\gamma_{9,1}=1.0$ 
+
+Portanto, todos os estados se comunicam entre si, e a cadeia é irredutível.
+
+Para verificar se a cadeia é recorrente, podemos utilizar a definição 17, que enuncia que para que uma cadeia seja recorrente, todos os seus estados devem ser recorrentes. Ou seja, para todos os estados, $\rho_{y,y}=1$ (Definição 14). Podemos verificar quais estados são recorrentes por meio da função steadyStates do pacote markovchain:
+
+```{r}
+library(markovchain)
+mat4 <- matrix(c(0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,
+                 0.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+                 0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+                 0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,
+                 0.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,
+                 0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,
+                 0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,
+                 0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,
+                 0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0), nrow=9)
+estados4 = c("0","1","2","3","4","5","6","7","8")
+mc4 <- new("markovchain", states=estados4, transitionMatrix=mat4)
+mc4
+steadyStates(mc4)
+transientStates(mc4)
+steadyStates(mc4)
+steadyStates(mc4^1000)
+transientStates(mc4)
+summary(mc4)
+```
+
+Como nenhum dos valores acusados é praticamente nulo, podemos concluir que todos os estados são recorrentese, por conseguinte, a cadeia também o é.
+
+
+\pagebreak
+
+### Exercicio 6
+
+A **Fiscalía de Mídia** identificou seis estados associados à televisão: 0 (nunca assiste TV), 1 (assiste apenas notícias), 2 (assiste TV com bastante frequência), 3 (viciado), 4 (em modificação de comportamento), 5 (morte encefálica). As transições de estado para estado podem ser modeladas como uma cadeia de Markov com a seguinte matriz de transição:
+
+$$\Gamma = \begin{pmatrix}
+1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+0.5 & 0.0 & 0.5 & 0.0 & 0.0 & 0.0 \\
+0.1 & 0.0 & 0.5 & 0.3 & 0.0 & 0.1 \\
+0.0 & 0.0 & 0.0 & 0.7 & 0.1 & 0.2 \\
+1/3 & 0.0 & 0.0 & 1/3 & 1/3 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0
+\end{pmatrix}$$
+
+**a)** Quais estados são recorrentes e quais transientes.
+
+**R:**
+Utilizando o pacote *markovchain*, podemos extrair a informação:
+
+```{r}
+estadosy <- c("0","1","2","3","4","5")
+y <- matrix(data = c(1.0 , 0.0 , 0.0 , 0.0 , 0.0 , 0.0 ,
+0.5 , 0.0 , 0.5 , 0.0 , 0.0 , 0.0 ,
+0.1 , 0.0 , 0.5 , 0.3 , 0.0 , 0.1 ,
+0.0 , 0.0 , 0.0 , 0.7 , 0.1 , 0.2 ,
+1/3 , 0.0 , 0.0 , 1/3 , 1/3 , 0.0 ,
+0.0 , 0.0 , 0.0 , 0.0 , 0.0 , 1.0
+), nrow=6,ncol=6,byrow=T, dimnames=list(estadosy,estadosy))
+y
+```
+
+```{r}
+library(markovchain)
+Proby = new("markovchain", states=estadosy, transitionMatrix=y)
+transientStates(Proby)
+```
+
+```{r}
+steadyStates(Proby)
+```
+
+Logo, podemos observar que os estados 0 e 5 são recorrentes, enquanto os estados 1, 2, 3 e 4 são transientes.
+
+**b)** Começando do estado 1, qual é a probabilidade de o estado 5 ser atingido antes do estado 0, ou seja, qual é a probabilidade de um visualizador de notícias acabar com morte cerebral?
+
+**R:**
+
+Seja o teorema 19:
+
+$f(x)=\sum_{y \in F}\gamma_{x,z}+\sum_{y \in St}\gamma_{x,y}f(y),$ $x \in St$ 
+$f(x)=\rho_{x,f},$ $x \in St$
+
+Queremos a probabilidade partindo do estado "1" chegando ao estado "5" antes de chegar ao estado "0", então toma-se F={5}.
+
+Podemos tomar F={5,0} e substrair  $\gamma_{x,0}$, $x \in St$
+
+Então:
+
+$f(1) = \gamma_{1,5}+\gamma_{1,1}f(1)+\gamma_{1,2}f(2)+\gamma_{1,3}f(3)+\gamma_{1,4}f(4)$
+
+$f(2) = \gamma_{2,5}+\gamma_{2,1}f(1)+\gamma_{2,2}f(2)+\gamma_{2,3}f(3)+\gamma_{2,4}f(4)$
+
+$f(3) = \gamma_{3,5}+\gamma_{3,1}f(1)+\gamma_{3,2}f(2)+\gamma_{3,3}f(3)+\gamma_{3,4}f(4)$
+
+$f(4) = \gamma_{4,5}+\gamma_{4,1}f(1)+\gamma_{4,2}f(2)+\gamma_{4,3}f(3)+\gamma_{4,4}f(4)$
+
+com isso temos:
+
+$f(1)=0.5f(2)$
+
+$f(2)=0.5f(2)+0,3f(3)+0,1$
+
+$f(3)=0.7f(3)+0,1f(4)+0,2$
+
+$f(4)=\frac{1}{3}f(3)+\frac{1}{3}f(4)$
+
+Resolvendo o sistema, temos:
+
+$f(1)=0,34$ 
+$f(2)=0,68$
+$f(3)=0,8$
+$f(4)=0,4$
+
+Como $f(x)=\rho_{x,f}$,
+
+Temos: $f(1)=\rho_{1,5}=0,34$
+
+Para encontrarmos a probabilidade de que assintoticamente pelo R, partindo de determinado estado, o visualizador atinja determinado estado antes de entrar no estado absorvente, podemos utilizar uma potência elevada da matriz de transição:
+
+```{r}
+require(expm)
+y %^% 10000
+```
+ 
+ Portanto, podemos perceber que, partindo do estado 1, o visualizador terá probabilidade de 0.34 de atingir o estado 5 antes que caia no estado 0.

@@ -1,0 +1,371 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={3º CE231 - Modelos Markovianos},
+  pdfauthor={XXXX},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{3º CE231 - Modelos Markovianos}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{III Decomposição do espaço de estados}
+\author{XXXX}
+\date{17 de Agosto de 2020}
+
+\begin{document}
+\maketitle
+
+\hypertarget{exercicio-1}{%
+\subsubsection{Exercicio 1}\label{exercicio-1}}
+
+Mostrar que se o estado \(x\) é recorrente e não se comunica com o
+estado \(y\), então \(γ_{x,y}=0\)
+
+\textbf{Resolução:}
+
+Seja \(S(x,y)\) onde \(x\) é um estado recorrente e não se comunica com
+\(y\), ou seja, \(\rho_{x,x}=1 \;e \; \rho_{x,y}=0\).
+
+Seja \(C_{n}\) uma Cadeia de Markov com espaço de estados \(S\) onde
+\(N(y)\) é o número de vezes em que a cadeia permanece no espaço \(y\),
+então: \[N(y)=\sum_{n=1}^{\infty}I_{y}(C_{n})\]
+
+Também observamos que \(N(y)\geq 1\) é o mesmo que \(T_{y}<\infty\)
+logo: \[P_{x}(N(y)\geq1)=P_{x}(T_{y}<\infty)=\rho_{x,y}\] Temos que a
+probabilidade com a qual a cadeia começando em \(x\) visitar a primeira
+vez \(y\) no tempo \(m\) e visitar novamente no tempo \(n\) (onde \(m\)
+e \(n\) são inteiros positivos) é: \[P_{x}(T_{y}=m).P_{y}(T_{y}=n)\]
+Logo:
+\[P_{x}(N(y)\geq2)=\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}P_{x}(T_{y}=m).P_{y}(T_{y}=n)\\
+=\left [ \sum_{m=1}^{\infty}P_{x}(T_{y}=m) \right ].\left [ \sum_{n=1}^{\infty}P_{y}(T_{y}=m)\right ]=\rho_{x,x}\rho_{x,y}=1*0=0\]
+
+\pagebreak
+
+\hypertarget{exercicio-3}{%
+\subsubsection{Exercicio 3}\label{exercicio-3}}
+
+Mostre que se o estado \(x\) se comunica com \(y\) e \(y\) se comunica
+com \(z\), então \(x\) se comunica com \(z\).
+
+\textbf{Resolução:}
+
+Se \(x\) se comunica com \(y\), então temos que \(P_{x}(T_{y}=n)>0\),
+para algum \(n\) finito. Pelo mesmo princípio, se \(y\) se comunica com
+\(z\), então temos que \(P_{y}(T_{z}=m)>0\), para algum \(m\) finito.
+
+Logo \(P_{x}(T_{z}=m+n)>0\), mostrando que \(x\) se comunica com \(z\).
+
+\pagebreak
+
+\hypertarget{exercicio-4}{%
+\subsubsection{Exercicio 4}\label{exercicio-4}}
+
+Considere uma Cadeia de Markov com espaço de estados \{\(1,2,...,9\)\} e
+matriz de probabilidades de transição
+
+\[\Gamma = \begin{pmatrix}
+0.0 & 0.5 & 0.0 & 0.0 & 0.5 & 0.0 & 0.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 & 0.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 \\
+1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0
+\end{pmatrix}\]
+
+Esta cadeia é irredutível? Ou seja, prove que o conjunto de estados
+irredutíveis \(F\) satisfaz \(F=S\), sendo \(S=\)\{\(1,...,9\)\}. Prove
+também que esta cadeia é recorrente, ou seja, prove que cada estado em
+\(S\) é recorrente.
+
+\textbf{Resolução:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gamma4 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{),}
+                  \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{5}\NormalTok{),}\DecValTok{1}\NormalTok{,}\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{3}\NormalTok{),}\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{6}\NormalTok{),}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{7}\NormalTok{),}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{),}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{)), }\DataTypeTok{byrow=}\NormalTok{T, }\DataTypeTok{ncol =} \DecValTok{9}\NormalTok{, }\DataTypeTok{dimnames=}\KeywordTok{list}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{9}\NormalTok{))}
+\NormalTok{ProbT4 =}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"markovchain"}\NormalTok{, }\DataTypeTok{states=}\KeywordTok{as.character}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{9}\NormalTok{), }\DataTypeTok{transitionMatrix=}\NormalTok{gamma4, }\DataTypeTok{name=}\StringTok{"Gamma"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Verificando o \emph{summary} da cadeia:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ProbT4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Gamma  Markov chain that is composed by: 
+Closed classes: 
+1 2 3 4 5 6 7 8 9 
+Recurrent classes: 
+{1,2,3,4,5,6,7,8,9}
+Transient classes: 
+NONE 
+The Markov chain is irreducible 
+The absorbing states are: NONE
+\end{verbatim}
+
+Pela saída do R temos que todos os estados se comunicam, logo a matriz é
+irredutível, com os estados sendo recorrentes, como mostra o
+\textbf{Teorema 17}.
+
+\pagebreak
+
+\hypertarget{exercicio-6}{%
+\subsubsection{Exercicio 6}\label{exercicio-6}}
+
+\textbf{A Fiscalía de Mídia} identificou seis estados associados à
+televisão: 0 (nunca assiste TV), 1 (assiste apenas notícias), 2 (assiste
+TV com bastante frequência), 3 (viciado), 4 (em modificação de
+comportamento), 5 (morte encefálica). As transições de estado para
+estado podem ser modeladas como uma cadeia de Markov com a seguinte
+matriz de transição:
+
+\[\Gamma = \begin{pmatrix}
+1.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+0.5 & 0.0 & 0.5 & 0.0 & 0.0 & 0.0 \\
+0.1 & 0.0 & 0.5 & 0.3 & 0.0 & 0.1 \\
+0.0 & 0.0 & 0.0 & 0.7 & 0.1 & 0.2 \\
+1/3 & 0.0 & 0.0 & 1/3 & 1/3 & 0.0 \\
+0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0
+\end{pmatrix}\]
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Quais estados são recorrentes e quais transientes.
+\item
+  Começando do estado \(1\), qual é a probabilidade de o estado \(5\)
+  ser atingido antes do estado \(0\), ou seja, qual é a probabilidade de
+  um visualizador de notícias acabar com morte cerebral?
+\end{enumerate}
+
+\textbf{Resolução A:} Com o auxílio do pacote \emph{markovchain}, temos
+a seguinte informação:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{estadosy <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{,}\StringTok{"1"}\NormalTok{,}\StringTok{"2"}\NormalTok{,}\StringTok{"3"}\NormalTok{,}\StringTok{"4"}\NormalTok{,}\StringTok{"5"}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{c}\NormalTok{(}\FloatTok{1.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ ,}
+\FloatTok{0.5}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.5}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ ,}
+\FloatTok{0.1}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.5}\NormalTok{ , }\FloatTok{0.3}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.1}\NormalTok{ ,}
+\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.7}\NormalTok{ , }\FloatTok{0.1}\NormalTok{ , }\FloatTok{0.2}\NormalTok{ ,}
+\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{ , }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ ,}
+\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{0.0}\NormalTok{ , }\FloatTok{1.0}
+\NormalTok{), }\DataTypeTok{nrow=}\DecValTok{6}\NormalTok{,}\DataTypeTok{ncol=}\DecValTok{6}\NormalTok{,}\DataTypeTok{byrow=}\NormalTok{T, }\DataTypeTok{dimnames=}\KeywordTok{list}\NormalTok{(estadosy,estadosy))}
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          0 1   2         3         4   5
+0 1.0000000 0 0.0 0.0000000 0.0000000 0.0
+1 0.5000000 0 0.5 0.0000000 0.0000000 0.0
+2 0.1000000 0 0.5 0.3000000 0.0000000 0.1
+3 0.0000000 0 0.0 0.7000000 0.1000000 0.2
+4 0.3333333 0 0.0 0.3333333 0.3333333 0.0
+5 0.0000000 0 0.0 0.0000000 0.0000000 1.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(markovchain)}
+\NormalTok{Proby =}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"markovchain"}\NormalTok{, }\DataTypeTok{states=}\NormalTok{estadosy, }\DataTypeTok{transitionMatrix=}\NormalTok{y)}
+\KeywordTok{transientStates}\NormalTok{(Proby)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "1" "2" "3" "4"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{steadyStates}\NormalTok{(Proby)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     0 1 2 3 4 5
+[1,] 0 0 0 0 0 1
+[2,] 1 0 0 0 0 0
+\end{verbatim}
+
+Logo, podemos observar que os estados 0 e 5 são recorrentes, enquanto os
+estados 1, 2, 3 e 4 são transientes.
+
+\textbf{Resolução B:}
+
+Seja o teorema 19:
+
+\(f(x)=\sum_{y \in F}\gamma_{x,z}+\sum_{y \in St}\gamma_{x,y}f(y),\)
+\(x \in St\)
+
+\(f(x)=\rho_{x,f},\) \(x \in St\)
+
+Queremos a probabilidade partindo do estado ``1'' chegando ao estado
+``5'' antes de chegar ao estado ``0'', então toma-se \(F\)=\{5\}.
+
+Podemos tomar \(F\)=\{\(5,0\)\} e substrair \(\gamma_{x,0}\),
+\(x \in St\)
+
+Então:
+
+\(f(1) = \gamma_{1,5}+\gamma_{1,1}f(1)+\gamma_{1,2}f(2)+\gamma_{1,3}f(3)+\gamma_{1,4}f(4)\)
+
+\(f(2) = \gamma_{2,5}+\gamma_{2,1}f(1)+\gamma_{2,2}f(2)+\gamma_{2,3}f(3)+\gamma_{2,4}f(4)\)
+
+\(f(3) = \gamma_{3,5}+\gamma_{3,1}f(1)+\gamma_{3,2}f(2)+\gamma_{3,3}f(3)+\gamma_{3,4}f(4)\)
+
+\(f(4) = \gamma_{4,5}+\gamma_{4,1}f(1)+\gamma_{4,2}f(2)+\gamma_{4,3}f(3)+\gamma_{4,4}f(4)\)
+
+com isso temos:
+
+\(f(1)=0.5f(2)\)
+
+\(f(2)=0.5f(2)+0,3f(3)+0,1\)
+
+\(f(3)=0.7f(3)+0,1f(4)+0,2\)
+
+\(f(4)=\frac{1}{3}f(3)+\frac{1}{3}f(4)\)
+
+Resolvendo o sistema, temos:
+
+\(f(1)=0,34\) \(f(2)=0,68\) \(f(3)=0,8\) \(f(4)=0,4\)
+
+Como \(f(x)=\rho_{x,f}\),
+
+Temos: \(f(1)=\rho_{1,5}=0,34\)
+
+Para encontrarmos a probabilidade de que assintoticamente pelo R,
+partindo de determinado estado, o visualizador atinja determinado estado
+antes de entrar no estado absorvente, podemos utilizar uma potência
+elevada da matriz de transição:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(expm)}
+\NormalTok{y }\OperatorTok{%^%}\StringTok{ }\DecValTok{10000}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     0 1 2 3 4    5
+0 1.00 0 0 0 0 0.00
+1 0.66 0 0 0 0 0.34
+2 0.32 0 0 0 0 0.68
+3 0.20 0 0 0 0 0.80
+4 0.60 0 0 0 0 0.40
+5 0.00 0 0 0 0 1.00
+\end{verbatim}
+
+Portanto, podemos perceber que, partindo do estado 1, o visualizador
+terá probabilidade de 0.34 de atingir o estado 5 antes que caia no
+estado 0.
+
+\end{document}

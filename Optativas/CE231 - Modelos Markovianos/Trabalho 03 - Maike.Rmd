@@ -3,9 +3,7 @@ title: "Trabalho 3 - Modelos Markovianos"
 author: "Maike W. Martins - GRR20159111"
 date: "10/08/2020"
 output:
-  html_document: default
   pdf_document: default
-  word_document: default
 ---
 
 ```{r setup, include=FALSE}
