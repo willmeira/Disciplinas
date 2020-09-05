@@ -388,7 +388,7 @@ summary {
 </div>
 <div id="exercício-7" class="section level2">
 <h2>Exercício 7</h2>
-<p>Exemplo em Bisgaard and Travis (1991). Considere a seguinte sequência de 21 observações, assumidas como resultantes de uma Cadeia de Markov homogênea de dois estados <span class="math display">\[ 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 0 \hspace{0.3 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} \]</span> a) Estimar a matriz de probabilidades de transição por máxima verssimilhança condicionada à primeira observação.</p>
+<p>Exemplo em Bisgaard and Travis (1991). Considere a seguinte sequência de 21 observações, assumidas como resultantes de uma Cadeia de Markov homogênea de dois estados <span class="math display">\[ 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 0 \hspace{0.3 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} \]</span> a) Estimar a matriz de probabilidades de transição por máxima verossimilhança condicionada à primeira observação.</p>
 <pre class="r"><code>library( markovchain )
 ex7= c(1,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1)
 markovchainFit( data = ex7 )$estimate</code></pre>

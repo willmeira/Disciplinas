@@ -1,6 +1,6 @@
 ---
 date: "10/08/2020"
-output: html_document
+output: pdf_document
 ---
 
 \thispagestyle{empty}
