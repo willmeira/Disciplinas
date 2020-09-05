@@ -1,0 +1,562 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={4º CE231 - Modelos Markovianos},
+  pdfauthor={XXXX},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{4º CE231 - Modelos Markovianos}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{IV Distribuição estacionária}
+\author{XXXX}
+\date{17 de Agosto de 2020}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{##LIMPESA DO HISTORICO DO R}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
+
+\CommentTok{##PACOTES USADOS}
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(markovchain)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercicio-3}{%
+\subsubsection{Exercicio 3}\label{exercicio-3}}
+
+Uma Matriz de probabilidade de transição \(\Gamma\) é dita ser
+duplamente estocástica e a soma por colunas é também 1, isto é, se
+
+\[\sum_{x\epsilon S} \gamma_{x,y}=1,\forall\epsilon S\] Considere uma
+cadeia com matriz de transição duplamente estocástica irredutível,
+aperiódica e consistindo de \(M +1\) estados, do qual
+\(S=\)\{0,1,2,\ldots,\(M\)\}. Prove que a distribuição estacionária é
+dada por
+
+\[\pi(y)=\frac{1}{M+1},y\epsilon S\]
+
+\textbf{R:}
+
+O enunciado mostra que a cadeia em análise é irredutível (ou seja, todos
+os estados se comunicam entre si) e aperiódica, ou seja, \(d=1\)
+(Definição 34). Em conjunto, essas duas afirmações evidenciam que nenhum
+dos elementos da matriz de transição é nulo. Em seguida, temos a
+informação de que a matriz de transição é duplamente estocástica, ou
+seja, todas as colunas e linhas somam 1. Tomemos o exemplo mais simples,
+para \(M = 1\), implicando uma cadeia de Markov com dois estados:
+
+\[\Gamma = 
+\begin{pmatrix}
+a & b \\
+c & d    
+\end{pmatrix}\] Logo, temos um sistema em que \(a + b = 1\),
+\(a + c = 1\), \(b + d = 1\) e \(c + d = 1\). Não é difícil perceber que
+a = b = c = d, de forma que para que as condições acima mencionadas
+procedam, a = b = c = d = 0.5. Para o caso de \(M = 2\), temos a
+seguinte matriz de transição:
+
+\[\Gamma = 
+\begin{pmatrix}
+a & b & c  \\
+d & e & f  \\
+g & h & i  
+\end{pmatrix}\]
+
+Da mesma forma, temos que \(a + b + c = 1\), \(d + e + f = 1\),
+\(g + h + i = f\), \(a + d + g = 1\), \(b + e + h = 1\) e
+\(c + f + i = 1\). A solução dessas equações implica que
+\(a = b = c = d = e = f = g = h = i\), e com as condições mencionadas no
+enunciado, todos os valores são iguais. Portanto,
+\(a = b = c = d = e = f = g = h = i = 1/3\). Calculando a distribuição
+estacionária para essas duas matrizes, temos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{estados3a <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{)}
+\NormalTok{M <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{2}\NormalTok{,}
+\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{dimnames =} \KeywordTok{list}\NormalTok{(estados3a, estados3a));M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    0   1
+0 0.5 0.5
+1 0.5 0.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{estados3b <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{, }\StringTok{"2"}\NormalTok{)}
+\NormalTok{Mb <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{,}
+\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{dimnames =} \KeywordTok{list}\NormalTok{(estados3b, estados3b));Mb}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          0         1         2
+0 0.3333333 0.3333333 0.3333333
+1 0.3333333 0.3333333 0.3333333
+2 0.3333333 0.3333333 0.3333333
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ProbT3b <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"markovchain"}\NormalTok{, }\DataTypeTok{states=}\NormalTok{estados3b, }\DataTypeTok{transitionMatrix=}\NormalTok{Mb)}
+\KeywordTok{steadyStates}\NormalTok{(ProbT3b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             0         1         2
+[1,] 0.3333333 0.3333333 0.3333333
+\end{verbatim}
+
+Logo, verifica-se que para qualquer valor de y na distribuição
+estacionária, seu valor dentro do vetor sempre será representado por
+\(\pi(y) = \frac{1}{M+1}\), para todo \(y\epsilon S\). Ou seja, para 2
+estados, \(M = 1\), e \(\pi(y)=\frac{1}{1+1}=0.5\). Para 3 estados,
+\(M = 2\) e \(\pi(y) = 1/3\) e assim sucessivamente.
+
+\pagebreak
+
+\hypertarget{exercicio-4}{%
+\subsubsection{Exercicio 4}\label{exercicio-4}}
+
+Considere uma cadeia de Markov com espaço de estados \(S\) = \{0,1,2\} e
+matriz de probabilidade de transição
+
+\[\Gamma = 
+\begin{matrix}
+0\\ 
+1\\ 
+2
+\end{matrix}
+\begin{pmatrix}
+0.4 & 0.4 & 0.2  \\
+0.3 & 0.4 & 0.3  \\
+0.2 & 0.4 & 0.4  
+\end{pmatrix}\]
+
+Mostre que esta cadeia tem uma única distribuição estacionária \(\pi\) e
+encontre-a.
+
+\textbf{R:}
+
+\[\text{como: } \sum_{x}\pi(x)p_{\text{x, y}} = \pi{(y)}\ \quad y \in \mathcal{S} \]
+\[\sum_{x}{\pi(x)} = 1 \] Portanto, o seguinte sistema de equações
+lineares, caso tenha solução, encontre a distribuição estacionária:
+
+\[ \begin{cases}0.4 \pi(0) + 0.3\pi(1) + 0.2\pi(2) = \pi(0), \quad \text{equação (1)} \\
+  0.4 \pi(0) + 0.4\pi(1) + 0.4\pi(2) = \pi(1), \quad \text{equação (2)}  \\
+  0.2 \pi(0) + 0.3\pi(1) + 0.4\pi(2) = \pi(2), \quad \text{equação (3)}  
+  \end{cases}\]
+
+Resolvendo o sistema: equação(1) - equação(3)
+
+\[\begin{array}{rcl} 0.2*\pi(0) + 0*\pi(0) -0.2*\pi(2) &=& \pi(0) -\pi(2)\\
+  0.2*\pi(2) &=& 0.8*\pi(0) \\
+  \pi(2) &=& \pi(0)
+  \end{array} \]
+
+equação(1) - equação(2) e tendo \(\pi(2) = \pi(0)\)
+\[ \begin{array}{rcl} 0*\pi(0) - 0.1*\pi(0) -0.2*\pi(2) &=& \pi(0) -\pi(1)\\
+  -0.1*\pi(1) - 0.2 * \pi(2) &=& \pi(2) - \pi(1) \\
+  0.9*\pi(1)  &=& 1.2 \pi(2) \\
+    \pi(1) &=& \frac{4}{3} \pi(2)  \end{array} \]
+
+Tendo \(\pi(0) = 0.75\), \(\pi(1) = \pi(2)\) e \(\sum_{x}\pi(x) = 1\). A
+distribuição estacionária \[\pi = 
+\begin{pmatrix}
+\frac{3}{10}& \frac{2}{5} &  \frac{3}{10} 
+\end{pmatrix}\]
+
+\pagebreak
+
+\hypertarget{exercicio-8}{%
+\subsubsection{Exercicio 8}\label{exercicio-8}}
+
+Considere uma cadeia de Markov com espaço de estados \(S\) = \{0,1,2\} e
+matriz de probabilidade de transição
+
+\[\Gamma =\begin{matrix}
+0\\ 
+1\\ 
+2
+\end{matrix}
+\begin{pmatrix}
+0 & 0 & 1  \\
+1 & 0 & 0  \\
+1/2 & 1/2 & 0  
+\end{pmatrix}\]
+
+\textbf{a)} Mostre que esta é uma cadeia irredutível.
+
+\textbf{R:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gamma8 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\DecValTok{0}\NormalTok{), }\DataTypeTok{byrow=}\NormalTok{T, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{dimnames=}\KeywordTok{list}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{2}\NormalTok{))}
+\NormalTok{ProbT8 =}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"markovchain"}\NormalTok{, }\DataTypeTok{states=}\KeywordTok{as.character}\NormalTok{(}\DecValTok{0}\OperatorTok{:}\DecValTok{2}\NormalTok{), }\DataTypeTok{transitionMatrix=}\NormalTok{gamma8, }\DataTypeTok{name=}\StringTok{"Γ"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Abaixo apresento a saída do \emph{summary} da matriz de transição:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ProbT8)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+G  Markov chain that is composed by: 
+Closed classes: 
+0 1 2 
+Recurrent classes: 
+{0,1,2}
+Transient classes: 
+NONE 
+The Markov chain is irreducible 
+The absorbing states are: NONE
+\end{verbatim}
+
+Aqui temos que todos os estados se comunicam, logo a matriz é
+irredutível.
+
+\textbf{b)} Encontre o período.
+
+\textbf{R:}
+
+Aplicando a Def. 34 temos:
+
+\(\Gamma^1:\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ProbT8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+G 
+ A  3 - dimensional discrete Markov Chain defined by the following states: 
+ 0, 1, 2 
+ The transition matrix  (by rows)  is defined as follows: 
+    0   1 2
+0 0.0 0.0 1
+1 1.0 0.0 0
+2 0.5 0.5 0
+\end{verbatim}
+
+\(\Gamma^2:\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ProbT8}\OperatorTok{^}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+G^2 
+ A  3 - dimensional discrete Markov Chain defined by the following states: 
+ 0, 1, 2 
+ The transition matrix  (by rows)  is defined as follows: 
+    0   1   2
+0 0.5 0.5 0.0
+1 0.0 0.0 1.0
+2 0.5 0.0 0.5
+\end{verbatim}
+
+\(\Gamma^3:\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ProbT8}\OperatorTok{^}\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+G^3 
+ A  3 - dimensional discrete Markov Chain defined by the following states: 
+ 0, 1, 2 
+ The transition matrix  (by rows)  is defined as follows: 
+     0    1   2
+0 0.50 0.00 0.5
+1 0.50 0.50 0.0
+2 0.25 0.25 0.5
+\end{verbatim}
+
+\(\Gamma^4:\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ProbT8}\OperatorTok{^}\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+G^4 
+ A  3 - dimensional discrete Markov Chain defined by the following states: 
+ 0, 1, 2 
+ The transition matrix  (by rows)  is defined as follows: 
+     0    1    2
+0 0.25 0.25 0.50
+1 0.50 0.00 0.50
+2 0.50 0.25 0.25
+\end{verbatim}
+
+\(\Gamma^5:\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ProbT8}\OperatorTok{^}\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+G^5 
+ A  3 - dimensional discrete Markov Chain defined by the following states: 
+ 0, 1, 2 
+ The transition matrix  (by rows)  is defined as follows: 
+      0     1    2
+0 0.500 0.250 0.25
+1 0.250 0.250 0.50
+2 0.375 0.125 0.50
+\end{verbatim}
+
+\(\Gamma^6:\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ProbT8}\OperatorTok{^}\DecValTok{6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+G^6 
+ A  3 - dimensional discrete Markov Chain defined by the following states: 
+ 0, 1, 2 
+ The transition matrix  (by rows)  is defined as follows: 
+      0     1     2
+0 0.375 0.125 0.500
+1 0.500 0.250 0.250
+2 0.375 0.250 0.375
+\end{verbatim}
+
+\(d_0=m.d.c \left \{ 2,3,4, \cdots \right \}=1\\\)
+\(d_1=m.d.c \left \{ 3,5,6, \cdots \right \}=1\\\)
+\(d_2=m.d.c \left \{ 2,3,4, \cdots \right \}=1\\\)
+
+Do teorema 44, observamos que
+\(\lim_{n\rightarrow \infty }\Gamma^{(n)} =\) \(\Gamma^6:\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ProbT8}\OperatorTok{^}\DecValTok{50000}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+G^50000 
+ A  3 - dimensional discrete Markov Chain defined by the following states: 
+ 0, 1, 2 
+ The transition matrix  (by rows)  is defined as follows: 
+    0   1   2
+0 0.4 0.2 0.4
+1 0.4 0.2 0.4
+2 0.4 0.2 0.4
+\end{verbatim}
+
+Então temos que: \(\Pi(0)=0.4,\ \Pi(1)=0.2\ e\ \Pi(2)=0.4\\\)
+
+\(\lim_{n\rightarrow \infty }\gamma^{(n)}_{x,0} = \pi(0) = 0.4\\\)
+\(\lim_{n\rightarrow \infty }\gamma^{(n)}_{x,1} = \pi(1) = 0.2\\\)
+\(\lim_{n\rightarrow \infty }\gamma^{(n)}_{x,2} = \pi(2) = 0.4\\\)
+
+O que leva a conclusão de que a cadeia é aperiódica (\(d = 1\))
+
+\textbf{c)} Encontre a distribuição estacionária.
+
+\textbf{R:}
+
+A distribuição estacionária é dada por:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{estados4 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{, }\StringTok{"2"}\NormalTok{)}
+\NormalTok{estados8 <-}\StringTok{ }\NormalTok{estados4}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{data=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{,}
+\DataTypeTok{dimnames =} \KeywordTok{list}\NormalTok{(estados8, estados8))}
+\NormalTok{ProbT8 <-}\StringTok{ }\KeywordTok{new}\NormalTok{(}\StringTok{"markovchain"}\NormalTok{, }\DataTypeTok{states=}\NormalTok{estados8, }\DataTypeTok{transitionMatrix=}\NormalTok{y)}
+\KeywordTok{steadyStates}\NormalTok{(ProbT8)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       0   1   2
+[1,] 0.4 0.2 0.4
+\end{verbatim}
+
+Logo, a distribuição estacionária da cadeia acima é dada por
+\(\pi_{1} = (0.4, 0.2, 0.4)\)
+
+\pagebreak
+
+\hypertarget{exercicio-12}{%
+\subsubsection{Exercicio 12}\label{exercicio-12}}
+
+Sejam \(\pi_{0}\) e \(\pi_{1}\) duas distribuições estacionárias
+distintas para uma Cadeia de Markov.
+
+\textbf{a)} Prove que para \(0\leq\alpha\leq\), a função
+\(\pi_{\alpha}\) definida como:
+
+\(\pi_{\alpha}(x)=(1-\alpha)\pi_{0}(x)+\alpha \pi_{1}(x)\),
+\(x\epsilon S\), é uma distribuição estacionária.
+
+\textbf{R:}
+
+Nós temos que \(\pi_{0}\) e \(\pi_{1}\) são distribuições estacionárias
+e, portanto, satisfazem a definição 26, ou seja:
+
+\[\sum_{n}\pi(x)\gamma_{x,y}=\pi(y),y\epsilon S\]
+
+Logo, podemos escrever que:
+
+\[\sum_{n}\pi(x)\gamma_{x,y}=\sum_{n}(\alpha \pi_{1}(x)+(1-\alpha)\pi_{0}(x))\gamma_{x,y}=\alpha \pi_{1}(y)+(1-\alpha)\pi_{0}(y)=\pi\alpha(y)\]
+Essa solução vale para todo y 2 S. A condição de que
+\(0 \leq \pi\alpha \leq 1, \forall \epsilon S\) também procede e,
+portanto, \(\pi_{\alpha}\) é uma distribuição estacionária.
+
+\textbf{b)} Mostre que distintos valores de \(\alpha\) implicam em
+distribuições estacionárias \(\pi_{\alpha}\) distintas. Para demonstrar
+isso sugere-se escolher \(x_{0} \epsilon S\) tal que
+\(\pi_{0}(x_{0})\neq\pi_{1}(x_{0})\) e prove que
+\(\pi_{\alpha}(x_{0})=\pi_{\beta}(x_{0})\) implica que o
+\(\alpha = \beta\).
+
+\textbf{R:}
+
+Sabemos que \(\pi_{0}\) e \(\pi_{1}\) são distintos, e, portanto, há um
+valor \(x_{0} \epsilon S\) tal que
+\(\pi_{0}(x_{0})\neq \pi_{1}(x_{0})\). Tomamos um valor \(\alpha\) e
+\(\beta\) arbitrários do intervalo {[}0, 1{]}, que satisfaçam
+\(\pi_{\alpha}(x_{0})\neq \pi_{\beta}(x_{0})\) para todo
+\(x \epsilon S\). Logo, o que devemos mostrar aqui é que
+\(\alpha = \beta\). Como a condição também é válida para \(x_{0}\),
+temos que:
+
+\[\alpha pi_{1}(x_{0})+(1- \alpha)\pi_{0}(x_{0})=\beta \pi_{1}(x_{0})+(1-\beta)\pi_{0}x_{0}\]
+
+\[(\alpha -\beta) \pi_{1}(x_{0})+(-\alpha +\beta)\pi_{0}x_{0}\]
+\[(\alpha -\beta) (\pi_{1}(x_{0})-\pi_{0}(x_{0}))=0\]
+
+Como sabemos que \(\pi_{0}(x_{0})\neq \pi_{1}(x_{0})\), logo a igualdade
+\(\alpha=\beta\), o que prova que distintos valores de \(\alpha\)
+implicam distribuição estacionárias \(\pi_{\alpha}\) distintas.
+
+\end{document}

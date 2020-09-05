@@ -1,0 +1,225 @@
+---
+title: "2º CE231 - Modelos Markovianos"
+subtitle: "II Cálculos com a função de transição"
+author: "Milton Ferreira - GRR:20137581"
+date: "08 de Agosto de 2020"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width=8, fig.height=4, fig.path='Figs/',                     echo=F,warning=T,message=FALSE,cache=F,comment=NULL)
+```
+
+```{r}
+##LIMPESA DO HISTORICO DO R
+rm(list = ls())
+
+##PACOTES USADOS
+library(dplyr)
+library(markovchain)
+```
+
+### Exercicio 1
+
+![](C:/Users/FILIPE/OneDrive/Faculdade/CE231 - Modelos Markovianos/imagens/IIexercicio1.JPG)
+
+*R:*
+
+```{r}
+# Exercicio 1
+g1 <- matrix(c(1,0,0,1), ncol=2);g1
+g1%*%g1
+```
+
+Na matriz 1ª, podemos verificar que quando realizamos a potencia dela, observamos a mesma matriz ou seja $\Gamma^2=\Gamma^3=\Gamma^4 =\cdots =\Gamma^n$
+
+Também, uma vez em um dos 2 estados, irá ficar no mesmo estado independente do número de repetições
+
+```{r}
+g2 <- matrix(c(0,1,1,0), ncol=2);g2
+#g2^2
+g2%*%g2
+#g2^3
+g2%*%g2%*%g2
+#g2^4
+g2%*%g2%*%g2%*%g2
+```
+
+Para a segunda matriz de transição, observamos que:
+
+$\Gamma=\Gamma^3=\Gamma^5=\cdots =\Gamma^n$ para caso *n* ímpar
+
+Nesse caso do *n* ímpar, na próxima repetição alterará com probabilidade =1 para o outro estado.
+
+$\Gamma^2=\Gamma^4=\cdots =\Gamma^n$ para caso *n* par
+
+No caso se *n* for par ira ter o mesmo comportamento verificado na 1ª matriz (ira permanecer no mesmo estado na próxima repetição).
+
+### Exercicio 3
+
+![](C:/Users/FILIPE/OneDrive/Faculdade/CE231 - Modelos Markovianos/imagens/IIexercicio3.JPG)
+
+*R:*
+
+**a)**
+
+$P_{0}(T_{0}=n)=P(T_{n+2}=1|T_{n}=0)= \\
+\sum_{r=0}^{n}=P(C_{n+1}=0,C_{n+2}=1|C_{n}=0) \\
+\sum_{r=0}^{n}=P(C_{n+1}=0|C_{n}=0)*P(C_{n+2}=1|C_{n+1}=0) \\
+\sum_{r=0}^{n}=\gamma_{0,0}*\gamma_{0,1}$  
+
+**b)**
+
+$P_{0}(T_{1}=n)=P(T_{n+2}=1|T_{n}=1)= \\
+\sum_{r=1}^{n}=P(C_{n+1}=1|C_{n}=1)*P(C_{n+2}=1|C_{n+1}=1) \\
+\sum_{r=1}^{n}=\gamma_{1,1}^2$
+
+
+### Exercicio 4
+
+![](C:/Users/FILIPE/OneDrive/Faculdade/CE231 - Modelos Markovianos/imagens/IIexercicio4.JPG)
+
+*R:*
+
+```{r}
+# Exercicio 4
+Prob.T=matrix(c(0.3,0.3,0.4,0.2,0.7,0.1,0.2,0.3,0.5),nrow=3, ncol=3,byrow=T)
+ProbT = new("markovchain", transitionMatrix=Prob.T)
+```
+
+Calculando a matriz de probabilidade de transição após 16 passos temos:
+
+$\Gamma^{16}:$
+
+```{r}
+# Exercicio 4
+g16 <- ProbT^16
+```
+
+Então a $P(C_{16}=2|C_{0}=0)=$
+
+```{r}
+# Exercicio 4
+c <- round(g16[1,3]%*%100,2)
+cat(g16[1,3],"\t","Aproximadamente:",c,"%")
+```
+
+
+
+Calculando a matriz de probabilidade de transição após 12 passos temos:
+
+```{r}
+# Exercicio 4
+g12 <- ProbT^12
+```
+Então a $P(C_{12}=2,C_{16}=2|C_{0}=0)=P(C_{16}=2|C_{0}=0)$ X  $P(C_{12}=2|C_{0}=0)=$
+
+```{r}
+# Exercicio 4
+b <- g16[1,3]%*%g12[1,3]
+d <- round(b%*%100,2)
+cat(b,"\t","Aproximadamente:",d,"%")
+```
+
+### Exercicio 8
+
+![](C:/Users/FILIPE/OneDrive/Faculdade/CE231 - Modelos Markovianos/imagens/IIexercicio8.JPG)
+
+*R:*
+
+Pelo Teorema 8: Seja $\left \{ C_{b} \right \}$ uma cadeia de markov com estaço de estado S e sejam x,y $\epsilon$ S, então:
+
+$\gamma_{x,y}^{(n)}=\sum_{m=1}^{n}P_{x}(T_{y}=m)\gamma_{y,y}^{n-m} \; Para \; p/n\geq1 \\
+\left \{ C_{n}=y \right \}=\bigcup_{n}^{m=1}\left \{ T_{y}=m,C_{n}=y \right \}\\
+apartir\;de\; \left \{ C_{n}=y \right \}\;temos:\\
+\gamma_{x,y}^{(n)}=P_{x}(C_{n}=y)\\
+=\sum_{m=1}^{n}P_{x}(T_{y}=m,C_{n}=y)\\
+=\sum_{m=1}^{n}P_{x}(T_{y}=m)*P(C_{0}=x|C_{0}=x,C_{1} \neq y,...,C_{m-1} \neq y,C_{m}=y)\\
+=\sum_{m=1}^{n}P_{x}(T_{y}=m)\gamma_{y,y}^{n-m} \;$
+
+Onde:
+
+$(T_{y}=m)$; é uma v.a inteiro não negativo e $\gamma_{y,y}^{n-m}$ é uma probabilidade
+
+### Exercicio 12
+
+![](C:/Users/FILIPE/OneDrive/Faculdade/CE231 - Modelos Markovianos/imagens/IIexercicio12.JPG)
+
+*R:*
+
+**a)**
+
+```{r}
+# Exercicio 12
+g4.T=matrix(c(0.1,0.2,0.2,0.3,0.2,
+               0.2,0.1,0.1,0.2,0.4,
+               0.2,0.1,0.4,0.2,0.1,
+               0.3,0.1,0.1,0.2,0.3,
+               0.1,0.3,0.1,0.1,0.4),nrow=5, ncol=5,byrow=T)
+g4 = new("markovchain", transitionMatrix=g4.T);g4
+```
+$\Gamma^2:$
+```{r}
+# Exercicio 12
+g4_2 <- g4^2;g4_2
+```
+
+$\Gamma^3:$
+```{r}
+# Exercicio 12
+g4_3 <- g4^3;g4_3
+```
+
+$\Gamma^4:$
+```{r}
+# Exercicio 12
+g4_4 <- g4^4;g4_4
+```
+
+$\Gamma^5:$
+```{r}
+# Exercicio 12
+g4_5 <- g4^5;g4_5
+```
+
+$\gamma _{2,4}=0.18719$ para *n* igual a 5
+
+
+**b)**
+
+```{r}
+# Exercicio 12
+g5.T=matrix(c(0.3,0.2,0.3,0.1,0.1,
+              0.4,0.2,0.1,0.2,0.1,
+              0.1,0.3,0.2,0.2,0.2,
+              0.2,0.1,0.3,0.2,0.2,
+              0.1,0.1,0.4,0.2,0.2),nrow=5, ncol=5,byrow=T)
+g5 = new("markovchain", transitionMatrix=g5.T);g5
+```
+
+$\Gamma^2:$
+```{r}
+# Exercicio 12
+g5_2 <- g5^2;g5_2
+```
+
+$\Gamma^3:$
+```{r}
+# Exercicio 12
+g5_3 <- g5^3;g5_3
+```
+
+$\Gamma^4:$
+```{r}
+# Exercicio 12
+g5_4 <- g5^4;g5_4
+```
+
+$\Gamma^5:$
+```{r}
+# Exercicio 12
+g5_5 <- g5^5;g5_5
+```
+
+$\gamma _{2,4}=0.1794$ para *n* igual a 5
