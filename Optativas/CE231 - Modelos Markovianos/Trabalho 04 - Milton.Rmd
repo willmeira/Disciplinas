@@ -1,0 +1,265 @@
+---
+title: "4º CE231 - Modelos Markovianos"
+subtitle: "IV Distribuição estacionária"
+author: "XXXX"
+date: "17 de Agosto de 2020"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width=8, fig.height=4, fig.path='Figs/',                     echo=T,warning=T,message=FALSE,cache=F,comment=NULL)
+```
+
+```{r}
+##LIMPESA DO HISTORICO DO R
+rm(list = ls())
+
+##PACOTES USADOS
+library(dplyr)
+library(markovchain)
+```
+
+### Exercicio 3
+
+ Uma Matriz de probabilidade de transição $\Gamma$ é dita ser duplamente estocástica e a soma por colunas é também 1, isto é, se
+ 
+ $$\sum_{x\epsilon S} \gamma_{x,y}=1,\forall\epsilon S$$ 
+ Considere uma cadeia com matriz de transição duplamente estocástica irredutível, aperiódica e consistindo de $M +1$ estados, do qual $S=${0,1,2,...,$M$}. Prove  que a distribuição estacionária é dada por
+ 
+ $$\pi(y)=\frac{1}{M+1},y\epsilon S$$
+
+**R:**
+
+O enunciado mostra que a cadeia em análise é irredutível (ou seja, todos os estados se comunicam entre si) e aperiódica, ou seja, $d=1$ (Definição 34). Em conjunto, essas duas afirmações evidenciam que nenhum dos elementos da matriz de transição é nulo. Em seguida, temos a informação de que a matriz de transição é duplamente estocástica, ou seja, todas as colunas e linhas somam 1. Tomemos o exemplo mais simples, para $M = 1$, implicando uma cadeia de Markov com dois estados:
+
+
+$$\Gamma = 
+\begin{pmatrix}
+a & b \\
+c & d    
+\end{pmatrix}$$
+Logo, temos um sistema em que $a + b = 1$, $a + c = 1$, $b + d = 1$ e $c + d = 1$. Não é difícil perceber que a = b = c = d, de forma que para que as condições acima mencionadas procedam, a = b = c = d = 0.5. Para o caso de $M = 2$, temos a seguinte matriz de transição:
+
+$$\Gamma = 
+\begin{pmatrix}
+a & b & c  \\
+d & e & f  \\
+g & h & i  
+\end{pmatrix}$$
+
+Da mesma forma, temos que $a + b + c = 1$, $d + e + f = 1$, $g + h + i = f$, $a + d + g = 1$, $b + e + h = 1$ e $c + f + i = 1$. A solução dessas equações implica que $a = b = c = d = e = f = g = h = i$, e com as condições mencionadas no enunciado, todos os valores são iguais. Portanto, $a = b = c = d = e = f = g = h = i = 1/3$. Calculando a distribuição estacionária para essas duas matrizes, temos:
+
+```{r}
+estados3a <- c("0", "1")
+M <- matrix(data = c(0.5, 0.5, 0.5, 0.5), nrow = 2, ncol = 2,
+byrow = TRUE, dimnames = list(estados3a, estados3a));M
+```
+```{r}
+estados3b <- c("0", "1", "2")
+Mb <- matrix(data = c(1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3, 1/3), nrow = 3, ncol = 3,
+byrow = TRUE, dimnames = list(estados3b, estados3b));Mb
+```
+```{r}
+ProbT3b <- new("markovchain", states=estados3b, transitionMatrix=Mb)
+steadyStates(ProbT3b)
+```
+
+Logo, verifica-se que para qualquer valor de y na distribuição estacionária, seu valor dentro do vetor sempre será representado por $\pi(y) = \frac{1}{M+1}$, para todo $y\epsilon S$. Ou seja, para 2 estados, $M = 1$, e $\pi(y)=\frac{1}{1+1}=0.5$. 
+Para 3 estados, $M = 2$ e $\pi(y) = 1/3$ e assim sucessivamente.
+
+
+\pagebreak
+
+### Exercicio 4
+ 
+ Considere uma cadeia de Markov com espaço de estados $S$ = {0,1,2} e matriz de probabilidade de transição
+
+$$\Gamma = 
+\begin{matrix}
+0\\ 
+1\\ 
+2
+\end{matrix}
+\begin{pmatrix}
+0.4 & 0.4 & 0.2  \\
+0.3 & 0.4 & 0.3  \\
+0.2 & 0.4 & 0.4  
+\end{pmatrix}$$
+
+Mostre que esta cadeia tem uma única distribuição estacionária $\pi$ e encontre-a.
+
+**R:**
+
+ $$\text{como: } \sum_{x}\pi(x)p_{\text{x, y}} = \pi{(y)}\ \quad y \in \mathcal{S} $$
+  $$\sum_{x}{\pi(x)} = 1 $$
+  Portanto, o seguinte sistema de equações lineares, caso tenha solução, encontre a distribuição estacionária: 
+  
+  $$ \begin{cases}0.4 \pi(0) + 0.3\pi(1) + 0.2\pi(2) = \pi(0), \quad \text{equação (1)} \\
+  0.4 \pi(0) + 0.4\pi(1) + 0.4\pi(2) = \pi(1), \quad \text{equação (2)}  \\
+  0.2 \pi(0) + 0.3\pi(1) + 0.4\pi(2) = \pi(2), \quad \text{equação (3)}  
+  \end{cases}$$
+
+  Resolvendo o sistema: 
+  equação(1) - equação(3)
+  
+  $$\begin{array}{rcl} 0.2*\pi(0) + 0*\pi(0) -0.2*\pi(2) &=& \pi(0) -\pi(2)\\
+  0.2*\pi(2) &=& 0.8*\pi(0) \\
+  \pi(2) &=& \pi(0)
+  \end{array} $$
+
+  equação(1) - equação(2) e tendo $\pi(2) = \pi(0)$
+  $$ \begin{array}{rcl} 0*\pi(0) - 0.1*\pi(0) -0.2*\pi(2) &=& \pi(0) -\pi(1)\\
+  -0.1*\pi(1) - 0.2 * \pi(2) &=& \pi(2) - \pi(1) \\
+  0.9*\pi(1)  &=& 1.2 \pi(2) \\
+    \pi(1) &=& \frac{4}{3} \pi(2)  \end{array} $$
+    
+  Tendo  $\pi(0) = 0.75$, $\pi(1) = \pi(2)$ e $\sum_{x}\pi(x) = 1$.
+  A distribuição estacionária
+  $$\pi = 
+\begin{pmatrix}
+\frac{3}{10}& \frac{2}{5} &  \frac{3}{10} 
+\end{pmatrix}$$
+  
+
+\pagebreak
+
+
+### Exercicio 8
+
+Considere uma cadeia de Markov com espaço de estados $S$ = {0,1,2} e matriz de probabilidade de transição
+
+$$\Gamma =\begin{matrix}
+0\\ 
+1\\ 
+2
+\end{matrix}
+\begin{pmatrix}
+0 & 0 & 1  \\
+1 & 0 & 0  \\
+1/2 & 1/2 & 0  
+\end{pmatrix}$$
+
+**a)** Mostre que esta é uma cadeia irredutível.
+
+**R:**
+
+```{r}
+gamma8 <- matrix(c(0,0,1,1,0,0,0.5,0.5,0), byrow=T, ncol = 3, dimnames=list(0:2))
+ProbT8 = new("markovchain", states=as.character(0:2), transitionMatrix=gamma8, name="Γ")
+```
+
+Abaixo apresento a saída do *summary* da matriz de transição:
+```{r}
+summary(ProbT8)
+```
+Aqui temos que todos os estados se comunicam, logo a matriz é irredutível.
+
+**b)** Encontre o período.
+
+**R:**
+
+Aplicando a Def. 34 temos:
+
+$\Gamma^1:$
+```{r}
+ProbT8
+```
+$\Gamma^2:$
+```{r}
+ProbT8^2
+```
+
+$\Gamma^3:$
+```{r}
+ProbT8^3
+```
+
+$\Gamma^4:$
+```{r}
+ProbT8^4
+```
+
+$\Gamma^5:$
+```{r}
+ProbT8^5
+```
+
+$\Gamma^6:$
+```{r}
+ProbT8^6
+```
+
+$d_0=m.d.c \left \{ 2,3,4, \cdots \right \}=1\\$
+$d_1=m.d.c \left \{ 3,5,6, \cdots \right \}=1\\$
+$d_2=m.d.c \left \{ 2,3,4, \cdots \right \}=1\\$
+
+
+Do teorema 44, observamos que $\lim_{n\rightarrow \infty }\Gamma^{(n)} =$
+$\Gamma^6:$
+```{r}
+ProbT8^50000
+```
+
+Então temos que: $\Pi(0)=0.4,\ \Pi(1)=0.2\ e\ \Pi(2)=0.4\\$
+
+$\lim_{n\rightarrow \infty }\gamma^{(n)}_{x,0} = \pi(0) = 0.4\\$
+$\lim_{n\rightarrow \infty }\gamma^{(n)}_{x,1} = \pi(1) = 0.2\\$
+$\lim_{n\rightarrow \infty }\gamma^{(n)}_{x,2} = \pi(2) = 0.4\\$
+
+O que leva a conclusão de que a cadeia é aperiódica ($d = 1$)
+
+**c)** Encontre a distribuição estacionária.
+
+**R:**
+
+A distribuição estacionária é dada por:
+
+```{r}
+estados4 <- c("0", "1", "2")
+estados8 <- estados4
+y <- matrix(data=c(0, 0, 1, 1, 0, 0, 0.5, 0.5, 0), nrow = 3, ncol = 3, byrow = TRUE,
+dimnames = list(estados8, estados8))
+ProbT8 <- new("markovchain", states=estados8, transitionMatrix=y)
+steadyStates(ProbT8)
+```
+
+Logo, a distribuição estacionária da cadeia acima é dada por $\pi_{1} = (0.4, 0.2, 0.4)$
+
+
+\pagebreak
+
+
+### Exercicio 12
+
+Sejam $\pi_{0}$ e $\pi_{1}$ duas distribuições estacionárias distintas para uma Cadeia de Markov.
+
+**a)** Prove que para $0\leq\alpha\leq$, a função $\pi_{\alpha}$ definida como:
+
+$\pi_{\alpha}(x)=(1-\alpha)\pi_{0}(x)+\alpha \pi_{1}(x)$, $x\epsilon S$, é uma distribuição estacionária.
+
+**R:**
+
+Nós temos que $\pi_{0}$ e $\pi_{1}$ são distribuições estacionárias e, portanto, satisfazem a definição 26, ou seja:
+
+$$\sum_{n}\pi(x)\gamma_{x,y}=\pi(y),y\epsilon S$$
+
+Logo, podemos escrever que:
+
+$$\sum_{n}\pi(x)\gamma_{x,y}=\sum_{n}(\alpha \pi_{1}(x)+(1-\alpha)\pi_{0}(x))\gamma_{x,y}=\alpha \pi_{1}(y)+(1-\alpha)\pi_{0}(y)=\pi\alpha(y)$$
+Essa solução vale para todo y 2 S. A condição de que $0 \leq \pi\alpha \leq 1, \forall \epsilon S$ também procede e, portanto, $\pi_{\alpha}$ é
+uma distribuição estacionária.
+
+**b)** Mostre que distintos valores de $\alpha$  implicam em distribuições estacionárias $\pi_{\alpha}$ distintas. Para demonstrar isso sugere-se escolher $x_{0} \epsilon S$ tal que $\pi_{0}(x_{0})\neq\pi_{1}(x_{0})$ e prove que $\pi_{\alpha}(x_{0})=\pi_{\beta}(x_{0})$ implica que o $\alpha = \beta$.
+
+
+**R:**
+
+Sabemos que $\pi_{0}$ e $\pi_{1}$ são distintos, e, portanto, há um valor $x_{0} \epsilon S$ tal que $\pi_{0}(x_{0})\neq \pi_{1}(x_{0})$. Tomamos um valor $\alpha$ e $\beta$ arbitrários do intervalo [0, 1], que satisfaçam $\pi_{\alpha}(x_{0})\neq \pi_{\beta}(x_{0})$ para todo $x \epsilon S$. Logo, o que devemos mostrar aqui é que $\alpha = \beta$. Como a condição também é válida para $x_{0}$, temos que:
+
+$$\alpha pi_{1}(x_{0})+(1- \alpha)\pi_{0}(x_{0})=\beta \pi_{1}(x_{0})+(1-\beta)\pi_{0}x_{0}$$
+
+$$(\alpha -\beta) \pi_{1}(x_{0})+(-\alpha +\beta)\pi_{0}x_{0}$$
+$$(\alpha -\beta) (\pi_{1}(x_{0})-\pi_{0}(x_{0}))=0$$
+
+Como sabemos que $\pi_{0}(x_{0})\neq \pi_{1}(x_{0})$, logo a igualdade $\alpha=\beta$, o que prova que distintos valores de $\alpha$ implicam distribuição estacionárias $\pi_{\alpha}$ distintas.

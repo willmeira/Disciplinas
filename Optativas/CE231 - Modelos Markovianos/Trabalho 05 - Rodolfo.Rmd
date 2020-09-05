@@ -1,0 +1,107 @@
+---
+date: "10/08/2020"
+output: html_document
+---
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\bf{UNIVERSIDADE FEDERAL DO PARANÁ}\\
+\bf{CURSO ESTATíSTICA}\\
+
+\vspace{4cm}
+
+\bf{RODOLFO PIROLO GATZKE - GRR 20149150}
+
+\vspace{6.5cm}
+
+\bf{RESOLUÇÃO DOS EXERCICIOS DA LISTA V \\
+    MODELOS MARKOVIANOS}\\
+
+\vspace{9.0cm}
+
+\bf{CURITIBA} \\
+\bf{Setembro de 2020}\\
+\end{center}
+
+\newpage
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Exercício 1
+Seja $X$ uma varável aleatória com distribuição uma mistura de duas distribuições com esperanças $\mu_1$ e $\mu_2$ e variâncisas $\sigma_1^2, \sigma_2^2$, respectivamente, onde os parâmetros de mistura são $\delta_1$ e $\delta_2$ com $\delta_1 + \delta_2 = 1$. \newline
+
+a) Prove que $Var(X) = \delta_1\sigma_1^2 + \delta_2\sigma_2^2 + \delta_1\delta_2(\mu_1 - \mu_2)^2$ \newline
+
+b) Mostre que a mistura de duas distribuições Poisson, $P(\lambda_1), P(\lambda_2)$, com $\lambda_1 \neq \lambda_2$, é superdispersa, ou seja, $Var(X) > E(X)$. \newline
+$Resposta$ \newline
+
+
+
+
+## Exercício 3
+Considere uma Cadeia de Markov estacionária de dois estados e matras de probabilidades de transição dada por \newline
+$$\Gamma = \left(\begin{array}{cc} \gamma_{1,1} & \gamma_{1,2}\\
+                                    \gamma_{2,1} & \gamma_{2,2}\\
+ \end{array}\right)$$
+a) Mostre que a distribuição estacionária é 
+$$(\pi(1),\pi(2)) = \dfrac{1}{\gamma_{1,2}+\gamma_{2,1}}(\gamma_{2,1},\gamma_{1,2} )$$
+b) Considere o caso
+$$\Gamma = \left(\begin{array}{cc} 0.9 & 0.1\\
+                                   0.2 & 0.8\\
+ \end{array}\right) $$
+e as duas sequências de observa'vões seguintes, que se supõe serem geradas pela Cadeia de Markov acima
+$$Sequência 1: 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 2 \hspace{0.1 cm} 2 \hspace{0.1 cm} 1 $$
+$$Sequência 2: 2 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 2 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 $$
+
+Calcule a distribuição estacionária de cada uma das sequências. Note que cada sequência contém o mesmo número de uns e dois. Porquê estas sequências não são igualmente prováveis\newline
+
+
+
+
+## Exercício 7
+Exemplo em Bisgaard and Travis (1991). Considere a seguinte sequência de 21 observações, assumidas como resultantes de uma Cadeia de Markov homogênea de dois estados
+$$ 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} 0 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 0 \hspace{0.3 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.1 cm} 1 \hspace{0.3 cm} 1 \hspace{0.1 cm} $$
+a) Estimar a matriz de probabilidades de transição por máxima verossimilhança condicionada à primeira observação.
+```{r message=FALSE, warning=FALSE}
+library( markovchain )
+ex7= c(1,1,1,0,1,1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1)
+markovchainFit( data = ex7 )$estimate
+
+```
+
+
+
+## Exercício 9
+Exemplo em Singh (2003). Considere a seguinte, muito curta, sequência de ADN:
+$$ AACGT \hspace{0.3 cm} CTCTA \hspace{0.3 cm} TCATG \hspace{0.3 cm} CCAGG \hspace{0.3 cm} ATCTG$$
+Ajuste uma Cadeia de Markov homogênea a estes dados por:
+
+a) Máxima verossimilhança condicionada à primeira observação;
+```{r}
+library(markovchain)
+ex9<- c('A','A','C','G','T','C','T','C','T','A','T','C','A','T','G','C','C','A','G','G','A','T','C','T','G')
+fit_ex9<- markovchainFit(data = ex9)
+fit_ex9[[1]]
+
+fit_ex9[[1]]^500
+
+fit_ex9[[1]]^600
+
+```
+Resultando em 
+
+```{r}
+fit_ex9[[1]]^600
+```
+
+
+
+
+
+
+
+

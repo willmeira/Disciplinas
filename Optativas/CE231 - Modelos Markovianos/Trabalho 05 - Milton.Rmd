@@ -1,0 +1,256 @@
+---
+title: "5º CE231 - Modelos Markovianos"
+subtitle: "Modelos Ocultos de Markov - I Fundamentos"
+author: "xxx - GRR:xxx"
+date: "01 de Setembro de 2020"
+output:
+  pdf_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width=8, fig.height=4, fig.path='Figs/',                     echo=F,warning=T,message=FALSE,cache=F,comment=NULL)
+```
+
+```{r}
+##LIMPESA DO HISTORICO DO R
+rm(list = ls())
+
+##PACOTES USADOS
+library(dplyr)
+library(markovchain)
+```
+
+### Exercicio 1
+
+ Seja $X$ uma variável aleatória com distribuição uma mistura de duas distribuições com esperanças $\mu_{1},\mu_{2}$ e variância $\sigma_{1}^2,\sigma_{2}^2$, respectivamente, onde os parâmetros de mistura são $\delta_{1}$ e $\delta_{2}$ com $\delta_{1} + \delta_{2}=1$
+ 
+ **a)** Prove que $Var(X)=\delta_{1} \sigma_{1}^2+\delta_{2} \sigma_{2}^2 + \delta_{1}\delta_{2}(\mu_{1}-\mu_{2})^2$.
+
+**R:**
+
+$E(x)=\sum_{i=1}^{n} \delta _{i}E(x_i)$
+
+
+$E(x)=\sum_{i=1}^{2} \delta_{i}E(x_i)=\delta_{1}\mu_{1}+\delta_{2}\mu_{2}$
+
+
+$E(x^2)=\sum_{i=1}^{n}\delta_{i}E(X^2_i)$
+
+
+$E(x^2)=\sum_{i=1}^{2}\delta_{i}E(X^2_i)=\delta_{1}E(X^2_i)+\delta_{2}E(X^2_2)$
+
+
+$\delta^2_i=E(X^2_i)-\mu^2_i$ 
+
+Temos que:
+
+$E(X^2_i)=\delta^2_i+\mu^2_i$
+
+
+$E(X^2)=\delta_1(\delta^2_1+\mu^2_1)+\delta_(\delta^2_2+\mu^2_2)$
+
+$Var(X)=\delta_1(\delta^2_1+\mu^2_1)+\delta_2(\delta^2_2+\mu^2_2)-(\delta_1\mu_1+\delta_2\mu_2)=\delta_1(\delta^2_1+\mu^2_1)+\delta_2(\delta^2_2+\mu^2_2)-\delta^2_1\mu^2_1-2\delta_1\mu_1\delta_2\mu_2-\delta^2_2\mu^2_2=\delta_1\delta^2_1+\delta_2\delta^2_2+\delta_1\mu^2_1+\delta_2\mu^2_1-\delta^2_1\mu^2_1-2\delta_1\mu_1\delta_2\mu_2-\delta^2_2\mu^2_2=\delta_1\delta^2_1+\delta_2\delta^2_2+\delta_1\mu^2_1+(1-\delta_1)+\delta_2\mu^2_2(1-\delta_2)-2\delta_1=\delta_1\delta^2_1+\delta_2\delta^2_2+\delta_1\delta_2\mu^2_1+\delta_1\delta_2\mu^2_2-2\delta_1\delta_2\mu_1-\mu_2=\delta_1\delta^2_1+\delta_2\delta^2_2+\delta_1\delta_2(\mu^2_1+\mu^2_2-2\mu_1\mu_2)=\delta_1\delta^2_1+\delta_2\delta^2_2+\delta_1\delta_2(\mu_1+\mu_2) = Var(X)$
+
+ **b)** Mostre que a mistura de duas distribuições Poisson, $P(\lambda_{1}), P(\lambda_{2})$, com $\lambda_{1} \neq \lambda_{2}$, é superdispersa, ou seja, $VAR(X)> E(X)$.
+ 
+**R:**
+
+$E(X)=\sum_{i=1}^{n}\delta_iE(X_i)=\delta_1\lambda_1+\delta_2\lambda_2$
+
+$E(X^2)=\sum_{i=1}^{n}\delta_iE(X^2_1)=\delta_1E(X^2_1)+\delta_2E(X^2_2)$
+
+Distribuição de Poisson ~ $Var(X) = E(X) = \lambda$
+
+$Var(X_i)=E(X^2_1)-E(X_1)^2 \lambda_i=E(X^2_1)-\lambda^2_1 \rightarrow  E(X^2_1)=\lambda_i+\lambda^2_i$
+
+$E(X^2)=\delta_1(\lambda+\lambda^2_1)+\delta_2(\lambda_2+\lambda^2_2)$
+
+$Var(X)\delta_1(\lambda_1+\lambda^2_1)+\delta_2(\lambda_2+\lambda^2_2)-(\delta_1\lambda_1+\delta_2\lambda_2)^2=\delta_1\lambda_1+\delta_1\lambda^2_1+\delta_2\lambda_2+\delta_2\lambda^2_2-\delta^2_1\lambda^2_1-2\delta_1\delta_2\lambda_1\lambda_2-\delta^2_2\lambda^2_2=\delta_1\lambda^2_1(1-\delta_1)+\delta_2\lambda^2_2(1-\delta_2)+\delta_2\lambda_2+\delta_2\lambda_2-2\delta_1\delta_2\lambda_1\lambda_2=\delta_1\delta_2\lambda^2_1+\delta_1\delta_2\lambda^2_2+\delta_1\lambda_1+\delta_2\lambda_2-2\delta_1\delta_2\lambda_1\lambda_2=\delta_1\lambda_1+\delta_2\lambda_2+\delta_1\delta_2(\lambda_1-\lambda_2)^2$
+
+Então
+
+$\delta_1\lambda_1+\delta_2\lambda_2+\delta_1\delta_2(\lambda_1-\lambda_2)^2 >\delta_1\lambda_1+\delta_1\lambda_2$
+
+Para:
+
+$(\lambda_1-\lambda_2)^2>0$ uma vez que $\lambda_1\neq\lambda_2$
+
+\pagebreak
+
+### Exercicio 3
+ 
+ Considere uma Cadeia de Markov estacionária de dois estados e matriz de probabilidades de transição dada por
+
+$$\Gamma =
+\begin{pmatrix}
+\gamma_{1,1} & \gamma_{1,2}\\ 
+\gamma_{2,1} & \gamma_{2,2} 
+\end{pmatrix}$$
+
+**a)** Mostre que a distribuição estacionária é
+
+$$(\pi(1), \pi(2))=\frac{1}{\gamma_{1,2}+\gamma_{2,1}}(\gamma_{2,1},\gamma_{1,2})$$
+
+**R:**
+
+$$G =
+\begin{pmatrix}
+a & b\\ 
+c & d 
+\end{pmatrix}$$
+
+Do item 2.1: $\pi(I-G+U)=1$
+
+$$\begin{bmatrix}
+\pi(1)& \pi(2)
+\end{bmatrix}(\begin{pmatrix}
+1 & 0\\ 
+0 & 1 
+\end{pmatrix}-
+\begin{pmatrix}
+a & b\\ 
+c & d 
+\end{pmatrix}+
+\begin{pmatrix}
+1 & 1\\ 
+1 & 1 
+\end{pmatrix})=\begin{bmatrix}
+1& 1
+\end{bmatrix}$$
+
+{$\pi(1)(2-a)+\pi(2)(1-c)=1$ 
+
+{$\pi(1)(1-b)+\pi(2)(1-d)=1$
+
+$\pi(1)=\frac{1-\pi(2)(1-c)}{(2-a)}$
+
+$\frac{(1-\pi(2)(1-c))(1-b)}{(2-a)}+\pi(2)(2-d)=1$
+
+$(1-b)(1-\pi(2)(1-c))+(2-a)(2-b)\pi(2)=(2-a)$
+
+$(1-b)(1-\pi(2)(1-c))+(1+b)(1+c)\pi(2)=(1+b)$
+
+$(1-b)(1-b)(1-c)\pi(2)+(1+b)(1+c)\pi(2)=(1+b)$
+
+$\pi(2)(-1+b-1+c+1+b+1+c)=1+b-1+b$
+
+$\pi(2)(2b+2c)=2b$
+
+$\pi(2)=\frac{2b}{2b+2c}=\frac{b}{b+c}$
+
+Sabemos que $\pi(1)+\pi(2)=1$
+
+Logo:
+
+$\pi(1)=-1\frac{b}{b+c}=\frac{b+c-b}{b+c}=\frac{c}{b+c}$
+
+$\pi(1)=\frac{c}{b+c}$,$\pi(2)=\frac{b}{b+c}$
+
+Assim:
+
+$(\pi(1),\pi(2))=\frac{1}{b+c}(c,b)$ onde $b=\gamma_{1,2}$ e $c=\gamma_{2,1}$
+
+
+**b)** Considera o caso:
+
+$$\Gamma =
+\begin{pmatrix}
+0.9 & 0.1\\ 
+0.2 & 0.8
+\end{pmatrix}$$
+
+e as duas sequências de observações seguintes, que se supõe serem geradas pela Cadeia de Markov acima
+
+>Sequencia 1: 1 1 1 2 2 1
+
+>Sequencia 2: 2 1 1 2 1 1
+
+Calcule a distribuição estacionária de cada uma das sequências. Note que cada sequência contém o mesmo número de uns e dois. Porquê estas sequências não são igualmente prováveis?
+
+**R:**
+
+```{r}
+vetor3b <- matrix(c(0.9,0.1,0.2,0.8), byrow=T, ncol = 2)
+e3b = new("markovchain", states=as.character(1:2), transitionMatrix=vetor3b, name="Γ")
+
+vetor3b1 = c("1","1","1","2","2","1")
+vetor3b2 = c("2","1","1","2","1","1")
+
+e3b1 <- markovchainFit(data = vetor3b1, method = "mle", )$estimate
+e3b2 <- markovchainFit(data = vetor3b2, method = "mle", )$estimate
+```
+
+Distribuição estacionária de $\Gamma$:
+
+```{r}
+steadyStates(e3b)
+```
+
+Distribuição estacionária da matriz de transição gerada pela Sequência 1:
+
+```{r}
+steadyStates(e3b1)
+```
+Distribuição estacionária da matriz de transição gerada pela Sequência 2:
+
+```{r}
+steadyStates(e3b2)
+```
+
+As sequências não são igualmente prováveis pois pela distribuição estacionária da matriz $\Gamma$ que gerou ambas sequências, a probabilidade de iniciar no estado 1 $(\frac{2}{3})$ é maior do que iniciar no estado 2 $(\frac{1}{3})$.
+  
+
+\pagebreak
+
+
+### Exercicio 7
+
+Exemplo em Bisgaard and Travis (1991). Considere a seguinte sequência de 21 observações, assumidas como resultantes de uma Cadeia de Markov homogénea de dois estados
+
+$$11101\;\;\;10111\;\;\;10110\;\;\;11111\;\;\;1$$
+
+**a)** Estimar a matriz de probabilidades de transição por máxima verossimilhança condicionada à primeira observação.
+
+**R:**
+
+```{r message=FALSE, warning=FALSE}
+require( markovchain )
+vetor= c("1","1","1","0","1","1","0","1","1","1","1","0","1","1","0","1","1","1","1","1","1")
+markovchainFit( data = vetor )$estimate
+```
+
+
+
+\pagebreak
+
+
+### Exercicio 9
+
+Exemplo em Singh (2003). Considere a seguinte, muito curta, sequência de ADN:
+
+$$AACGT\;\;\;CTCTA\;\;\;TCATG\;\;\;CCAGG\;\;\;ATCTG$$
+
+Ajuste uma Cadeia de Markov homogênea a estes dados por:
+
+**a)** Máxima verossimilhança condicionada à primeira observação;
+
+**R:**
+
+```{r message=FALSE, warning=FALSE}
+library(markovchain)
+dados9<- c('A','A','C','G','T','C','T','C','T','A','T','C','A','T','G','C','C','A','G','G','A','T','C','T','G')
+
+mcfit9<- markovchainFit(data = dados9)
+
+mcfit9[[1]]
+
+mcfit9[[1]]^500
+```
+
+Sendo assim a matriz de probabilidades de transição por máxima verossimilhança condicionada:
+
+```{r message=FALSE, warning=FALSE}
+mcfit9[[1]]^600
+```
+
