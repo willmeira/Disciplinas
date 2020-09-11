@@ -1,0 +1,163 @@
+---
+title: "Solar Radiation EDA & prediction"
+author: "Jonathan Bouchet"
+date: "`r Sys.Date()`"
+output:
+ html_document:
+    fig_width: 10
+    fig_height: 7
+    toc: yes
+    number_sections : yes
+    code_folding: show
+---
+
+```{r setup}
+#options(width=100)
+#knitr::opts_chunk$set(out.width='1000px',dpi=200,message=FALSE,warning=FALSE)
+knitr::opts_chunk$set(message=FALSE,warning=FALSE)
+```
+
+```{r}
+#load packages and csv file
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(Amelia)
+library(corrplot)
+library(ggfortify)
+library(RColorBrewer)
+library(forecast)
+```
+
+#EDA
+```{r}
+df<-read.csv("SolarPrediction.csv",sep = ",", dec = ".", header = TRUE)
+any(is.na(df))
+str(df)
+```
+
+We need :
+
+* to convert the `Data` feature to extract `year`,`month`,`day` and `hour` information
+* to calculate the duration of the day, as the difference in time between `TimeSunSet` and `TimeSunRise`
+
+##Utils
+```{r}
+getDate<-function(x,pos1,pos2){
+  if(pos1==1){
+  val<-as.numeric(strsplit(strsplit(as.character(x)," ")[[1]][pos1],'/')[[1]][pos2])
+  }
+  else if(pos1==3 & pos2==0){
+    val<-as.factor(strsplit(strsplit(as.character(x)," ")[[1]][pos1],'/')[[1]])
+  }
+  return(val)
+}
+
+getTIME<-function(x,pos){
+  val<-strsplit(as.character(x),":")[[1]][pos]
+  return(as.numeric(val))
+}
+```
+
+```{r}
+df$Month<-sapply(df$Data,getDate,1,1)
+df$Day<-sapply(df$Data,getDate,1,2)
+df$Year<-sapply(df$Data,getDate,1,3)
+df$TimeAbbr<-sapply(df$Data,getDate,3,0)
+df$hour<-sapply(df$Time,getTIME,1)
+df$minute<-sapply(df$Time,getTIME,2)
+df$sec<-sapply(df$Time,getTIME,3)
+head(df)
+```
+
+```{r}
+mymonths<-c("January","February","March","April","May","June","July","August","September","October","November","December")
+df$MonthAbb <- mymonths[ df$Month ]
+df$ordered_month <- factor(df$MonthAbb, levels = month.name)
+#posixct for time serie
+df$DateTs<-as.POSIXct(paste0(df$Year,'-',df$Month,'-',df$Day,' ',as.character(df$Time)), format="%Y-%m-%d %H:%M:%S")
+df$DailyTs<-as.POSIXct(as.character(df$Time), format="%H:%M:%S")
+df$DiffTime<-as.numeric(difftime(
+  as.POSIXct(paste0(df$Year,'-',df$Month,'-',df$Day,' ',as.character(df$TimeSunSet)), format="%Y-%m-%d %H:%M:%S"),
+  as.POSIXct(paste0(df$Year,'-',df$Month,'-',df$Day,' ',as.character(df$TimeSunRise)), format="%Y-%m-%d %H:%M:%S"),
+  units='sec'))
+```
+
+##Radiation level
+```{r}
+ggplot(data=df,aes(x=Radiation,fill=ordered_month)) + 
+  geom_histogram(bins=100) + 
+  scale_y_log10() + 
+  scale_fill_manual(name="",values=c("#46ACC8","#F21A00","#EBCC2A","#0B775E")) + 
+  theme(legend.position='top') + 
+  facet_wrap(~ordered_month) +
+  xlab('Radiation level [W/m^-2]') + ylab('Count')
+```
+
+Comments :
+
+* we see a large peak for low Radiation (~0, meaning no Radiation) then smaller activity
+* September is the month with a more pronounce peak at higher Radiation (>1000W/m^-2)
+
+```{r}
+ggplot(data=df,aes(x=DiffTime,y=Radiation)) + 
+  geom_point(aes(color=ordered_month)) +
+  scale_color_manual(name="",values=c("#46ACC8","#F21A00","#EBCC2A","#0B775E")) + 
+  theme(legend.position='top') + xlab("SunSet -SunRise [sec]")
+```
+
+* This is an expected result : since the day is longer in September vs. all the other month, so the difference between sunrise and the sunset is longer
+* it also seems that Radiation with higher level appear more often in September (or might just be a statistical issue, day longer so more probability to get a high Radiation)
+
+##Mean Radiation per Day
+```{r}
+df %>% select(ordered_month,Day,Radiation) %>% 
+  group_by(ordered_month,Day) %>% 
+  summarise(dailyRad = mean(Radiation)) %>% 
+  ggplot(aes(x=ordered_month,y=dailyRad,color=dailyRad)) + 
+  scale_color_gradientn(colours=rev(brewer.pal(10,'Spectral'))) + 
+  geom_boxplot(colour='black',size=.4,alpha=.5) + 
+  geom_jitter(shape=16,width=.2,size=2) +
+  xlab('') + ylab('') + theme(legend.position='top')
+```
+
+###Radiation for a given day (as a test plot)
+```{r,eval=F}
+ggplot(data=filter(df,Day==1 & ordered_month=='September'),aes(x=DateTs,y=Radiation)) + 
+  geom_line() + xlab('')
+df %>% filter(Day==1 & ordered_month=='September') %>% summarise(mean(Radiation))
+```
+
+##Time Serie
+```{r}
+dailyRadiation<-as.data.frame(df %>% 
+                                select(Month,Day,Radiation) %>% 
+                                group_by(Month,Day) %>% 
+                                summarise(dailyRad = mean(Radiation)))
+#(re)create a Date format
+dailyRadiation$dateTS<-as.Date(paste0('2016-',dailyRadiation$Month,'-',dailyRadiation$Day))
+#weekly moving average
+dailyRadiation$ma_week<-ma(dailyRadiation$dailyRad,order=7)
+dailyRadiation$ma_2weeks<-ma(dailyRadiation$dailyRad,order=14)
+
+ggplot() + 
+  geom_line(data=dailyRadiation,aes(x=dateTS,y=dailyRad,color='by_day'),alpha=.75) + 
+  geom_line(data=dailyRadiation,aes(x=dateTS,y=ma_week,color='by_week'),size=2) + 
+  geom_line(data=dailyRadiation,aes(x=dateTS,y=ma_2weeks,color='by_2weeks'),size=2) + 
+  xlab('') + ylab('Average Solar Radiation') + 
+  scale_colour_manual(name="",values=c(by_day="black",by_week="#46ACC8",by_2weeks="#F21A00")) + 
+  theme(legend.position='top')
+
+```
+
+* We may not have enough data to make a time serie analysis
+* it seems (with this data) that we cannot identify any periodicity
+
+#Prediction
+to do
+<hr>
+<strong>History :</strong>
+
+* _version 1 : initial commit_ 
+
+<hr>
