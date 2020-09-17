@@ -1,0 +1,357 @@
+---
+title: "Trabalho Nº6 - Modelos Markovianos"
+author: "Rodrigo Albanas | Lais Hoffman | Willian Meira "
+date: "14 de Setembro de 2020"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width=8, fig.height=4, fig.path='Figs/',                     echo=F,warning=T,message=FALSE,cache=F,comment=NULL)
+```
+
+```{r}
+##LIMPESA DO HISTORICO DO R
+rm(list = ls())
+options(digits = 4)
+
+```
+
+# 1. Resumo
+*****
+Estação meteorológica que onde foi coletado os dados: HI-SEAS (Hawai’i Space Exploration Analog and Simulation) é um habitat que simula condições explicitamente projetadas para serem semelhantes às de uma missão de exploração planetária. Construido em um local isolado com condições semelhantes ao planeta Marte, ao lado do vuldão Mauna Loa (4169 m) na Ilha Grande do Havaí. O HI-SEAS é único, além de sua configuração em um ambiente analógico diferenciado, como:
+    
+  - o local é acessível durante todo o ano e tem muito pouca variação de clima, permitindo estudos de ambiente isolado e confinado de maior duração do que em outros locais;
+  -  o ambiente semelhante a Marte fornece tarefas analógicas de alta fidelidade, como trabalho de campo geológico realizado por exploradores humanos e / ou robôs.
+  
+  
+# 2. Introdução
+*****
+
+
+# 3 Base de Dados
+
+## 3.1 Descrição dos dados**
+
+A base original foi retirada do portal *Kaggle* e pode ser obtida no link [www.kaggle.com](https://www.kaggle.com/dronio/SolarEnergy). São dados coletados na estação meteorológica HI-SEAS de setembro a dezembro de 2016, no Hawai
+
+
+UNIXTime: total de segundos desde 1 de janeiro de 1970;
+Data: data da coleta no formato "mm/dd/yyyy";
+Time: hora da coleta no formato "hh:mm:ss";
+WindDirectionG: direção do vento em graus;
+TimeSunRise e TimeSunSet: hora do nascer e pôr do sol;
+Radiation: nível de radiação solar medida em W/m2 (watts por metro quadrado);
+Temperature: temperatura em graus Fahrenheit;
+Pressure: pressão barométrica medida em mm Hg (milímetros de mercúrio);
+Humidity: humidade relativa do ar em percentual;
+Speed: velocidade do vento medida em m/h (milhas por hour);
+
+Para a nossa análise fizemos alguns ajustes na base original. A  categorizamos a varíavel referente a direção do vento e criamos algumas covaríaveis com base nos dados originais  
+
+
+
+TimeHora: 
+DiaNoite: 0 Noite, 1 Dia
+WindDirection:
+DiaMes:
+Mes:
+TimeSeg:   
+
+
+
+
+
+Solar radiation: watts per meter^2
+Temperature: degrees Fahrenheit
+Humidity: percent
+Barometric pressure: Hg
+Wind direction: degrees
+Wind speed: miles per hour
+Sunrise/sunset: Hawaii time
+
+
+
+
+
+
+
+
+", sendo dados dos EUA, entre 1997-2002, de acidentes de carro relatados pela polícia nos quais há um evento prejudicial (pessoas ou propriedade) e do qual pelo menos um veículo foi rebocado.
+Os dados são restritos aos ocupantes do banco da frente, incluem apenas um subconjunto das variáveis registradas e são restritos de outras maneiras também.
+
+
+
+
+>>>  Esses conjuntos de dados são dados meteorológicos da 
+
+Para cada conjunto de dados, os campos são:
+
+
+A base original possui uma base de dados com 26.217 observações nas 15 variáveis a seguir.
+
+
+
+
+
+
+
+```{r include=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+## PACOTES USADOS
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(corrplot)
+library(gamlss)
+library(gamlss.data)
+library(gamlss.dist)
+
+```
+
+
+
+
+
+```{r include=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+## Carregando dados
+dados = read.csv("SolarPredictionAjustada.csv",sep = ";", dec = ".", header = TRUE)
+str(dados)
+summary(dados)
+
+```
+
+```{r include=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+## Ajustando base
+
+dados$WindDirection <- as.factor(dados$WindDirection)
+dados$DayNight <- as.factor(dados$DayNight)
+dados$Month <- as.factor(dados$Month)
+
+dados$Radiation <- as.numeric(dados$Radiation)
+dados$Temperature <- as.numeric(dados$Temperature)
+dados$Pressure <- as.numeric(dados$Pressure)
+dados$Humidity <- as.numeric(dados$Humidity)
+dados$Speed <- as.numeric(dados$Speed)
+
+
+
+
+
+
+
+dados = dados[,-c(1,2,3,4,5,6)]
+str(dados)
+summary(dados)
+
+```
+
+
+
+
+# 2 Análise Descritiva
+
+**2.1 Medidas de Resumo**
+
+```{r include=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+library(gridExtra)
+
+g1 <- ggplot(dados, aes(x=Radiation)) + geom_histogram()+ xlab('Radiation')+ ylab('')
+g2 <- ggplot(dados, aes(x=Temperature)) + geom_histogram()+ xlab('Temperature')+ ylab('')
+g3 <- ggplot(dados, aes(x=Pressure)) + geom_histogram()+ xlab('Pressure')+ ylab('')
+g4 <- ggplot(dados, aes(x=Humidity)) + geom_histogram()+ xlab('Humidity')+ ylab('')
+g5 <- ggplot(dados, aes(x=Speed)) + geom_histogram()+ xlab('Speed')+ ylab('')
+g6 <- ggplot(dados, aes(x=TimeHour)) + geom_histogram()+ xlab('TimeHour')+ ylab('')
+g7 <- ggplot(dados, aes(x=DiaMes)) + geom_histogram()+ xlab('DiaMes')+ ylab('')
+g8 <- ggplot(dados, aes(x=TimeSec)) + geom_histogram()+ xlab('TimeSec')+ ylab('')
+
+grid.arrange(g1,g2,g3,g4,g5,g6,g7,g8,ncol=3, nrow=3)
+
+
+```
+
+
+
+```{r include=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+
+
+x11()
+par(mfrow=c(1,3))
+boxplot(dados$Radiation, xlab = '', ylab = '', main = 'Radiation ', las=1)
+boxplot(dados$Temperature, xlab = '', ylab = '', main = 'Temperature ', las=1)
+boxplot(dados$Pressure, xlab = '', ylab = '', main = 'Pressure ', las=1)
+
+```
+
+
+
+# Direção vento X Radiaton
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+
+g1<-ggplot(dados, aes(x=WindDirection, y=Radiation)) +  geom_boxplot()+ xlab('WindDirection')+ ylab('Radiation') + theme(legend.title=element_blank())
+
+g1
+
+#grid.arrange(g5, ncol=2, nrow=1)
+```
+
+
+# Direção vento X DiaNoite
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+
+g2<-ggplot(dados, aes(x=WindDirection, y=DayNight)) +  geom_boxplot()+ xlab('WindDirection')+ ylab('DayNight') + theme(legend.title=element_blank())
+
+g2
+
+
+x11()
+par(mfrow = c(2,2))
+barplot(table(dados$DayNight,dados$WindDirection), beside=T, las = 1,
+        xlab = 'Faixa de velocidade', legend = c('Noite','Dia'))
+barplot(table(dados$Radiation,dados$DayNight), beside=T, las = 1,
+        xlab = 'Faixa de velocidade', legend = c('Noite','Dia'))
+
+
+
+#barplot(table(dados$sobrev,dados$cinto), beside=T, las = 1,
+#        xlab = 'Cinto') 
+#barplot(table(dados$sobrev,dados$frontal), beside=T, las = 1,
+#        xlab = 'Frontal') 
+#barplot(table(dados$sobrev,dados$sexo), beside=T, las = 1,
+#        xlab = 'Sexo')
+
+
+
+
+#grid.arrange(g5, ncol=2, nrow=1)
+```
+
+
+
+# Direção vento X Radiaton
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+
+g3<-ggplot(dados, aes(x=Month, y=Radiation)) +  geom_boxplot()+ xlab('Month')+ ylab('Radiation') + theme(legend.title=element_blank())
+
+g3
+
+#grid.arrange(g5, ncol=2, nrow=1)
+```
+
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+#dadosDia <- subset(dados, DayNight == 1, select = -DayNight)
+dadosDia <- subset(dados, DayNight == 1, select = -c(DayNight,TimeHour))
+head(dadosDia)
+str(dadosDia)
+g1 <- ggplot(dadosDia, aes(x=Radiation)) + geom_histogram()+ xlab('Radiation')+ ylab('')
+g2 <- ggplot(dadosDia, aes(x=Temperature)) + geom_histogram()+ xlab('Temperature')+ ylab('')
+g3 <- ggplot(dadosDia, aes(x=Pressure)) + geom_histogram()+ xlab('Pressure')+ ylab('')
+g4 <- ggplot(dadosDia, aes(x=Humidity)) + geom_histogram()+ xlab('Humidity')+ ylab('')
+g5 <- ggplot(dadosDia, aes(x=Speed)) + geom_histogram()+ xlab('Speed')+ ylab('')
+#g6 <- ggplot(dadosDia, aes(x=TimeHour)) + geom_histogram()+ xlab('TimeHour')+ ylab('') #AVALIAR NECESSIDADE
+g7 <- ggplot(dadosDia, aes(x=DiaMes)) + geom_histogram()+ xlab('DiaMes')+ ylab('') #AVALIAR NECESSIDADE
+g8 <- ggplot(dadosDia, aes(x=TimeSec)) + geom_histogram()+ xlab('TimeSec')+ ylab('') #AVALIAR NECESSIDADE
+
+grid.arrange(g1,g2,g3,g4,g5,g7,g8,ncol=3, nrow=3)
+```
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+plot(dados)
+plot(dadosDia)
+str(dadosDia)
+
+```
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+
+
+```
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+
+
+```
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+
+
+```
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+
+
+```
+
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, results="markup"}
+
+
+```
+
+
+
+
+
+
+
+
+
+```{r include=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+X <- cor(dadosDia[,1:8])
+#K <- cor(dados[,c("Radiation","Temperature")])
+X
+corrplot(X, method="circle")
+
+
+```
+
+```{r include=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+X <- cor(dados[,1:8])
+#K <- cor(dados[,c("Radiation","Temperature")])
+X
+corrplot(X, method="circle")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

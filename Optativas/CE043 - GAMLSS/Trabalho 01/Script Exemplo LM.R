@@ -18,7 +18,6 @@ month_day = month_day[,c(1,2)]
 
 str(month_day)
 
-
 month_day = data.frame(month_day)
 
 month_day$X1 = as.numeric(month_day$X1) +8
@@ -69,6 +68,7 @@ mydata$TimeSunSet = endingtime
 mydata = data.frame(mydata,month = month_day$X1 , day = month_day$X2) 
 
 dim(mydata)
+summary(mydata)
 
 ggplot(mydata, aes(day, Radiation)) + 
   geom_boxplot() + 
@@ -80,7 +80,7 @@ ggplot(mydata, aes(day, Radiation)) +
 september = mydata %>% filter( month == 9 )
 october = mydata %>% filter( month == 10 )
 november = mydata %>% filter( month == 11 )
-december = mydata %>% filter( month == 12 )
+december = mydata %>% filter( month == 12 ) 
 
 mean(september$Radiation)
 mean(october$Radiation)
@@ -88,6 +88,7 @@ mean(november$Radiation)
 mean(december$Radiation)
 
 # september, october, december are close to each other. November is the coolest month.
+head(mydata)
 
 K <- cor(mydata[,1:10])
 K
